@@ -13,8 +13,8 @@ public class Museum extends DatabaseElement {
 		this.description = description;
 	}
 
-	public Museum(Long id, Timestamp deleted, String name, String description) {
-		super(id, deleted);
+	public Museum(Long id, String name, String description, Timestamp inserted, Timestamp deleted) {
+		super(id, inserted, deleted);
 		this.name = name;
 		this.description = description;
 	}

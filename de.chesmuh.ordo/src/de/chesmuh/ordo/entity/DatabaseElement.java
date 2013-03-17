@@ -6,18 +6,21 @@ public class DatabaseElement {
 
 	private Long id;
 	private Timestamp deleted;
+	private Timestamp inserted;
 	
 	public DatabaseElement() {
 		this.id = null;
 		this.deleted = null;
+		this.inserted = null;
 	}
 	
-	public DatabaseElement(Long id, Timestamp deleted) {
+	public DatabaseElement(Long id, Timestamp inserted, Timestamp deleted) {
 		this.id = id;
 		this.deleted = deleted;
+		this.inserted = inserted;
 	}
 	
-	public Long getID() {
+	public Long getId() {
 		return this.id;
 	}
 	
@@ -32,4 +35,17 @@ public class DatabaseElement {
 	public void setDeleted(Timestamp deleted) {
 		this.deleted = deleted;
 	}
+	
+	public Timestamp getInsert() {
+		return this.inserted;
+	}
+	
+	public void setInsert(Timestamp insert) {
+		this.inserted = insert;
+	}
+	
+	public boolean isDeleted() {
+		return this.deleted != null;
+	}
+	
 }

@@ -1,5 +1,6 @@
 package de.chesmuh.ordo.data.manager;
 
+import de.chesmuh.ordo.data.manager.AbstractManager;
 import de.chesmuh.ordo.data.sql.SQLQueryMuseum;
 import de.chesmuh.ordo.entity.Museum;
 

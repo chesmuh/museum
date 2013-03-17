@@ -8,5 +8,4 @@ public class MuseumManager extends AbstractManager<Museum> {
 	public MuseumManager() {
 		super(SQLQueryMuseum.class);
 	}
-
 }

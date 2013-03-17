@@ -25,6 +25,7 @@ public class Main {
 		Collection<Museum> collection = museumManager.getAll();
 		for(Museum m : collection) {
 			System.out.println(m.getId() + ": " + m.getName() + "\n\t" + m.getDescription());
+
 		}
 	}
 }

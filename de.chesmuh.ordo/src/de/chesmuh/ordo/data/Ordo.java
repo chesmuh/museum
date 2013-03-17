@@ -17,6 +17,8 @@ public class Ordo {
 		public static final String NAME = "name";
 		public static final String DESCRIPTION = "description";
 		public static final String DELETED = "deleted";
+		public static final String INSERTED = "inserted";
+		public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (\n\t" + ID + " int unsigned primary key auto_increment,\n\t" + NAME + " varchar(255) not null,\n\t" + DESCRIPTION + " text null,\n\t" + INSERTED + " timestamp not null,\n\t" + DELETED + " timestamp null\n);";
 				
 	}
 	
@@ -33,6 +35,8 @@ public class Ordo {
 		public static final String NAME = "name";
 		public static final String DESCRIPTION = "description";
 		public static final String DELETED = "deleted";
+		public static final String INSERTED = "inserted";
+		public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (\n\t" + ID + " int unsigned primary key auto_increment,\n\t" + PARENT_ID + " int unsigned null,\n\t" + MUSEUM_ID + " int unsigned null,\n\t" + NAME + " varchar(255) not null,\n\t" + DESCRIPTION + " text null,\n\t" + INSERTED + " timestamp not null,\n\t" + DELETED + " timestamp null\n);";
 		
 	}
 }

@@ -1,19 +1,26 @@
 package de.chesmuh.ordo.data.manager;
 
-import java.awt.List;
+import java.util.Collection;
 
 import de.chesmuh.ordo.entity.DatabaseElement;
+import de.chesmuh.ordo.exceptions.ModelAlreadyDeletedException;
 
-public interface IManager<Model extends DatabaseElement> {
+public interface IManager<Element extends DatabaseElement> {
 
-	public List getAll();
+	Collection<Element> getAll();
 	
-	public Model get(Long id);
+	void store(Element model);
 	
-	public void insert(Model model);
+	void update(Element model);
 	
-	public void update(Model model);
-	
-	public void delete(Model model);
+	void markAsDeleted(Element model) throws ModelAlreadyDeletedException;
+
+	void loadAll();
+
+	Collection<Element> getAllDeleted();
+
+	Element getbyId(Long id);
+
+	void delete(Element model);
 	
 }

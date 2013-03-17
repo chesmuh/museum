@@ -2,6 +2,11 @@ package de.chesmuh.ordo.entity;
 
 import java.sql.Timestamp;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class Section extends DatabaseElement {
 
 	private Long museum_id;

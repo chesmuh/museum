@@ -2,6 +2,11 @@ package de.chesmuh.ordo.entity;
 
 import java.sql.Timestamp;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class DatabaseElement {
 
 	private Long id;

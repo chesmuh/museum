@@ -5,6 +5,12 @@ import java.util.Collection;
 
 import de.chesmuh.ordo.entity.DatabaseElement;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ * @param <D> {@link DatabaseElement}
+ */
 public interface ISqlQuery<D extends DatabaseElement>
 {
 

@@ -1,5 +1,10 @@
 package de.chesmuh.ordo.exceptions;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class ModelAlreadyDeletedException extends Exception {
 
 	/**

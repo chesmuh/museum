@@ -9,6 +9,11 @@ import java.util.logging.Logger;
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.Ordo.Section;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class Database {
 
 	private static Database instance;

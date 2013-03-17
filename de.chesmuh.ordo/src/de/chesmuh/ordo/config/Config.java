@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class Config {
 
 	private static Config instance;

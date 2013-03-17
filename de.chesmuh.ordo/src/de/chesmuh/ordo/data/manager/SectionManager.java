@@ -7,6 +7,11 @@ import de.chesmuh.ordo.data.sql.SQLQuerySection;
 import de.chesmuh.ordo.entity.Museum;
 import de.chesmuh.ordo.entity.Section;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class SectionManager extends AbstractManager<Section>
 {
 

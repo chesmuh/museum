@@ -1,5 +1,10 @@
 package de.chesmuh.ordo.config;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class ConfigKeys {
 	private ConfigKeys() {
 

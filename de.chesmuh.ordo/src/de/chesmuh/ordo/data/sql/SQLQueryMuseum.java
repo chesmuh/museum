@@ -9,6 +9,11 @@ import java.util.Collection;
 import de.chesmuh.ordo.data.Ordo;
 import de.chesmuh.ordo.entity.Museum;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class SQLQueryMuseum extends AbstractSQLQuery<Museum> {
 
 	public SQLQueryMuseum() throws SQLException {

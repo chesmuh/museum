@@ -12,6 +12,12 @@ import de.chesmuh.ordo.data.sql.ISqlQuery;
 import de.chesmuh.ordo.entity.DatabaseElement;
 import de.chesmuh.ordo.exceptions.ModelAlreadyDeletedException;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ * @param <Element> {@link DatabaseElement}
+ */
 public abstract class AbstractManager<Element extends DatabaseElement> implements
 		IManager<Element> {
 

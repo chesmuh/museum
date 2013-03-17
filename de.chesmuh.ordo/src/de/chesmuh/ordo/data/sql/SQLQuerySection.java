@@ -9,6 +9,11 @@ import java.util.Collection;
 import de.chesmuh.ordo.data.Ordo;
 import de.chesmuh.ordo.entity.Section;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class SQLQuerySection extends AbstractSQLQuery<Section> {
 
 	public SQLQuerySection() throws SQLException {

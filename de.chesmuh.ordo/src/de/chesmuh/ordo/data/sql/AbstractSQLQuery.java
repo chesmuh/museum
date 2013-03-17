@@ -8,6 +8,12 @@ import java.sql.Statement;
 import de.chesmuh.ordo.data.Database;
 import de.chesmuh.ordo.entity.DatabaseElement;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ * @param <Element> {@link DatabaseElement}
+ */
 public abstract class AbstractSQLQuery<Element extends DatabaseElement> implements
 		ISqlQuery<Element> {
 

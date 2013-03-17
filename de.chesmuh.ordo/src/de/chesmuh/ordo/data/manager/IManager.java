@@ -5,6 +5,12 @@ import java.util.Collection;
 import de.chesmuh.ordo.entity.DatabaseElement;
 import de.chesmuh.ordo.exceptions.ModelAlreadyDeletedException;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ * @param <Element> {@link DatabaseElement}
+ */
 public interface IManager<Element extends DatabaseElement> {
 
 	Collection<Element> getAll();

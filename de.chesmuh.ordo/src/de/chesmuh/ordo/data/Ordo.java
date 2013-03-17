@@ -1,5 +1,10 @@
 package de.chesmuh.ordo.data;
 
+/**
+ * 
+ * @author Chesmuh
+ *
+ */
 public class Ordo {
 
 	private Ordo() {

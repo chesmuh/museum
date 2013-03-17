@@ -36,6 +36,13 @@ public class SQLQuerySection extends AbstractSQLQuery<Section> {
 			Long museum_id = resultSet.getLong(Ordo.Section.MUSEUM_ID);
 			Timestamp deleted = resultSet.getTimestamp(Ordo.Section.DELETED);
 			Timestamp inserted = resultSet.getTimestamp(Ordo.Section.INSERTED);
+			
+			if(0L == museum_id)  {
+				museum_id = null;
+			}
+			if(0L == parent_id) {
+				parent_id = null;
+			}
 			result.add(new Section(id, inserted, deleted, museum_id, parent_id,
 					name, description));
 		}

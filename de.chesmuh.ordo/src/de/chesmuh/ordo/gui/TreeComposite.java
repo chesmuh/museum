@@ -2,6 +2,7 @@ package de.chesmuh.ordo.gui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -16,6 +17,9 @@ public class TreeComposite extends Composite {
 	}
 
 	private void initialize() {
+		// ----- Layout -----
+		this.setLayout(new GridLayout(1, true));
+		
 		tree = new Tree(this, SWT.V_SCROLL);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		for (int i = 0; i < 5; i++) {

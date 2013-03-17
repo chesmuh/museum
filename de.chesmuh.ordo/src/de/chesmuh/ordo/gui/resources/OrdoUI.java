@@ -7,5 +7,6 @@ public class OrdoUI {
 	}
 	
 	public static final String MENU_FILE = "menu.file";
+	public static final String MENU_FILE_CLOSE = "menu.file.close";
 	
 }

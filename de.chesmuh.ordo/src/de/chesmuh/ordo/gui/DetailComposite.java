@@ -15,6 +15,7 @@ public class DetailComposite extends Composite {
 	}
 
 	private void initialize() {
+		// ----- Layout -----
 		this.setLayout(new GridLayout(4, false));
 		
 		final Label label = new Label(this, SWT.NONE);

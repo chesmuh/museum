@@ -2,6 +2,7 @@ package de.chesmuh.ordo.gui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -15,6 +16,10 @@ public class TableComposite extends Composite {
 	}
 
 	private void initialize() {
+		// ----- Layout -----
+		this.setLayout(new GridLayout(1,true));
+		
+		
 		final Table table = new Table(this, SWT.MULTI
 				| SWT.FULL_SELECTION);
 		table.setLinesVisible(true);

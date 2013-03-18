@@ -1,4 +1,4 @@
-package de.chesmuh.ordo.gui;
+package de.chesmuh.ordo.gui.composites;
 
 
 import org.eclipse.swt.SWT;

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import de.chesmuh.ordo.data.Database;
-import de.chesmuh.ordo.entity.DatabaseElement;
+import de.chesmuh.ordo.entitys.DatabaseElement;
 
 /**
  * 

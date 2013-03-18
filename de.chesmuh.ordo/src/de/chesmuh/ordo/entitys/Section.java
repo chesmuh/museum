@@ -1,13 +1,15 @@
-package de.chesmuh.ordo.entity;
+package de.chesmuh.ordo.entitys;
 
 import java.sql.Timestamp;
+
+import de.chesmuh.ordo.data.DataAccess;
 
 /**
  * 
  * @author Chesmuh
  *
  */
-public class Section extends DatabaseElement {
+public class Section extends DatabaseElement implements Comparable<Section> {
 
 	private Long museum_id;
 	private Long parent_id;
@@ -62,6 +64,16 @@ public class Section extends DatabaseElement {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public int compareTo(Section o) {
+		return this.name.compareTo(o.name);
+		
+	}
+
+	public Museum getMuseum() {
+		return DataAccess.getInstance().getMuseumById(this.museum_id);
 	}
 		
 }

@@ -2,7 +2,7 @@ package de.chesmuh.ordo.data.manager;
 
 import java.util.Collection;
 
-import de.chesmuh.ordo.entity.DatabaseElement;
+import de.chesmuh.ordo.entitys.DatabaseElement;
 import de.chesmuh.ordo.exceptions.ModelAlreadyDeletedException;
 
 /**

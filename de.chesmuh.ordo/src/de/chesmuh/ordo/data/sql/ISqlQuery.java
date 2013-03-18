@@ -3,7 +3,7 @@ package de.chesmuh.ordo.data.sql;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import de.chesmuh.ordo.entity.DatabaseElement;
+import de.chesmuh.ordo.entitys.DatabaseElement;
 
 /**
  * 

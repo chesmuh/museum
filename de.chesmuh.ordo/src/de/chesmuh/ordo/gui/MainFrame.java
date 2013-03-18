@@ -1,5 +1,8 @@
 package de.chesmuh.ordo.gui;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -16,12 +19,20 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
 import de.chesmuh.ordo.config.Config;
+import de.chesmuh.ordo.gui.composites.DetailComposite;
+import de.chesmuh.ordo.gui.composites.LabelComposite;
+import de.chesmuh.ordo.gui.composites.TableComposite;
+import de.chesmuh.ordo.gui.composites.TreeComposite;
+import de.chesmuh.ordo.gui.interfaces.IUiListener;
+import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 
 public class MainFrame {
 
-	Shell shell;
-	ResourceBundle uiBundle;
+	private Shell shell;
+	private ResourceBundle uiBundle;
+	private static HashMap<UiEventType, Collection<IUiListener>> listeners = new HashMap<UiEventType, Collection<IUiListener>>();
+	
 	public MainFrame() {
 		Display display = new Display();
 
@@ -99,6 +110,26 @@ public class MainFrame {
 		menuItemFile.setMenu(menuFile);
 		
 	}
+	
+	public static void addObserver(UiEventType type, IUiListener listener) {
+		if(listeners.containsKey(type)) {
+			Collection<IUiListener> list = listeners.get(type);
+			list.add(listener);
+		} else {
+			Collection<IUiListener> list = new ArrayList<IUiListener>();
+			list.add(listener);
+			listeners.put(type, list);
+		}
+	}
+	
+	public static void handleEvent(UiEvent event) {
+		if(listeners.containsKey(event.getType())) {
+			Collection<IUiListener> collection = listeners.get(event.getType());
+			for(IUiListener listener : collection) {
+				listener.handleEvent(event);
+			}
+		}
+	}
 
 	private class FileCloseSelectionListener implements SelectionListener {
 
@@ -109,9 +140,10 @@ public class MainFrame {
 
 		@Override
 		public void widgetDefaultSelected(SelectionEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 		
 	}
+	
+	
 }

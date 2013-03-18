@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import de.chesmuh.ordo.data.manager.MuseumManager;
 import de.chesmuh.ordo.data.manager.SectionManager;
-import de.chesmuh.ordo.entity.Museum;
-import de.chesmuh.ordo.entity.Section;
+import de.chesmuh.ordo.entitys.Museum;
+import de.chesmuh.ordo.entitys.Section;
 
 /**
  * 
@@ -37,6 +37,10 @@ public class DataAccess {
 		return museumManager.getAll();
 	}
 	
+	public Museum getMuseumById(Long id) {
+		return museumManager.getbyId(id);
+	}
+
 	public Collection<Section> getAllSection() {
 		return sectionManager.getAll();
 	}
@@ -52,4 +56,5 @@ public class DataAccess {
 	public Collection<Section> getAllSectionByMuseumWithNoParent(Museum museum) {
 		return sectionManager.getByMuseumWithParentNull(museum);
 	}
+
 }

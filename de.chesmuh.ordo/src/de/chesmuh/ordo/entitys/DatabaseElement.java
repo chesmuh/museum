@@ -1,4 +1,4 @@
-package de.chesmuh.ordo.entity;
+package de.chesmuh.ordo.entitys;
 
 import java.sql.Timestamp;
 

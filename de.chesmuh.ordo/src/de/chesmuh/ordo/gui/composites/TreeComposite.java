@@ -1,20 +1,24 @@
-package de.chesmuh.ordo.gui;
+package de.chesmuh.ordo.gui.composites;
 
-import java.io.InputStream;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.chesmuh.ordo.data.DataAccess;
-import de.chesmuh.ordo.entity.Museum;
-import de.chesmuh.ordo.entity.Section;
+import de.chesmuh.ordo.entitys.Museum;
+import de.chesmuh.ordo.entitys.Section;
+import de.chesmuh.ordo.gui.MainFrame;
+import de.chesmuh.ordo.gui.UiEventType;
+import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
+import de.chesmuh.ordo.gui.resources.ResourceManager;
 
 public class TreeComposite extends Composite {
 
@@ -31,29 +35,28 @@ public class TreeComposite extends Composite {
 
 		tree = new Tree(this, SWT.V_SCROLL);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
+		tree.addListener(SWT.Selection, new TreeListener());
+
 		refreshTree();
 	}
-	
+
 	private void refreshTree() {
 		Collection<Museum> allMuseum = DataAccess.getInstance().getAllMuseum();
 		for (Museum museum : allMuseum) {
 			TreeItem museumItem = new TreeItem(tree, SWT.NONE);
 			museumItem.setData(museum);
 			museumItem.setText(museum.getName());
-			InputStream museumStream = TreeComposite.class.getResourceAsStream(OrdoUI.IMAGES_MUSEUM);
-			Image museumImage = new Image(getDisplay(), museumStream);
-			museumItem.setImage(museumImage);
-			
+			museumItem.setImage(ResourceManager.getImage(getDisplay(),
+					OrdoUI.IMAGES_MUSEUM));
+
 			Collection<Section> allSection = DataAccess.getInstance()
 					.getAllSectionByMuseumWithNoParent(museum);
 			for (Section section : allSection) {
 				TreeItem sectionItem = new TreeItem(museumItem, SWT.NONE);
 				sectionItem.setData(section);
 				sectionItem.setText(section.getName());
-				InputStream sectionStream = TreeComposite.class.getResourceAsStream(OrdoUI.IMAGES_SECTION);
-				Image sectionImage = new Image(getDisplay(), sectionStream);
-				sectionItem.setImage(sectionImage);
+				sectionItem.setImage(ResourceManager.getImage(getDisplay(),
+						OrdoUI.IMAGES_SECTION));
 				addSubSection(sectionItem);
 			}
 		}
@@ -69,10 +72,25 @@ public class TreeComposite extends Composite {
 			TreeItem subItem = new TreeItem(item, SWT.NONE);
 			subItem.setData(subSection);
 			subItem.setText(subSection.getName());
-			InputStream resourceAsStream = TreeComposite.class.getResourceAsStream(OrdoUI.IMAGES_SECTION);
-			Image image = new Image(getDisplay(), resourceAsStream);
-			subItem.setImage(image);
+			subItem.setImage(ResourceManager.getImage(getDisplay(),
+					OrdoUI.IMAGES_SECTION));
 			addSubSection(subItem);
 		}
+	}
+
+	private class TreeListener implements Listener {
+
+		@Override
+		public void handleEvent(Event event) {
+			TreeItem selection = tree.getSelection()[0];
+			if(selection.getData() instanceof Section) {
+				UiEvent uiEvent = new UiEvent(tree, selection.getData(), UiEventType.SectionChoose);
+				MainFrame.handleEvent(uiEvent);
+			} else if(selection.getData() instanceof Museum) {
+				UiEvent uiEvent = new UiEvent(tree, selection.getData(), UiEventType.MuseumChoose);
+				MainFrame.handleEvent(uiEvent);
+			}
+		}
+
 	}
 }

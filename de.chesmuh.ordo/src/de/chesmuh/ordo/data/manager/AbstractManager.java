@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import de.chesmuh.ordo.data.sql.ISqlQuery;
-import de.chesmuh.ordo.entity.DatabaseElement;
+import de.chesmuh.ordo.entitys.DatabaseElement;
 import de.chesmuh.ordo.exceptions.ModelAlreadyDeletedException;
 
 /**

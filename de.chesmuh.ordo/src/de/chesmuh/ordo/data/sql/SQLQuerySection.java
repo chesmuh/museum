@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import de.chesmuh.ordo.data.Ordo;
-import de.chesmuh.ordo.entity.Section;
+import de.chesmuh.ordo.entitys.Section;
 
 /**
  * 

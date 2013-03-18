@@ -25,7 +25,7 @@ public class ConfigKeys {
 	public static final String DATABASE_DATABASE = "database.database";
 	public static final String DATABASE_DATABASE_DEFAULT = "ordo";
 	public static final String DATABASE_PORT = "database.port";
-	public static final String DATABASE_PORT_DEFAULT = "3006";
+	public static final String DATABASE_PORT_DEFAULT = "3306";
 	
 	// ----- LOCATION -----
 	public static final String LOCALE_LANGUAGE = "locale.language";

@@ -12,7 +12,7 @@ public class ConfigKeys {
 
 	public static final String FILE_PATH = "data/";
 	public static final String FILE_NAME = "config.cfg";
-	public static final String LOCALE_PATH = "resources/language/";
+	public static final String LOCALE_PATH = "locale/";
 	public static final String LOCALE_NAME = "UiMessages";
 
 	// ----- Database -----

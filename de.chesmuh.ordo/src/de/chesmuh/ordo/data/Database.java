@@ -68,7 +68,6 @@ public class Database {
 		String port = Config.getInstance().getDatabasePort();
 		String pwd = Config.getInstance().getDatabasePassword();
 		String url = "jdbc:mysql://" + host + ":" + port + "/" + db;
-		LOGGER.info("URL:" + url);
 		return DriverManager.getConnection(url, user, pwd);
 	}
 	

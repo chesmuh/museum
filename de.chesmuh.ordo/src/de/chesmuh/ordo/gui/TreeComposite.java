@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entity.Museum;
 import de.chesmuh.ordo.entity.Section;
+import de.chesmuh.ordo.gui.resources.OrdoUI;
 
 public class TreeComposite extends Composite {
 
@@ -30,13 +31,17 @@ public class TreeComposite extends Composite {
 
 		tree = new Tree(this, SWT.V_SCROLL);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+		
+		refreshTree();
+	}
+	
+	private void refreshTree() {
 		Collection<Museum> allMuseum = DataAccess.getInstance().getAllMuseum();
 		for (Museum museum : allMuseum) {
 			TreeItem museumItem = new TreeItem(tree, SWT.NONE);
 			museumItem.setData(museum);
 			museumItem.setText(museum.getName());
-			InputStream museumStream = TreeComposite.class.getResourceAsStream("home.png");
+			InputStream museumStream = TreeComposite.class.getResourceAsStream(OrdoUI.IMAGES_MUSEUM);
 			Image museumImage = new Image(getDisplay(), museumStream);
 			museumItem.setImage(museumImage);
 			
@@ -46,7 +51,7 @@ public class TreeComposite extends Composite {
 				TreeItem sectionItem = new TreeItem(museumItem, SWT.NONE);
 				sectionItem.setData(section);
 				sectionItem.setText(section.getName());
-				InputStream sectionStream = TreeComposite.class.getResourceAsStream("book.png");
+				InputStream sectionStream = TreeComposite.class.getResourceAsStream(OrdoUI.IMAGES_SECTION);
 				Image sectionImage = new Image(getDisplay(), sectionStream);
 				sectionItem.setImage(sectionImage);
 				addSubSection(sectionItem);
@@ -64,7 +69,7 @@ public class TreeComposite extends Composite {
 			TreeItem subItem = new TreeItem(item, SWT.NONE);
 			subItem.setData(subSection);
 			subItem.setText(subSection.getName());
-			InputStream resourceAsStream = TreeComposite.class.getResourceAsStream("book.png");
+			InputStream resourceAsStream = TreeComposite.class.getResourceAsStream(OrdoUI.IMAGES_SECTION);
 			Image image = new Image(getDisplay(), resourceAsStream);
 			subItem.setImage(image);
 			addSubSection(subItem);

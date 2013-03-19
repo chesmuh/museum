@@ -1,8 +1,6 @@
 package de.chesmuh.ordo.gui.composites;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -43,8 +41,9 @@ public class TableComposite extends Composite implements IUiListener {
 		table.setHeaderVisible(true);
 		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
 		table.setLayoutData(data);
-		
+
 		MainFrame.addObserver(UiEventType.MuseumChoose, this);
+		MainFrame.addObserver(UiEventType.SectionChoose, this);
 	}
 
 	@Override
@@ -60,6 +59,10 @@ public class TableComposite extends Composite implements IUiListener {
 			}
 			break;
 		case SectionChoose:
+			if(event.getData() instanceof Section) {
+				Section section = (Section) event.getData();
+				showExhibitsBySection(section);
+			}
 			break;
 		default:
 			break;
@@ -67,29 +70,51 @@ public class TableComposite extends Composite implements IUiListener {
 		}
 	}
 
+	private void showExhibitsBySection(Section section) {
+		table.setRedraw(false);
+		deleteAllColumn();
+		deleteAllItems();
+		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
+				bundle.getString(OrdoUI.TABLE_HEADERS_SECTION),
+				bundle.getString(OrdoUI.TABLE_HEADERS_DESCRIPTION)});
+				
+		table.setRedraw(true);
+	}
+
 	private void showSectionByMuseum(Museum museum) {
-		String headerName = bundle.getString(OrdoUI.TABLE_HEADERS_NAME);
-		String headerMuseum = bundle.getString(OrdoUI.TABLE_HEADERS_MUSEUM);
-
+		table.setRedraw(false);
+		deleteAllColumn();
+		deleteAllItems();
+		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
+				bundle.getString(OrdoUI.TABLE_HEADERS_PARENT_SECTION),
+				bundle.getString(OrdoUI.TABLE_HEADERS_MUSEUM) });
 		Collection<Section> allSectionsByMuseum = DataAccess.getInstance().getAllSectionsByMuseum(museum);
-		Collections.sort((List<Section>) allSectionsByMuseum);
-
-		String[] titles = { headerName, headerMuseum };
-		for (int i = 0; i < titles.length; i++) {
-			TableColumn column = new TableColumn(table, SWT.NONE);
-			column.setText(titles[i]);
-			table.getColumn(i).pack();
-		}
-		
 		for(Section section : allSectionsByMuseum) {
 			TableItem item = new TableItem(table, SWT.NONE);
-			item.setText(0, section.getName());
-			item.setText(1, section.getMuseum().getName());
+			item.setText(section.getName());
 			item.setData(section);
-		}
+		}		
+		table.setRedraw(true);
+	}
 
-		for (int i = 0; i < titles.length; i++) {
-			table.getColumn(i).pack();
+	private void deleteAllItems() {
+		while(table.getItemCount() > 0) {
+			table.remove(0);
+		}
+		
+	}
+
+	private void deleteAllColumn() {
+		while(table.getColumnCount() > 0) {
+			table.getColumns()[0].dispose();
+		}
+	}
+
+	private void addColumns(String[] columnNames) {
+		for (int i = 0; i < columnNames.length; i++) {
+			TableColumn column = new TableColumn(table, SWT.NONE);
+			column.setText(columnNames[i]);
+			column.pack();
 		}
 	}
 }

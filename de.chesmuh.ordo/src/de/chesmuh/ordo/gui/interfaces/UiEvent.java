@@ -2,7 +2,6 @@ package de.chesmuh.ordo.gui.interfaces;
 
 import org.eclipse.swt.widgets.Composite;
 
-import de.chesmuh.ordo.gui.UiEventType;
 
 public class UiEvent {
 	

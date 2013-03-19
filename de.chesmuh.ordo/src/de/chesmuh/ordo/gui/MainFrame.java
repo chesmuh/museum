@@ -25,6 +25,7 @@ import de.chesmuh.ordo.gui.composites.TableComposite;
 import de.chesmuh.ordo.gui.composites.TreeComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
+import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 
 public class MainFrame {

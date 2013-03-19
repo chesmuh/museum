@@ -19,6 +19,6 @@ public class OrdoUI {
 	public static final String TABLE_HEADERS_DESCRIPTION = "table.headers.description";
 	
 	// ----- Images -----
-	public static final String IMAGES_SECTION = "/images/book.png";
+	public static final String IMAGES_SECTION = "/images/folder.png";
 	public static final String IMAGES_MUSEUM = "/images/home.png";
 }

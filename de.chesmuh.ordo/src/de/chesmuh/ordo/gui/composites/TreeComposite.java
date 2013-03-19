@@ -15,8 +15,8 @@ import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
-import de.chesmuh.ordo.gui.UiEventType;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
+import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 

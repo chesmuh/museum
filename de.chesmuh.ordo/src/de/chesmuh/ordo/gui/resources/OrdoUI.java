@@ -6,6 +6,8 @@ public class OrdoUI {
 		
 	}
 	
+	public static final String WINDOW_TITLE = "window.title";
+
 	// ----- Menu -----
 	public static final String MENU_FILE = "menu.file";
 	public static final String MENU_FILE_CLOSE = "menu.file.close";
@@ -21,4 +23,5 @@ public class OrdoUI {
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
 	public static final String IMAGES_MUSEUM = "/images/home.png";
+	public static final String IMAGE_ORDO = "/images/home.png";
 }

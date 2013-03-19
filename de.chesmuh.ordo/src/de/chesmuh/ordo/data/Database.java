@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.logging.Logger;
 
 import de.chesmuh.ordo.config.Config;
-import de.chesmuh.ordo.data.Ordo.Section;
 
 /**
  * 

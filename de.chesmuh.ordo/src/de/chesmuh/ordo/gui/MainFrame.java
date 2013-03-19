@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -27,6 +27,7 @@ import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
+import de.chesmuh.ordo.gui.resources.ResourceManager;
 
 public class MainFrame {
 
@@ -56,13 +57,16 @@ public class MainFrame {
 		
 		// ----- Menu -----
 		setMenu();
+		shell.setText(uiBundle.getString(OrdoUI.WINDOW_TITLE));
+		shell.setImage(ResourceManager.getImage(shell.getDisplay(), OrdoUI.IMAGE_ORDO));
+		
 		
 		// ----- Content -----
 		Composite mainComposite = new Composite(shell, SWT.BORDER);
 		mainComposite.setBackground(new Color(Display.getCurrent(), 128, 128, 128));
 		mainComposite.setLayout(new GridLayout(5, true));
 
-		// ----- Tree -----
+		// ----- SectionTree -----
 		Composite treeComposite = new TreeComposite(mainComposite, SWT.BORDER);
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 1;
@@ -132,16 +136,11 @@ public class MainFrame {
 		}
 	}
 
-	private class FileCloseSelectionListener implements SelectionListener {
+	private class FileCloseSelectionListener extends SelectionAdapter {
 
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
 			shell.close();
-		}
-
-		@Override
-		public void widgetDefaultSelected(SelectionEvent arg0) {
-			
 		}
 		
 	}

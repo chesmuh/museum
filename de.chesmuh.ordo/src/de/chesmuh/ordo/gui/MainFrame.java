@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -17,6 +16,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.gui.composites.DetailComposite;
@@ -34,7 +35,7 @@ public class MainFrame {
 	private Shell shell;
 	private ResourceBundle uiBundle;
 	private static HashMap<UiEventType, Collection<IUiListener>> listeners = new HashMap<UiEventType, Collection<IUiListener>>();
-	
+
 	public MainFrame() {
 		Display display = new Display();
 
@@ -53,18 +54,19 @@ public class MainFrame {
 	}
 
 	private void initialize() {
-		 uiBundle = Config.getInstance().getUIBundle();
-		
+		uiBundle = Config.getInstance().getUIBundle();
+		shell.setText(uiBundle.getString(OrdoUI.WINDOW_TITLE));
+		shell.setImage(ResourceManager.getImage(shell.getDisplay(),
+				OrdoUI.IMAGE_ORDO));
+
 		// ----- Menu -----
 		setMenu();
-		shell.setText(uiBundle.getString(OrdoUI.WINDOW_TITLE));
-		shell.setImage(ResourceManager.getImage(shell.getDisplay(), OrdoUI.IMAGE_ORDO));
-		
-		
+
 		// ----- Content -----
 		Composite mainComposite = new Composite(shell, SWT.BORDER);
-		mainComposite.setBackground(new Color(Display.getCurrent(), 128, 128, 128));
 		mainComposite.setLayout(new GridLayout(5, true));
+
+		setToolBar(mainComposite);
 
 		// ----- SectionTree -----
 		Composite treeComposite = new TreeComposite(mainComposite, SWT.BORDER);
@@ -80,19 +82,22 @@ public class MainFrame {
 		overViewComposite.setLayout(new GridLayout(4, true));
 
 		// ----- Table -----
-		Composite tableComposite = new TableComposite(overViewComposite, SWT.BORDER);
+		Composite tableComposite = new TableComposite(overViewComposite,
+				SWT.BORDER);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 3;
 		tableComposite.setLayoutData(gridData);
 
 		// ----- Label -----
-		Composite labelComposite = new LabelComposite(overViewComposite, SWT.BORDER);
+		Composite labelComposite = new LabelComposite(overViewComposite,
+				SWT.BORDER);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 1;
 		labelComposite.setLayoutData(gridData);
 
 		// ----- Detail -----
-		Composite detailComposite = new DetailComposite(overViewComposite, SWT.BORDER);
+		Composite detailComposite = new DetailComposite(overViewComposite,
+				SWT.BORDER);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 4;
 		detailComposite.setLayoutData(gridData);
@@ -101,23 +106,41 @@ public class MainFrame {
 	private void setMenu() {
 		Menu menuBar = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(menuBar);
-		
+
 		// ----- File -----
 		MenuItem menuItemFile = new MenuItem(menuBar, SWT.CASCADE);
 		menuItemFile.setText(uiBundle.getString(OrdoUI.MENU_FILE));
 		Menu menuFile = new Menu(menuItemFile);
-		
+
 		// ----- File.Close -----
 		MenuItem menuItemFileClose = new MenuItem(menuFile, SWT.CASCADE);
 		menuItemFileClose.setText(uiBundle.getString(OrdoUI.MENU_FILE_CLOSE));
 		menuItemFileClose.setAccelerator(SWT.MOD1 + 'Q');
-		menuItemFileClose.addSelectionListener(new FileCloseSelectionListener());
+		menuItemFileClose
+				.addSelectionListener(new FileCloseSelectionListener());
 		menuItemFile.setMenu(menuFile);
-		
+
 	}
-	
+
+	private void setToolBar(Composite parent) {
+		
+		Composite toolBarComposite = new Composite(parent, SWT.BORDER);
+		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gridData.horizontalSpan = 5;
+		toolBarComposite.setLayoutData(gridData);
+		toolBarComposite.setLayout(new GridLayout(1,true));
+		
+		ToolBar toolBar = new ToolBar(toolBarComposite, SWT.NONE);
+		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		ToolItem itemPush = new ToolItem(toolBar, SWT.PUSH);
+		itemPush.setImage(ResourceManager.getImage(shell.getDisplay(),
+				OrdoUI.IMAGES_SECTION));
+
+		toolBar.pack();
+	}
+
 	public static void addObserver(UiEventType type, IUiListener listener) {
-		if(listeners.containsKey(type)) {
+		if (listeners.containsKey(type)) {
 			Collection<IUiListener> list = listeners.get(type);
 			list.add(listener);
 		} else {
@@ -126,11 +149,11 @@ public class MainFrame {
 			listeners.put(type, list);
 		}
 	}
-	
+
 	public static void handleEvent(UiEvent event) {
-		if(listeners.containsKey(event.getType())) {
+		if (listeners.containsKey(event.getType())) {
 			Collection<IUiListener> collection = listeners.get(event.getType());
-			for(IUiListener listener : collection) {
+			for (IUiListener listener : collection) {
 				listener.handleEvent(event);
 			}
 		}
@@ -142,8 +165,7 @@ public class MainFrame {
 		public void widgetSelected(SelectionEvent arg0) {
 			shell.close();
 		}
-		
+
 	}
-	
-	
+
 }

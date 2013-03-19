@@ -71,8 +71,6 @@ public class TableComposite extends Composite implements IUiListener {
 	public void handleEvent(UiEvent event) {
 		UiEventType eventType = event.getType();
 		switch (eventType) {
-		case ExhibitChoose:
-			break;
 		case MuseumChoose:
 			if (event.getData() instanceof Museum) {
 				Museum museum = (Museum) event.getData();
@@ -87,7 +85,6 @@ public class TableComposite extends Composite implements IUiListener {
 			break;
 		default:
 			break;
-
 		}
 	}
 
@@ -102,7 +99,11 @@ public class TableComposite extends Composite implements IUiListener {
 				.getExhibitBySection(section);
 		for (Exhibit exhibit : exhibitBySection) {
 			TableItem item = new TableItem(table, SWT.NONE);
+			Section exhibitSection = exhibit.getSection();
 			item.setText(0, exhibit.getName());
+			if (exhibitSection != null) {
+				item.setText(1, exhibitSection.getName());
+			}
 			item.setText(2, exhibit.getDescription());
 			item.setData(exhibit);
 		}

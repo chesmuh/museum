@@ -2,6 +2,8 @@ package de.chesmuh.ordo.entitys;
 
 import java.sql.Timestamp;
 
+import de.chesmuh.ordo.data.DataAccess;
+
 
 public class Exhibit extends DatabaseElement {
 	
@@ -58,6 +60,10 @@ public class Exhibit extends DatabaseElement {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Section getSection() {
+		return DataAccess.getInstance().getSectionById(sectionId);
 	}
 	
 }

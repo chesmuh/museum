@@ -66,4 +66,8 @@ public class DataAccess {
 		return exhibitManager.getBySection(section);
 	}
 
+	public Section getSectionById(Long sectionId) {
+		return sectionManager.getbyId(sectionId);
+	}
+
 }

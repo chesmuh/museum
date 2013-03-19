@@ -19,9 +19,19 @@ public class OrdoUI {
 	public static final String TABLE_HEADERS_MUSEUM = "table.headers.museum";
 	public static final String TABLE_HEADERS_PARENT_SECTION = "table.headers.parentsection";
 	public static final String TABLE_HEADERS_DESCRIPTION = "table.headers.description";
+
+	// ----- Labels -----
+	public static final String LABELS_GROUP_TITLE = "labels.group.title";
 	
+	// ----- Details -----
+	public static final String DETAIL_GROUP_TITLE = "detail.group.title";
+
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
 	public static final String IMAGES_MUSEUM = "/images/home.png";
 	public static final String IMAGE_ORDO = "/images/home.png";
+	public static final String IMAGES_ADD = "/images/plus.png";
+
+
+
 }

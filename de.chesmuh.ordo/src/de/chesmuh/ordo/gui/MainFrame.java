@@ -134,7 +134,7 @@ public class MainFrame {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		ToolItem itemPush = new ToolItem(toolBar, SWT.PUSH);
 		itemPush.setImage(ResourceManager.getImage(shell.getDisplay(),
-				OrdoUI.IMAGES_SECTION));
+				OrdoUI.IMAGES_ADD));
 
 		toolBar.pack();
 	}

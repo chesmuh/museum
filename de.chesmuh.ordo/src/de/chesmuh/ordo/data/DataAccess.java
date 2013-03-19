@@ -2,6 +2,7 @@ package de.chesmuh.ordo.data;
 
 import java.util.Collection;
 
+import de.chesmuh.ordo.data.manager.ExhibitManager;
 import de.chesmuh.ordo.data.manager.MuseumManager;
 import de.chesmuh.ordo.data.manager.SectionManager;
 import de.chesmuh.ordo.entitys.Museum;
@@ -18,12 +19,15 @@ public class DataAccess {
 	
 	private MuseumManager museumManager;
 	private SectionManager sectionManager;
+	private ExhibitManager exhibitManager;
 	
 	private DataAccess() {
 		museumManager = new MuseumManager();
 		museumManager.loadAll();
 		sectionManager = new SectionManager();
 		sectionManager.loadAll();
+		exhibitManager = new ExhibitManager();
+		exhibitManager.loadAll();
 	}
 	
 	public static DataAccess getInstance() {

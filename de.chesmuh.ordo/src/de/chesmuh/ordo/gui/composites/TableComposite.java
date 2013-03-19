@@ -7,9 +7,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.DataAccess;
@@ -21,6 +24,7 @@ import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
+import de.chesmuh.ordo.gui.resources.ResourceManager;
 
 public class TableComposite extends Composite implements IUiListener {
 
@@ -37,12 +41,28 @@ public class TableComposite extends Composite implements IUiListener {
 		// ----- Layout -----
 		this.setLayout(new GridLayout(1, true));
 
-		table = new Table(this, SWT.MULTI | SWT.FULL_SELECTION);
+		Group group = new Group(this, SWT.NONE);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		group.setLayout(new GridLayout(1, true));
+		group.setText(bundle.getString(OrdoUI.EXHIBIT_GROUP_TITLE));
+
+		// ----- Buttons -----
+		ToolBar toolBar = new ToolBar(group, SWT.NONE);
+		ToolItem toolItemAdd = new ToolItem(toolBar, SWT.PUSH);
+		toolItemAdd.setImage(ResourceManager.getImage(getDisplay(),
+				OrdoUI.IMAGES_ADD));
+		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
+		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
+				OrdoUI.IMAGES_REMOVE));
+
+		// ----- Table -----
+		table = new Table(group, SWT.MULTI | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
 		table.setLayoutData(data);
 
+		// ----- Listener -----
 		MainFrame.addObserver(UiEventType.MuseumChoose, this);
 		MainFrame.addObserver(UiEventType.SectionChoose, this);
 	}
@@ -60,7 +80,7 @@ public class TableComposite extends Composite implements IUiListener {
 			}
 			break;
 		case SectionChoose:
-			if(event.getData() instanceof Section) {
+			if (event.getData() instanceof Section) {
 				Section section = (Section) event.getData();
 				showExhibitsBySection(section);
 			}
@@ -77,9 +97,10 @@ public class TableComposite extends Composite implements IUiListener {
 		deleteAllItems();
 		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
 				bundle.getString(OrdoUI.TABLE_HEADERS_SECTION),
-				bundle.getString(OrdoUI.TABLE_HEADERS_DESCRIPTION)});
-		Collection<Exhibit> exhibitBySection = DataAccess.getInstance().getExhibitBySection(section);
-		for(Exhibit exhibit : exhibitBySection) {
+				bundle.getString(OrdoUI.TABLE_HEADERS_DESCRIPTION) });
+		Collection<Exhibit> exhibitBySection = DataAccess.getInstance()
+				.getExhibitBySection(section);
+		for (Exhibit exhibit : exhibitBySection) {
 			TableItem item = new TableItem(table, SWT.NONE);
 			item.setText(0, exhibit.getName());
 			item.setText(2, exhibit.getDescription());
@@ -95,24 +116,25 @@ public class TableComposite extends Composite implements IUiListener {
 		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
 				bundle.getString(OrdoUI.TABLE_HEADERS_PARENT_SECTION),
 				bundle.getString(OrdoUI.TABLE_HEADERS_MUSEUM) });
-		Collection<Section> sectionsByMuseum = DataAccess.getInstance().getSectionsByMuseum(museum);
-		for(Section section : sectionsByMuseum) {
+		Collection<Section> sectionsByMuseum = DataAccess.getInstance()
+				.getSectionsByMuseum(museum);
+		for (Section section : sectionsByMuseum) {
 			TableItem item = new TableItem(table, SWT.NONE);
 			item.setText(0, section.getName());
 			item.setData(section);
-		}		
+		}
 		table.setRedraw(true);
 	}
 
 	private void deleteAllItems() {
-		while(table.getItemCount() > 0) {
+		while (table.getItemCount() > 0) {
 			table.remove(0);
 		}
-		
+
 	}
 
 	private void deleteAllColumn() {
-		while(table.getColumnCount() > 0) {
+		while (table.getColumnCount() > 0) {
 			table.getColumns()[0].dispose();
 		}
 	}
@@ -124,4 +146,5 @@ public class TableComposite extends Composite implements IUiListener {
 			column.pack();
 		}
 	}
+
 }

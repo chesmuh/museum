@@ -16,8 +16,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.gui.composites.DetailComposite;
@@ -65,8 +63,6 @@ public class MainFrame {
 		// ----- Content -----
 		Composite mainComposite = new Composite(shell, SWT.BORDER);
 		mainComposite.setLayout(new GridLayout(5, true));
-
-		setToolBar(mainComposite);
 
 		// ----- SectionTree -----
 		Composite treeComposite = new TreeComposite(mainComposite, SWT.BORDER);
@@ -120,23 +116,6 @@ public class MainFrame {
 				.addSelectionListener(new FileCloseSelectionListener());
 		menuItemFile.setMenu(menuFile);
 
-	}
-
-	private void setToolBar(Composite parent) {
-		
-		Composite toolBarComposite = new Composite(parent, SWT.BORDER);
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-		gridData.horizontalSpan = 5;
-		toolBarComposite.setLayoutData(gridData);
-		toolBarComposite.setLayout(new GridLayout(1,true));
-		
-		ToolBar toolBar = new ToolBar(toolBarComposite, SWT.NONE);
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		ToolItem itemPush = new ToolItem(toolBar, SWT.PUSH);
-		itemPush.setImage(ResourceManager.getImage(shell.getDisplay(),
-				OrdoUI.IMAGES_ADD));
-
-		toolBar.pack();
 	}
 
 	public static void addObserver(UiEventType type, IUiListener listener) {

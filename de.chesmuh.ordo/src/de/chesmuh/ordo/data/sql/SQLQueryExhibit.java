@@ -17,7 +17,7 @@ import de.chesmuh.ordo.entitys.Exhibit;
 public class SQLQueryExhibit extends AbstractSQLQuery<Exhibit> {
 
 	public SQLQueryExhibit() throws SQLException {
-		super(new String[] { de.chesmuh.ordo.data.Ordo.Exhibit.CREATE_TABLE },
+		super(new String[] { Ordo.Exhibit.CREATE_TABLE },
 				Ordo.Exhibit.ID, Ordo.Exhibit.TABLE_NAME, Ordo.Exhibit.NAME,
 				Ordo.Exhibit.DESCRIPTION, Ordo.Exhibit.SECTION_ID,
 				Ordo.Exhibit.MUSEUM_ID, Ordo.Exhibit.DELETED,

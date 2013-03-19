@@ -42,10 +42,12 @@ public class Database {
 			connection = getConnection();
 			connection.setAutoCommit(false);
 			Statement statement = connection.createStatement();
-			statement.addBatch(de.chesmuh.ordo.data.Ordo.Museum.CREATE_TABLE);
-			LOGGER.info(de.chesmuh.ordo.data.Ordo.Museum.CREATE_TABLE);
-			statement.addBatch(Section.CREATE_TABLE);
-			LOGGER.info(Section.CREATE_TABLE);
+			statement.addBatch(Ordo.Museum.CREATE_TABLE);
+			LOGGER.info(Ordo.Museum.CREATE_TABLE);
+			statement.addBatch(Ordo.Section.CREATE_TABLE);
+			LOGGER.info(Ordo.Section.CREATE_TABLE);
+			statement.addBatch(Ordo.Exhibit.CREATE_TABLE);
+			LOGGER.info(Ordo.Exhibit.CREATE_TABLE);
 			statement.executeBatch();
 			connection.commit();
 		} catch (SQLException e) {

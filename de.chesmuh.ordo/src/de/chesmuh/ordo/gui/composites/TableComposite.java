@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.TableItem;
 
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.DataAccess;
+import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
@@ -77,7 +78,13 @@ public class TableComposite extends Composite implements IUiListener {
 		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
 				bundle.getString(OrdoUI.TABLE_HEADERS_SECTION),
 				bundle.getString(OrdoUI.TABLE_HEADERS_DESCRIPTION)});
-				
+		Collection<Exhibit> exhibitBySection = DataAccess.getInstance().getExhibitBySection(section);
+		for(Exhibit exhibit : exhibitBySection) {
+			TableItem item = new TableItem(table, SWT.NONE);
+			item.setText(0, exhibit.getName());
+			item.setText(2, exhibit.getDescription());
+			item.setData(exhibit);
+		}
 		table.setRedraw(true);
 	}
 
@@ -88,10 +95,10 @@ public class TableComposite extends Composite implements IUiListener {
 		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
 				bundle.getString(OrdoUI.TABLE_HEADERS_PARENT_SECTION),
 				bundle.getString(OrdoUI.TABLE_HEADERS_MUSEUM) });
-		Collection<Section> allSectionsByMuseum = DataAccess.getInstance().getAllSectionsByMuseum(museum);
-		for(Section section : allSectionsByMuseum) {
+		Collection<Section> sectionsByMuseum = DataAccess.getInstance().getSectionsByMuseum(museum);
+		for(Section section : sectionsByMuseum) {
 			TableItem item = new TableItem(table, SWT.NONE);
-			item.setText(section.getName());
+			item.setText(0, section.getName());
 			item.setData(section);
 		}		
 		table.setRedraw(true);

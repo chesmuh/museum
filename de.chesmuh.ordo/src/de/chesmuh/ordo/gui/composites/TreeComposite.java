@@ -50,7 +50,7 @@ public class TreeComposite extends Composite {
 					OrdoUI.IMAGES_MUSEUM));
 
 			Collection<Section> allSection = DataAccess.getInstance()
-					.getAllSectionByMuseumWithNoParent(museum);
+					.getSectionByMuseumWithNoParent(museum);
 			for (Section section : allSection) {
 				TreeItem sectionItem = new TreeItem(museumItem, SWT.NONE);
 				sectionItem.setData(section);
@@ -67,7 +67,7 @@ public class TreeComposite extends Composite {
 	private void addSubSection(TreeItem item) {
 		Section section = (Section) item.getData();
 		Collection<Section> allSection = DataAccess.getInstance()
-				.getAllSectionBySection(section);
+				.getSectionBySection(section);
 		for (Section subSection : allSection) {
 			TreeItem subItem = new TreeItem(item, SWT.NONE);
 			subItem.setData(subSection);

@@ -5,6 +5,7 @@ import java.util.Collection;
 import de.chesmuh.ordo.data.manager.ExhibitManager;
 import de.chesmuh.ordo.data.manager.MuseumManager;
 import de.chesmuh.ordo.data.manager.SectionManager;
+import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 
@@ -49,16 +50,20 @@ public class DataAccess {
 		return sectionManager.getAll();
 	}
 	
-	public Collection<Section> getAllSectionsByMuseum(Museum museum) {
+	public Collection<Section> getSectionsByMuseum(Museum museum) {
 		return sectionManager.getByMuseum(museum);
 	}
 
-	public Collection<Section> getAllSectionBySection(Section section) {
+	public Collection<Section> getSectionBySection(Section section) {
 		return sectionManager.getBySection(section);
 	}
 
-	public Collection<Section> getAllSectionByMuseumWithNoParent(Museum museum) {
+	public Collection<Section> getSectionByMuseumWithNoParent(Museum museum) {
 		return sectionManager.getByMuseumWithParentNull(museum);
+	}
+
+	public Collection<Exhibit> getExhibitBySection(Section section) {
+		return exhibitManager.getBySection(section);
 	}
 
 }

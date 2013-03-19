@@ -65,7 +65,7 @@ public class Ordo {
 
 		public static final String TABLE_NAME = "exhibit";
 		public static final String ID = "id";
-		public static final String SECTION_ID = "parent_id";
+		public static final String SECTION_ID = "section_id";
 		public static final String MUSEUM_ID = "museum_id";
 		public static final String NAME = "name";
 		public static final String DESCRIPTION = "description";

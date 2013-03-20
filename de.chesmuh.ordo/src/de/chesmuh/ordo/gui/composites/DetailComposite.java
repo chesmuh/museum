@@ -10,9 +10,13 @@ import org.eclipse.swt.widgets.Group;
 
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.entitys.Exhibit;
+import de.chesmuh.ordo.entitys.Museum;
+import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
-import de.chesmuh.ordo.gui.composites.dialogs.AddSectionComposite;
+import de.chesmuh.ordo.gui.composites.dialogs.CreateSectionComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.ExhibitInformationComposite;
+import de.chesmuh.ordo.gui.composites.dialogs.MuseumInformationComposite;
+import de.chesmuh.ordo.gui.composites.dialogs.SectionInformationComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -23,10 +27,13 @@ public class DetailComposite extends Composite implements IUiListener {
 	private ResourceBundle bundle;
 	private Group group;
 	private GridData gridData;
+	private boolean saveState;
+	private UiEventType eventTypeThatLocked;
 
 	public DetailComposite(Composite parent, int style) {
 		super(parent, style);
 		bundle = Config.getInstance().getUIBundle();
+		saveState = false;
 		initialize();
 	}
 
@@ -47,69 +54,108 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.SectionAdded, this);
 		MainFrame.addObserver(UiEventType.AddSectionCanceled, this);
 		MainFrame.addObserver(UiEventType.ExhibitSelected, this);
+		MainFrame.addObserver(UiEventType.MuseumSelected, this);
+		MainFrame.addObserver(UiEventType.SectionSelected, this);
 	}
 
 	@Override
 	public void handleEvent(UiEvent event) {
-		switch (event.getType()) {
-		case AddExhibit:
-			break;
-		case AddLabel:
-			break;
-		case AddMuseum:
-			break;
-		case AddSection:
-			showNewSection(event.getData());
-			break;
-		case ExhibitSelected:
-			showExhibitInfos(event.getData());
-			break;
-		case MuseumSelected:
-			break;
-		case RemoveLabel:
-			break;
-		case RemoveMuseum:
-			break;
-		case RemoveSection:
-			break;
-		case SectionSelected:
-			break;
-		case SectionAdded:
-			showNothing();
-			break;
-		case AddSectionCanceled:
-			showNothing();
-		default:
-			break;
+		if(saveState) { // Lock and Unlock the Detail-Composite
+			switch(event.getType()) {
+			case AddSectionCanceled:
+			case SectionAdded:
+				if(eventTypeThatLocked == UiEventType.AddSection) {
+					saveState = false;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		
+		if (!saveState) {
+			switch (event.getType()) {
+			case AddExhibit:
+				break;
+			case AddLabel:
+				break;
+			case AddMuseum:
+				break;
+			case AddSection:
+				saveState = true;
+				eventTypeThatLocked = event.getType();
+				showSectionCreate(event.getData());
+				break;
+			case ExhibitSelected:
+				showExhibitInfos(event.getData());
+				break;
+			case MuseumSelected:
+				showMuseumInfos(event.getData());
+				break;
+			case RemoveLabel:
+				break;
+			case RemoveMuseum:
+				break;
+			case RemoveSection:
+				break;
+			case SectionSelected:
+				showSectionInfos(event.getData());
+				break;
+			case SectionAdded:
+				showNothing();
+				break;
+			case AddSectionCanceled:
+				showNothing();
+			default:
+				break;
+			}
 		}
 	}
 
-	private void showExhibitInfos(Object data) {
-		if(data instanceof Exhibit) {
-			group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_EXHIBIT));
-			while(group.getChildren().length > 0) {
-				group.getChildren()[0].dispose();
-			}
-			new ExhibitInformationComposite(group, (Exhibit)data);
+	private void showSectionInfos(Object data) {
+		if (data instanceof Section) {
+			group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_SECTION));
+			clearGroup();
+			new SectionInformationComposite(group, (Section) data);
 			group.layout();
 		}
 	}
 
-	private void showNewSection(Object data) {
-		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_ADD_SECTION));
-		while(group.getChildren().length > 0) {
-			group.getChildren()[0].dispose();
+	private void showMuseumInfos(Object data) {
+		if (data instanceof Museum) {
+			group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_MUSEUM));
+			clearGroup();
+			new MuseumInformationComposite(group, (Museum) data);
+			group.layout();
 		}
-		new AddSectionComposite(group, data);
+	}
+
+	private void showExhibitInfos(Object data) {
+		if (data instanceof Exhibit) {
+			group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_EXHIBIT));
+			clearGroup();
+			new ExhibitInformationComposite(group, (Exhibit) data);
+			group.layout();
+		}
+	}
+
+	private void showSectionCreate(Object data) {
+		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_ADD_SECTION));
+		clearGroup();
+		new CreateSectionComposite(group, data);
 		group.layout();
 	}
-	
+
 	private void showNothing() {
 		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_DEFAULT_TITLE));
-		while(group.getChildren().length > 0) {
+		clearGroup();
+		group.layout();
+	}
+
+	private void clearGroup() {
+		while (group.getChildren().length > 0) {
 			group.getChildren()[0].dispose();
 		}
-		group.layout();
 	}
 
 }

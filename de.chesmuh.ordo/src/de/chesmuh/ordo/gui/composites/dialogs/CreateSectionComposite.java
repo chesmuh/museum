@@ -30,7 +30,7 @@ import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 import de.chesmuh.ordo.logic.LogicAccess;
 
-public class AddSectionComposite extends Composite {
+public class CreateSectionComposite extends Composite {
 
 	private ResourceBundle bundle;
 	private Text textParent;
@@ -39,7 +39,7 @@ public class AddSectionComposite extends Composite {
 
 	private Object selection;
 
-	public AddSectionComposite(Composite parent, Object selection) {
+	public CreateSectionComposite(Composite parent, Object selection) {
 		super(parent, SWT.NONE);
 		this.bundle = Config.getInstance().getUIBundle();
 		this.selection = selection;
@@ -183,7 +183,7 @@ public class AddSectionComposite extends Composite {
 				
 				section = LogicAccess.addSection(museum.getId(), section_id, name,
 						description);
-				UiEvent event = new UiEvent(AddSectionComposite.this, section,
+				UiEvent event = new UiEvent(CreateSectionComposite.this, section,
 						UiEventType.SectionAdded);
 				MainFrame.handleEvent(event);
 			}
@@ -196,7 +196,7 @@ public class AddSectionComposite extends Composite {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			UiEvent event = new UiEvent(AddSectionComposite.this, null,
+			UiEvent event = new UiEvent(CreateSectionComposite.this, null,
 					UiEventType.AddSectionCanceled);
 			MainFrame.handleEvent(event);
 		}

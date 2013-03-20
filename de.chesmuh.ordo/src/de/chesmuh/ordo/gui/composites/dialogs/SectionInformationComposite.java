@@ -13,22 +13,22 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import de.chesmuh.ordo.config.Config;
-import de.chesmuh.ordo.entitys.Exhibit;
+import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
-public class ExhibitInformationComposite extends Composite {
+public class SectionInformationComposite extends Composite {
 
 	private ResourceBundle bundle;
 	private Text textName;
 	private Text textParent;
-	private Exhibit exhibit;
+	private Section section;
 	private Text textDescription;
 
-	public ExhibitInformationComposite(Composite parent, Exhibit exhibit) {
+	public SectionInformationComposite(Composite parent, Section section) {
 		super(parent, SWT.NONE);
 		this.bundle = Config.getInstance().getUIBundle();
-		this.exhibit = exhibit;
+		this.section = section;
 		initilalize();
 	}
 
@@ -40,7 +40,7 @@ public class ExhibitInformationComposite extends Composite {
 
 		// ----- Name -----
 		Label label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_NAME));
+		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_NAME));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -48,9 +48,9 @@ public class ExhibitInformationComposite extends Composite {
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		textName.setLayoutData(gridData);
 		textName.setEditable(false);
-		textName.setText(exhibit.getName());
+		textName.setText(section.getName());
 
-		// ----- ParentSection -----
+		// ----- Parent -----
 		label = new Label(this, SWT.NONE);
 		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_SECTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
@@ -60,17 +60,18 @@ public class ExhibitInformationComposite extends Composite {
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		textParent.setLayoutData(gridData);
 		textParent.setEditable(false);
-		if(null != exhibit.getMuseumId()) {
-			textParent.setText(exhibit.getMuseum().getName());
-			textParent.setData(exhibit.getMuseum());
-		} else if(null != exhibit.getSection()) {
-			textParent.setText(exhibit.getSection().getName());
-			textParent.setData(exhibit.getSection());
+		if(null != section.getMuseum()) {
+			textParent.setText(section.getMuseum().getName());
+			textParent.setData(section.getMuseum());
 		}
-
+		if(null != section.getParent()) {
+			textParent.setText(section.getParent().getName());
+			textParent.setData(section.getParent());
+		}
+		
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_DESCRIPTION));
+		label.setText(bundle.getString(OrdoUI.DETAIL_MUSEUM_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -78,7 +79,7 @@ public class ExhibitInformationComposite extends Composite {
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		textDescription.setLayoutData(gridData);
 		textDescription.setEditable(false);
-		textDescription.setText(exhibit.getDescription());
+		textDescription.setText(section.getDescription());
 
 		// ----- Buttons -----
 		Composite buttonComposite = new Composite(this, SWT.NONE);
@@ -90,7 +91,7 @@ public class ExhibitInformationComposite extends Composite {
 		Button button = new Button(buttonComposite, SWT.NONE);
 		button.setImage(ResourceManager
 				.getImage(getDisplay(), OrdoUI.IMAGES_EDIT));
-		button.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_EDIT));
+		button.setText(bundle.getString(OrdoUI.DETAIL_MUSEUM_EDIT));
 		button.addSelectionListener(new EditSelectionListener());
 
 	}

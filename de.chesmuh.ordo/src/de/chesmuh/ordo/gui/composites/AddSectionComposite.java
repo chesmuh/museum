@@ -11,6 +11,7 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -65,27 +66,7 @@ public class AddSectionComposite extends Composite {
 
 		DropTarget dropTarget = new DropTarget(dropLabel, DND.DROP_MOVE);
 		dropTarget.setTransfer(new Transfer[] { TextTransfer.getInstance() });
-		dropTarget.addDropListener(new DropTargetAdapter() {
-
-			@Override
-			public void drop(DropTargetEvent event) {
-				String msg = (String) event.data;
-				String[] split = msg.split("/");
-				if (split[0].equals("museum")) {
-					Long id = Long.parseLong(split[1]);
-					Museum museum = DataAccess.getInstance().getMuseumById(id);
-					textParent.setText(museum.getName());
-					textParent.setData(museum);
-				} else if (split[0].equals("section")) {
-					Long id = Long.parseLong(split[1]);
-					Section section = DataAccess.getInstance().getSectionById(
-							id);
-					textParent.setText(section.getName());
-					textParent.setData(section);
-				}
-			}
-
-		});
+		dropTarget.addDropListener(new SectionDropTargetAdapter());
 
 		textParent = new Text(this, SWT.NONE);
 		textParent.setText("");
@@ -107,14 +88,49 @@ public class AddSectionComposite extends Composite {
 
 		Composite buttonComposite = new Composite(this, SWT.NONE);
 		gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
+		gridData.horizontalSpan = 2;
 		buttonComposite.setLayoutData(gridData);
 		buttonComposite.setLayout(new GridLayout(2, false));
 		
-		label = new Label(buttonComposite, SWT.NONE);
-		label.setImage(ResourceManager.getImage(getDisplay(), OrdoUI.IMAGES_OK));
+		Button button = new Button(buttonComposite, SWT.NONE);
+		button.setImage(ResourceManager.getImage(getDisplay(), OrdoUI.IMAGES_OK));
+		button.setText(bundle.getString(OrdoUI.DETAIL_SECTION_ADD_SAVE));
 
-		label = new Label(buttonComposite, SWT.NONE);
-		label.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_CANCEL));
+		button = new Button(buttonComposite, SWT.NONE);
+		button.setImage(ResourceManager.getImage(getDisplay(), OrdoUI.IMAGES_CANCEL));
+		button.setText(bundle.getString(OrdoUI.DETAIL_SECTION_ADD_CANCEL));
+	}
+	
+	private class SectionDropTargetAdapter extends DropTargetAdapter {
+
+		@Override
+		public void drop(DropTargetEvent event) {
+			String msg = (String) event.data;
+			
+			String[] split = msg.split("/");
+			if (split[0].equals("museum")) {
+				Long id = Long.parseLong(split[1]);
+				Museum museum = DataAccess.getInstance().getMuseumById(id);
+				textParent.setText(museum.getName());
+				textParent.setData(museum);
+			} else if (split[0].equals("section")) {
+				Long id = Long.parseLong(split[1]);
+				Section section = DataAccess.getInstance().getSectionById(
+						id);
+				textParent.setText(getPath(section));
+				textParent.setData(section);
+			}
+		}
+		
+		private String getPath(Section section) {
+			String path = section.getName();
+			while(section.getParent() != null) {
+				path = section.getParent().getName() + "\\" + path;
+				section = section.getParent();
+			}
+			path = section.getMuseum().getName() + "\\" + path;
+			return path;
+		}
+
 	}
 }

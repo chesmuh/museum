@@ -38,6 +38,9 @@ public class OrdoUI {
 	// ----- Exhibit -----
 	public static final String EXHIBIT_GROUP_TITLE = "exhibit.group.title";
 
+	// ----- Categories -----
+	public static String CATEGORIES_GROUP_TITLE = "categories.group.title";
+
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
 	public static final String IMAGES_MUSEUM = "/images/home.png";

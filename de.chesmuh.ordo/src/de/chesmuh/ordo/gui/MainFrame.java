@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
 import de.chesmuh.ordo.config.Config;
+import de.chesmuh.ordo.gui.composites.CategorieComposite;
 import de.chesmuh.ordo.gui.composites.DetailComposite;
 import de.chesmuh.ordo.gui.composites.LabelComposite;
 import de.chesmuh.ordo.gui.composites.TableComposite;
@@ -95,8 +96,15 @@ public class MainFrame {
 		Composite detailComposite = new DetailComposite(overViewComposite,
 				SWT.BORDER);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gridData.horizontalSpan = 4;
+		gridData.horizontalSpan = 3;
 		detailComposite.setLayoutData(gridData);
+		
+		// ----- Categories -----
+		Composite categorieComposite = new CategorieComposite(overViewComposite,
+				SWT.BORDER);
+		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridData.horizontalSpan = 1;
+		categorieComposite.setLayoutData(gridData);
 	}
 
 	private void setMenu() {

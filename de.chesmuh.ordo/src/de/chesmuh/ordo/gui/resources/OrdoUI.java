@@ -27,6 +27,7 @@ public class OrdoUI {
 	
 	// ----- Details -----
 	public static final String DETAIL_GROUP_DEFAULT_TITLE = "detail.group.title";
+	public static final String DETAIL_GROUP_EXHIBIT = "detail.group.exhibit";
 	public static final String DETAIL_GROUP_ADD_SECTION = "detail.section.add.title";
 	public static final String DETAIL_SECTION_ADD_NOPARENT = "detail.section.add.noparent";
 	public static final String DETAIL_SECTION_ADD_NOPARENT_TITLE = "detail.section.add.noparent.title";
@@ -35,6 +36,10 @@ public class OrdoUI {
 	public static final String DETAIL_SECTION_NAME = "detail.section.name";
 	public static final String DETAIL_SECTION_DESCRIPTION = "detail.section.description";
 	public static final String DETAIL_SECTION_PARENTSECTION = "detail.section.parentsection";
+	public static final String DETAIL_EXHIBIT_NAME = "detail.exhibit.name";
+	public static final String DETAIL_EXHIBIT_SECTION = "detail.exhibit.section";
+	public static final String DETAIL_EXHIBIT_DESCRIPTION = "detail.exhibit.description";
+	public static final String DETAIL_EXHIBIT_EDIT = "detail.exhibit.edit";
 
 	// ----- Section -----
 	public static final String SECTION_GROUP_TITLE = "section.group.title";
@@ -43,16 +48,19 @@ public class OrdoUI {
 	public static String CATEGORIES_GROUP_TITLE = "categories.group.title";
 
 
+
+
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
 	public static final String IMAGES_MUSEUM = "/images/home.png";
-	public static final String IMAGE_ORDO = "/images/home.png";
+	public static final String IMAGES_ORDO = "/images/home.png";
 	public static final String IMAGES_ADD = "/images/plus.png";
 	public static final String IMAGES_REMOVE = "/images/minus.png";
 	public static final String IMAGES_SWAP = "/images/swap.png";
 	public static final String IMAGES_DROP = "/images/marquee-download.png";
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
+	public static final String IMAGES_EDIT = "/images/quill.png";
 
 
 

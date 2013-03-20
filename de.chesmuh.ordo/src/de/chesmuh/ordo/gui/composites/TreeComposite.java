@@ -128,11 +128,11 @@ public class TreeComposite extends Composite implements IUiListener {
 			TreeItem selection = tree.getSelection()[0];
 			if (selection.getData() instanceof Section) {
 				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
-						UiEventType.SectionChoose);
+						UiEventType.SectionSelected);
 				MainFrame.handleEvent(uiEvent);
 			} else if (selection.getData() instanceof Museum) {
 				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
-						UiEventType.MuseumChoose);
+						UiEventType.MuseumSelected);
 				MainFrame.handleEvent(uiEvent);
 			}
 		}

@@ -65,5 +65,9 @@ public class Exhibit extends DatabaseElement {
 	public Section getSection() {
 		return DataAccess.getInstance().getSectionById(sectionId);
 	}
+
+	public Museum getMuseum() {
+		return DataAccess.getInstance().getMuseumById(museumId);
+	}
 	
 }

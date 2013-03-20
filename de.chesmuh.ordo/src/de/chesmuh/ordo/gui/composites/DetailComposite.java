@@ -9,8 +9,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
 import de.chesmuh.ordo.config.Config;
+import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.composites.dialogs.AddSectionComposite;
+import de.chesmuh.ordo.gui.composites.dialogs.ExhibitInformationComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -44,6 +46,7 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.AddSection, this);
 		MainFrame.addObserver(UiEventType.SectionAdded, this);
 		MainFrame.addObserver(UiEventType.AddSectionCanceled, this);
+		MainFrame.addObserver(UiEventType.ExhibitSelected, this);
 	}
 
 	@Override
@@ -58,9 +61,10 @@ public class DetailComposite extends Composite implements IUiListener {
 		case AddSection:
 			showNewSection(event.getData());
 			break;
-		case ExhibitChoose:
+		case ExhibitSelected:
+			showExhibitInfos(event.getData());
 			break;
-		case MuseumChoose:
+		case MuseumSelected:
 			break;
 		case RemoveLabel:
 			break;
@@ -68,7 +72,7 @@ public class DetailComposite extends Composite implements IUiListener {
 			break;
 		case RemoveSection:
 			break;
-		case SectionChoose:
+		case SectionSelected:
 			break;
 		case SectionAdded:
 			showNothing();
@@ -77,6 +81,17 @@ public class DetailComposite extends Composite implements IUiListener {
 			showNothing();
 		default:
 			break;
+		}
+	}
+
+	private void showExhibitInfos(Object data) {
+		if(data instanceof Exhibit) {
+			group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_EXHIBIT));
+			while(group.getChildren().length > 0) {
+				group.getChildren()[0].dispose();
+			}
+			new ExhibitInformationComposite(group, (Exhibit)data);
+			group.layout();
 		}
 	}
 

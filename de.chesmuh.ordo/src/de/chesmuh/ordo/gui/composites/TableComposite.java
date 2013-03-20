@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -61,23 +63,24 @@ public class TableComposite extends Composite implements IUiListener {
 		table.setHeaderVisible(true);
 		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
 		table.setLayoutData(data);
+		table.addSelectionListener(new TableSelectionAdapter());
 
 		// ----- Listener -----
-		MainFrame.addObserver(UiEventType.MuseumChoose, this);
-		MainFrame.addObserver(UiEventType.SectionChoose, this);
+		MainFrame.addObserver(UiEventType.MuseumSelected, this);
+		MainFrame.addObserver(UiEventType.SectionSelected, this);
 	}
 
 	@Override
 	public void handleEvent(UiEvent event) {
 		UiEventType eventType = event.getType();
 		switch (eventType) {
-		case MuseumChoose:
+		case MuseumSelected:
 			if (event.getData() instanceof Museum) {
 				Museum museum = (Museum) event.getData();
 				showSectionByMuseum(museum);
 			}
 			break;
-		case SectionChoose:
+		case SectionSelected:
 			if (event.getData() instanceof Section) {
 				Section section = (Section) event.getData();
 				showExhibitsBySection(section);
@@ -150,4 +153,18 @@ public class TableComposite extends Composite implements IUiListener {
 		}
 	}
 
+	private class TableSelectionAdapter extends SelectionAdapter {
+		
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			if(table.getSelection().length > 0) {
+				Object data = table.getSelection()[0].getData();
+				if(data instanceof Exhibit) {
+					UiEvent event = new UiEvent(TableComposite.this, data, UiEventType.ExhibitSelected);
+					MainFrame.handleEvent(event);
+				}
+			}
+		}
+		
+	}
 }

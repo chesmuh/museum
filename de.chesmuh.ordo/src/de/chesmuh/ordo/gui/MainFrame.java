@@ -56,7 +56,7 @@ public class MainFrame {
 		uiBundle = Config.getInstance().getUIBundle();
 		shell.setText(uiBundle.getString(OrdoUI.WINDOW_TITLE));
 		shell.setImage(ResourceManager.getImage(shell.getDisplay(),
-				OrdoUI.IMAGE_ORDO));
+				OrdoUI.IMAGES_ORDO));
 
 		// ----- Menu -----
 		setMenu();

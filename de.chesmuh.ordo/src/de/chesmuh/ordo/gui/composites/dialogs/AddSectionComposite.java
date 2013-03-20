@@ -52,6 +52,7 @@ public class AddSectionComposite extends Composite {
 		this.setLayoutData(gridData);
 		this.setLayout(new GridLayout(3, false));
 
+		// ----- Name -----
 		Label label = new Label(this, SWT.NONE);
 		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_NAME));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
@@ -63,6 +64,7 @@ public class AddSectionComposite extends Composite {
 		gridData.horizontalSpan = 2;
 		textName.setLayoutData(gridData);
 
+		// ----- ParentSection -----
 		label = new Label(this, SWT.NONE);
 		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_PARENTSECTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
@@ -90,6 +92,7 @@ public class AddSectionComposite extends Composite {
 			textParent.setData(selection);
 		}
 
+		// ----- Description -----
 		label = new Label(this, SWT.NONE);
 		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
@@ -101,9 +104,10 @@ public class AddSectionComposite extends Composite {
 		gridData.horizontalSpan = 2;
 		textDescription.setLayoutData(gridData);
 
+		// ----- Buttons -----
 		Composite buttonComposite = new Composite(this, SWT.NONE);
 		gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
-		gridData.horizontalSpan = 2;
+		gridData.horizontalSpan = 3;
 		buttonComposite.setLayoutData(gridData);
 		buttonComposite.setLayout(new GridLayout(2, false));
 

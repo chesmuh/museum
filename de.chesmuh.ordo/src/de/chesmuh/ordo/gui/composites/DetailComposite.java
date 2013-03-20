@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Group;
 
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.gui.MainFrame;
+import de.chesmuh.ordo.gui.composites.dialogs.AddSectionComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -37,10 +38,12 @@ public class DetailComposite extends Composite implements IUiListener {
 		group = new Group(this, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		group.setLayout(new GridLayout(1, false));
-		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_TITLE));
+		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_DEFAULT_TITLE));
 
 		// ----- Listener -----
 		MainFrame.addObserver(UiEventType.AddSection, this);
+		MainFrame.addObserver(UiEventType.SectionAdded, this);
+		MainFrame.addObserver(UiEventType.AddSectionCanceled, this);
 	}
 
 	@Override
@@ -67,6 +70,11 @@ public class DetailComposite extends Composite implements IUiListener {
 			break;
 		case SectionChoose:
 			break;
+		case SectionAdded:
+			showNothing();
+			break;
+		case AddSectionCanceled:
+			showNothing();
 		default:
 			break;
 		}
@@ -77,7 +85,15 @@ public class DetailComposite extends Composite implements IUiListener {
 		while(group.getChildren().length > 0) {
 			group.getChildren()[0].dispose();
 		}
-		new AddSectionComposite(group, SWT.NONE);
+		new AddSectionComposite(group, data);
+		group.layout();
+	}
+	
+	private void showNothing() {
+		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_DEFAULT_TITLE));
+		while(group.getChildren().length > 0) {
+			group.getChildren()[0].dispose();
+		}
 		group.layout();
 	}
 

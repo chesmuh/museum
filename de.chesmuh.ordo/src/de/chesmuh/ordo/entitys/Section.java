@@ -11,13 +11,13 @@ import de.chesmuh.ordo.data.DataAccess;
  */
 public class Section extends DatabaseElement implements Comparable<Section> {
 
-	private Long museum_id;
+	private long museum_id;
 	private Long parent_id;
 	private String name;
 	private String description;
 	
 	public Section(Long id, Timestamp inserted, Timestamp deleted,
-			Long museum_id, Long parent_id, String name, String description) {
+			long museum_id, Long parent_id, String name, String description) {
 		super(id, inserted, deleted);
 		this.museum_id = museum_id;
 		this.parent_id = parent_id;
@@ -77,6 +77,9 @@ public class Section extends DatabaseElement implements Comparable<Section> {
 	}
 
 	public Section getParent() {
+		if(parent_id == null) {
+			return null;
+		}
 		return DataAccess.getInstance().getSectionById(parent_id);
 	}
 		

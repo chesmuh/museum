@@ -28,12 +28,13 @@ import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
+import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
-public class TreeComposite extends Composite {
+public class TreeComposite extends Composite implements IUiListener {
 
 	private Tree tree;
 	private ResourceBundle bundle;
@@ -74,10 +75,17 @@ public class TreeComposite extends Composite {
 		dragSource.setTransfer(new Transfer[] { TextTransfer.getInstance() });
 		dragSource.addDragListener(new TreeDragSourceAdapter());
 
-		refreshTree();
+		// ----- Listener -----
+		MainFrame.addObserver(UiEventType.SectionAdded, this);
+
+		refreshTree(null);
 	}
 
-	private void refreshTree() {
+	private void refreshTree(Object object) {
+		while (tree.getItemCount() > 0) {
+			tree.getItems()[0].dispose();
+		}
+
 		Collection<Museum> allMuseum = DataAccess.getInstance().getAllMuseum();
 		for (Museum museum : allMuseum) {
 			TreeItem museumItem = new TreeItem(tree, SWT.NONE);
@@ -97,8 +105,6 @@ public class TreeComposite extends Composite {
 				addSubSection(sectionItem);
 			}
 		}
-
-		tree.pack();
 	}
 
 	private void addSubSection(TreeItem item) {
@@ -138,10 +144,10 @@ public class TreeComposite extends Composite {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			UiEvent event;
-			if(tree.getSelection().length > 0) {
+			if (tree.getSelection().length > 0) {
 				TreeItem treeItem = tree.getSelection()[0];
-			 event = new UiEvent(null, treeItem.getData(),
-					UiEventType.AddSection);
+				event = new UiEvent(null, treeItem.getData(),
+						UiEventType.AddSection);
 			} else {
 				event = new UiEvent(null, null, UiEventType.AddSection);
 			}
@@ -170,16 +176,27 @@ public class TreeComposite extends Composite {
 			Object object = tree.getSelection()[0].getData();
 			if (object instanceof Section) {
 				stringBuilder.append("section/");
-				stringBuilder.append(Long.toString(((Section)object).getId()));
+				stringBuilder.append(Long.toString(((Section) object).getId()));
 			} else if (object instanceof Museum) {
 				stringBuilder.append("museum/");
-				stringBuilder.append(Long.toString(((Museum)object).getId()));
+				stringBuilder.append(Long.toString(((Museum) object).getId()));
 			} else {
 				return;
-			}			
+			}
 			event.data = stringBuilder.toString();
 		}
 
+	}
+
+	@Override
+	public void handleEvent(UiEvent event) {
+		switch (event.getType()) {
+		case SectionAdded:
+			this.refreshTree(event.getData());
+			break;
+		default:
+			break;
+		}
 	}
 
 }

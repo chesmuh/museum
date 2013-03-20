@@ -42,8 +42,16 @@ public class DataAccess {
 		return museumManager.getAll();
 	}
 	
-	public Museum getMuseumById(Long id) {
+	public Museum getMuseumById(long id) {
 		return museumManager.getbyId(id);
+	}
+
+	public Collection<Exhibit> getExhibitBySection(Section section) {
+		return exhibitManager.getBySection(section);
+	}
+
+	public Section getSectionById(long sectionId) {
+		return sectionManager.getbyId(sectionId);
 	}
 
 	public Collection<Section> getAllSection() {
@@ -53,21 +61,18 @@ public class DataAccess {
 	public Collection<Section> getSectionsByMuseum(Museum museum) {
 		return sectionManager.getByMuseum(museum);
 	}
-
+	
 	public Collection<Section> getSectionBySection(Section section) {
 		return sectionManager.getBySection(section);
 	}
-
+	
 	public Collection<Section> getSectionByMuseumWithNoParent(Museum museum) {
 		return sectionManager.getByMuseumWithParentNull(museum);
 	}
 
-	public Collection<Exhibit> getExhibitBySection(Section section) {
-		return exhibitManager.getBySection(section);
+	public void saveSection(Section section) {
+		sectionManager.store(section);
 	}
 
-	public Section getSectionById(Long sectionId) {
-		return sectionManager.getbyId(sectionId);
-	}
 
 }

@@ -24,8 +24,10 @@ public class OrdoUI {
 	public static final String LABELS_GROUP_TITLE = "labels.group.title";
 	
 	// ----- Details -----
-	public static final String DETAIL_GROUP_TITLE = "detail.group.title";
+	public static final String DETAIL_GROUP_DEFAULT_TITLE = "detail.group.title";
 	public static final String DETAIL_GROUP_ADD_SECTION = "detail.section.add.title";
+	public static final String DETAIL_SECTION_ADD_NOPARENT = "detail.section.add.noparent";
+	public static final String DETAIL_SECTION_ADD_NOPARENT_TITLE = "detail.section.add.noparent.title";
 	public static final String DETAIL_SECTION_ADD_SAVE = "detail.section.add.save";
 	public static final String DETAIL_SECTION_ADD_CANCEL = "detail.section.add.cancel";
 	public static final String DETAIL_SECTION_NAME = "detail.section.name";
@@ -41,6 +43,7 @@ public class OrdoUI {
 	// ----- Categories -----
 	public static String CATEGORIES_GROUP_TITLE = "categories.group.title";
 
+
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
 	public static final String IMAGES_MUSEUM = "/images/home.png";
@@ -51,5 +54,6 @@ public class OrdoUI {
 	public static final String IMAGES_DROP = "/images/marquee-download.png";
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
+
 
 }

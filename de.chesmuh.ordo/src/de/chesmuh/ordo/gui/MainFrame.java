@@ -98,10 +98,10 @@ public class MainFrame {
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 3;
 		detailComposite.setLayoutData(gridData);
-		
+
 		// ----- Categories -----
-		Composite categorieComposite = new CategorieComposite(overViewComposite,
-				SWT.BORDER);
+		Composite categorieComposite = new CategorieComposite(
+				overViewComposite, SWT.BORDER);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 1;
 		categorieComposite.setLayoutData(gridData);

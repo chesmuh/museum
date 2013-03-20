@@ -75,5 +75,9 @@ public class Section extends DatabaseElement implements Comparable<Section> {
 	public Museum getMuseum() {
 		return DataAccess.getInstance().getMuseumById(this.museum_id);
 	}
+
+	public Section getParent() {
+		return DataAccess.getInstance().getSectionById(parent_id);
+	}
 		
 }

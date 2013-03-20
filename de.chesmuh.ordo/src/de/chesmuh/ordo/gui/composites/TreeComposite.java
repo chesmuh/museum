@@ -4,6 +4,14 @@ import java.util.Collection;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -39,27 +47,32 @@ public class TreeComposite extends Composite {
 	private void initialize() {
 		// ----- Layout -----
 		this.setLayout(new GridLayout(1, true));
-		
+
 		Group group = new Group(this, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		group.setLayout(new GridLayout(1,true));
+		group.setLayout(new GridLayout(1, true));
 		group.setText(bundle.getString(OrdoUI.SECTION_GROUP_TITLE));
-		
+
 		// ----- Buttons -----
 		ToolBar toolBar = new ToolBar(group, SWT.NONE);
 		ToolItem toolItemAdd = new ToolItem(toolBar, SWT.PUSH);
-		toolItemAdd.setImage(ResourceManager.getImage(getDisplay(), OrdoUI.IMAGES_ADD));
+		toolItemAdd.setImage(ResourceManager.getImage(getDisplay(),
+				OrdoUI.IMAGES_ADD));
+		toolItemAdd.addSelectionListener(new AddSectionAdapter());
 		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
 		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_REMOVE));
-		ToolItem toolItemSwap = new ToolItem(toolBar, SWT.PUSH);
-		toolItemSwap.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_SWAP));
-		
+		toolItemRemove.addSelectionListener(new RemoveSectionAdapter());
+
 		// ----- Tree -----
 		tree = new Tree(group, SWT.V_SCROLL);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		tree.addListener(SWT.Selection, new TreeListener());
+
+		// ----- DragSource -----
+		DragSource dragSource = new DragSource(tree, DND.DROP_MOVE);
+		dragSource.setTransfer(new Transfer[] { TextTransfer.getInstance() });
+		dragSource.addDragListener(new TreeDragSourceAdapter());
 
 		refreshTree();
 	}
@@ -107,14 +120,61 @@ public class TreeComposite extends Composite {
 		@Override
 		public void handleEvent(Event event) {
 			TreeItem selection = tree.getSelection()[0];
-			if(selection.getData() instanceof Section) {
-				UiEvent uiEvent = new UiEvent(tree, selection.getData(), UiEventType.SectionChoose);
+			if (selection.getData() instanceof Section) {
+				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
+						UiEventType.SectionChoose);
 				MainFrame.handleEvent(uiEvent);
-			} else if(selection.getData() instanceof Museum) {
-				UiEvent uiEvent = new UiEvent(tree, selection.getData(), UiEventType.MuseumChoose);
+			} else if (selection.getData() instanceof Museum) {
+				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
+						UiEventType.MuseumChoose);
 				MainFrame.handleEvent(uiEvent);
 			}
 		}
 
 	}
+
+	private class AddSectionAdapter extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			TreeItem treeItem = tree.getSelection()[0];
+			UiEvent event = new UiEvent(null, treeItem.getData(),
+					UiEventType.AddSection);
+			MainFrame.handleEvent(event);
+		}
+
+	}
+
+	private class RemoveSectionAdapter extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			TreeItem treeItem = tree.getSelection()[0];
+			UiEvent event = new UiEvent(null, treeItem.getData(),
+					UiEventType.RemoveSection);
+			MainFrame.handleEvent(event);
+		}
+
+	}
+
+	private class TreeDragSourceAdapter extends DragSourceAdapter {
+
+		@Override
+		public void dragSetData(DragSourceEvent event) {
+			StringBuilder stringBuilder = new StringBuilder();
+			Object object = tree.getSelection()[0].getData();
+			if (object instanceof Section) {
+				stringBuilder.append("section/");
+				stringBuilder.append(Long.toString(((Section)object).getId()));
+			} else if (object instanceof Museum) {
+				stringBuilder.append("museum/");
+				stringBuilder.append(Long.toString(((Museum)object).getId()));
+			} else {
+				return;
+			}			
+			event.data = stringBuilder.toString();
+		}
+
+	}
+
 }

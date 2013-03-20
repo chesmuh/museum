@@ -137,9 +137,14 @@ public class TreeComposite extends Composite {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			TreeItem treeItem = tree.getSelection()[0];
-			UiEvent event = new UiEvent(null, treeItem.getData(),
+			UiEvent event;
+			if(tree.getSelection().length > 0) {
+				TreeItem treeItem = tree.getSelection()[0];
+			 event = new UiEvent(null, treeItem.getData(),
 					UiEventType.AddSection);
+			} else {
+				event = new UiEvent(null, null, UiEventType.AddSection);
+			}
 			MainFrame.handleEvent(event);
 		}
 

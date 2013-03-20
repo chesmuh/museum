@@ -78,10 +78,10 @@ public class TreeComposite extends Composite implements IUiListener {
 		// ----- Listener -----
 		MainFrame.addObserver(UiEventType.SectionAdded, this);
 
-		refreshTree(null);
+		refreshTree();
 	}
 
-	private void refreshTree(Object object) {
+	private void refreshTree() {
 		while (tree.getItemCount() > 0) {
 			tree.getItems()[0].dispose();
 		}
@@ -104,6 +104,21 @@ public class TreeComposite extends Composite implements IUiListener {
 						OrdoUI.IMAGES_SECTION));
 				addSubSection(sectionItem);
 			}
+		}
+		expandAll();
+	}
+
+	public void expandAll() {
+		for (TreeItem item : tree.getItems()) {
+			item.setExpanded(true);
+			expand(item.getItems());
+		}
+	}
+	
+	public void expand(TreeItem[] items) {
+		for (TreeItem item : items) {
+			item.setExpanded(true);
+			expand(item.getItems());
 		}
 	}
 
@@ -192,7 +207,7 @@ public class TreeComposite extends Composite implements IUiListener {
 	public void handleEvent(UiEvent event) {
 		switch (event.getType()) {
 		case SectionAdded:
-			this.refreshTree(event.getData());
+			this.refreshTree();
 			break;
 		default:
 			break;

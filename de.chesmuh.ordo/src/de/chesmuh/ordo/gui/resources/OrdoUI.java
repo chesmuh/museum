@@ -13,6 +13,8 @@ public class OrdoUI {
 	public static final String MENU_FILE_CLOSE = "menu.file.close";
 	
 	// ----- Table ------
+	public static final String TABLE_GROUP_SECTION = "table.group.section";
+	public static final String TABLE_GROUP_EXHIBIT = "table.group.exhibit";
 	public static final String TABLE_HEADERS_NAME = "table.headers.name";
 	public static final String TABLE_HEADERS_SECTION = "table.headers.section";
 	public static final String TABLE_HEADERS_CATEGORY = "table.headers.category";
@@ -37,9 +39,6 @@ public class OrdoUI {
 	// ----- Section -----
 	public static final String SECTION_GROUP_TITLE = "section.group.title";
 
-	// ----- Exhibit -----
-	public static final String EXHIBIT_GROUP_TITLE = "exhibit.group.title";
-
 	// ----- Categories -----
 	public static String CATEGORIES_GROUP_TITLE = "categories.group.title";
 
@@ -54,6 +53,8 @@ public class OrdoUI {
 	public static final String IMAGES_DROP = "/images/marquee-download.png";
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
+
+
 
 
 }

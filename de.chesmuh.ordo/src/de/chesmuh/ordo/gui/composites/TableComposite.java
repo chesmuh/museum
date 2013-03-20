@@ -30,6 +30,7 @@ public class TableComposite extends Composite implements IUiListener {
 
 	private Table table;
 	private ResourceBundle bundle;
+	private Group group;
 
 	public TableComposite(Composite parent, int style) {
 		super(parent, style);
@@ -41,10 +42,9 @@ public class TableComposite extends Composite implements IUiListener {
 		// ----- Layout -----
 		this.setLayout(new GridLayout(1, true));
 
-		Group group = new Group(this, SWT.NONE);
+		group = new Group(this, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		group.setLayout(new GridLayout(1, true));
-		group.setText(bundle.getString(OrdoUI.EXHIBIT_GROUP_TITLE));
 
 		// ----- Buttons -----
 		ToolBar toolBar = new ToolBar(group, SWT.NONE);
@@ -90,6 +90,7 @@ public class TableComposite extends Composite implements IUiListener {
 
 	private void showExhibitsBySection(Section section) {
 		table.setRedraw(false);
+		group.setText(bundle.getString(OrdoUI.TABLE_GROUP_EXHIBIT));
 		deleteAllColumn();
 		deleteAllItems();
 		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
@@ -112,6 +113,7 @@ public class TableComposite extends Composite implements IUiListener {
 
 	private void showSectionByMuseum(Museum museum) {
 		table.setRedraw(false);
+		group.setText(bundle.getString(OrdoUI.TABLE_GROUP_SECTION));
 		deleteAllColumn();
 		deleteAllItems();
 		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),

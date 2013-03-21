@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import de.chesmuh.ordo.config.Config;
+import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Label;
 import de.chesmuh.ordo.entitys.Section;
@@ -114,10 +115,28 @@ public class TableComposite extends Composite implements IUiListener {
 			item.setData(exhibit);
 		}
 		table.setRedraw(true);
-
 	}
 
 	private void showExhibitsBySection(Section section) {
+		table.setRedraw(false);
+		group.setText(bundle.getString(OrdoUI.TABLE_GROUP_EXHIBIT));
+		deleteAllColumn();
+		deleteAllItems();
+		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
+				bundle.getString(OrdoUI.TABLE_HEADERS_SECTION),
+				bundle.getString(OrdoUI.TABLE_HEADERS_DESCRIPTION) });
+		Collection<Exhibit> exhibits = DataAccess.getInstance().getExhibitBySection(section);
+		for (Exhibit exhibit : exhibits) {
+			TableItem item = new TableItem(table, SWT.NONE);
+			Section exhibitSection = exhibit.getSection();
+			item.setText(0, exhibit.getName());
+			if (exhibitSection != null) {
+				item.setText(1, exhibitSection.getName());
+			}
+			item.setText(2, exhibit.getDescription());
+			item.setData(exhibit);
+		}
+		table.setRedraw(true);
 	}
 
 	private void deleteAllItems() {

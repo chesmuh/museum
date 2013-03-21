@@ -1,7 +1,5 @@
 package de.chesmuh.ordo.gui.composites.dialogs;
 
-import java.util.ResourceBundle;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -12,21 +10,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
 public class MuseumInformationComposite extends Composite {
 
-	private ResourceBundle bundle;
 	private Text textName;
 	private Museum museum;
 	private Text textDescription;
 
 	public MuseumInformationComposite(Composite parent, Museum museum) {
 		super(parent, SWT.NONE);
-		this.bundle = Config.getInstance().getUIBundle();
 		this.museum = museum;
 		initilalize();
 	}
@@ -39,7 +34,7 @@ public class MuseumInformationComposite extends Composite {
 
 		// ----- Name -----
 		Label label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_MUSEUM_NAME));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_MUSEUM_NAME));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -51,7 +46,7 @@ public class MuseumInformationComposite extends Composite {
 
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_MUSEUM_DESCRIPTION));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_MUSEUM_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -71,7 +66,7 @@ public class MuseumInformationComposite extends Composite {
 		Button button = new Button(buttonComposite, SWT.NONE);
 		button.setImage(ResourceManager
 				.getImage(getDisplay(), OrdoUI.IMAGES_EDIT));
-		button.setText(bundle.getString(OrdoUI.DETAIL_MUSEUM_EDIT));
+		button.setText(ResourceManager.getText(OrdoUI.BUTTON_EDIT));
 		button.addSelectionListener(new EditSelectionListener());
 
 	}

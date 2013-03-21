@@ -1,7 +1,5 @@
 package de.chesmuh.ordo.gui.composites.dialogs;
 
-import java.util.ResourceBundle;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
@@ -19,7 +17,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
@@ -32,7 +29,6 @@ import de.chesmuh.ordo.logic.LogicAccess;
 
 public class CreateSectionComposite extends Composite {
 
-	private ResourceBundle bundle;
 	private Text textParent;
 	private Text textName;
 	private Text textDescription;
@@ -41,7 +37,6 @@ public class CreateSectionComposite extends Composite {
 
 	public CreateSectionComposite(Composite parent, Object selection) {
 		super(parent, SWT.NONE);
-		this.bundle = Config.getInstance().getUIBundle();
 		this.selection = selection;
 		initialize();
 	}
@@ -54,7 +49,7 @@ public class CreateSectionComposite extends Composite {
 
 		// ----- Name -----
 		Label label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_NAME));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_SECTION_NAME));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -66,7 +61,7 @@ public class CreateSectionComposite extends Composite {
 
 		// ----- ParentSection -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_PARENTSECTION));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_SECTION_PARENTSECTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -94,7 +89,7 @@ public class CreateSectionComposite extends Composite {
 
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_DESCRIPTION));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_SECTION_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -114,13 +109,13 @@ public class CreateSectionComposite extends Composite {
 		Button button = new Button(buttonComposite, SWT.NONE);
 		button.setImage(ResourceManager
 				.getImage(getDisplay(), OrdoUI.IMAGES_OK));
-		button.setText(bundle.getString(OrdoUI.DETAIL_SAVE));
+		button.setText(ResourceManager.getText(OrdoUI.BUTTON_SAVE));
 		button.addSelectionListener(new SaveSelectionListener());
 
 		button = new Button(buttonComposite, SWT.NONE);
 		button.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_CANCEL));
-		button.setText(bundle.getString(OrdoUI.DETAIL_CANCEL));
+		button.setText(ResourceManager.getText(OrdoUI.BUTTON_CANCEL));
 		button.addSelectionListener(new CloseSelectionListener());
 	}
 
@@ -168,9 +163,8 @@ public class CreateSectionComposite extends Composite {
 
 			if (null == textParent.getData()) {
 				MessageBox messageBox = new MessageBox(getShell());
-				messageBox.setMessage(bundle
-						.getString(OrdoUI.DETAIL_SECTION_ADD_NOPARENT));
-				messageBox.setText(bundle.getString(OrdoUI.DETAIL_SECTION_ADD_NOPARENT_TITLE));
+				messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NOPARENT));
+				messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NOPARENT_TITLE));
 				messageBox.open();
 			} else {
 				if (textParent.getData() instanceof Section) {

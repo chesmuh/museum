@@ -1,7 +1,6 @@
 package de.chesmuh.ordo.gui.composites;
 
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -23,7 +22,6 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
@@ -37,11 +35,9 @@ import de.chesmuh.ordo.gui.resources.ResourceManager;
 public class SectionComposite extends Composite implements IUiListener {
 
 	private Tree tree;
-	private ResourceBundle bundle;
 
 	public SectionComposite(Composite parent, int style) {
 		super(parent, style);
-		bundle = Config.getInstance().getUIBundle();
 		this.initialize();
 	}
 
@@ -52,7 +48,7 @@ public class SectionComposite extends Composite implements IUiListener {
 		Group group = new Group(this, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		group.setLayout(new GridLayout(1, true));
-		group.setText(bundle.getString(OrdoUI.SECTION_GROUP_TITLE));
+		group.setText(ResourceManager.getText(OrdoUI.SECTION_TITLE));
 
 		// ----- Buttons -----
 		ToolBar toolBar = new ToolBar(group, SWT.NONE);

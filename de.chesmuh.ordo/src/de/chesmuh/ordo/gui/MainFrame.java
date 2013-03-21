@@ -3,7 +3,6 @@ package de.chesmuh.ordo.gui;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -17,12 +16,11 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.gui.composites.CategorieComposite;
 import de.chesmuh.ordo.gui.composites.DetailComposite;
 import de.chesmuh.ordo.gui.composites.LabelComposite;
-import de.chesmuh.ordo.gui.composites.TableComposite;
 import de.chesmuh.ordo.gui.composites.SectionComposite;
+import de.chesmuh.ordo.gui.composites.TableComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -32,7 +30,6 @@ import de.chesmuh.ordo.gui.resources.ResourceManager;
 public class MainFrame {
 
 	private Shell shell;
-	private ResourceBundle uiBundle;
 	private static HashMap<UiEventType, Collection<IUiListener>> listeners = new HashMap<UiEventType, Collection<IUiListener>>();
 
 	public MainFrame() {
@@ -53,8 +50,7 @@ public class MainFrame {
 	}
 
 	private void initialize() {
-		uiBundle = Config.getInstance().getUIBundle();
-		shell.setText(uiBundle.getString(OrdoUI.WINDOW_TITLE));
+		shell.setText(ResourceManager.getText(OrdoUI.WINDOW_TITLE));
 		shell.setImage(ResourceManager.getImage(shell.getDisplay(),
 				OrdoUI.IMAGES_ORDO));
 
@@ -113,23 +109,23 @@ public class MainFrame {
 
 		// ----- File -----
 		MenuItem menuItemFile = new MenuItem(menuBar, SWT.CASCADE);
-		menuItemFile.setText(uiBundle.getString(OrdoUI.MENU_FILE));
+		menuItemFile.setText(ResourceManager.getText(OrdoUI.MENU_FILE));
 		Menu menuFile = new Menu(menuItemFile);
 		
 		// ---- File.New ----
 		MenuItem menuItemNew = new MenuItem(menuFile, SWT.CASCADE);
-		menuItemNew.setText(uiBundle.getString(OrdoUI.MENU_FILE_NEW));
+		menuItemNew.setText(ResourceManager.getText(OrdoUI.MENU_FILE_NEW));
 		Menu menuNew = new Menu(menuItemNew);
 		menuItemNew.setMenu(menuNew);
 	    
 	    // ----- File.New.Museum -----
 	    MenuItem menuItemNewMuseum = new MenuItem(menuNew, SWT.CASCADE);
-		menuItemNewMuseum.setText(uiBundle.getString(OrdoUI.MENU_FILE_NEW_MUSEUM));
+		menuItemNewMuseum.setText(ResourceManager.getText(OrdoUI.MENU_FILE_NEW_MUSEUM));
 		menuItemNewMuseum.setImage(ResourceManager.getImage(shell.getDisplay(), OrdoUI.IMAGES_MUSEUM));
 	    
 		// ----- File.Close -----
 		MenuItem menuItemFileClose = new MenuItem(menuFile, SWT.CASCADE);
-		menuItemFileClose.setText(uiBundle.getString(OrdoUI.MENU_FILE_CLOSE));
+		menuItemFileClose.setText(ResourceManager.getText(OrdoUI.MENU_FILE_CLOSE));
 		menuItemFileClose.setAccelerator(SWT.MOD1 + 'Q');
 		menuItemFileClose
 				.addSelectionListener(new FileCloseSelectionListener());

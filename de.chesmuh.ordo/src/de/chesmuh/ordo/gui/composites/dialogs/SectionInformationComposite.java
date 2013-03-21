@@ -1,7 +1,5 @@
 package de.chesmuh.ordo.gui.composites.dialogs;
 
-import java.util.ResourceBundle;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -12,14 +10,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
 public class SectionInformationComposite extends Composite {
 
-	private ResourceBundle bundle;
 	private Text textName;
 	private Text textParent;
 	private Section section;
@@ -27,7 +23,6 @@ public class SectionInformationComposite extends Composite {
 
 	public SectionInformationComposite(Composite parent, Section section) {
 		super(parent, SWT.NONE);
-		this.bundle = Config.getInstance().getUIBundle();
 		this.section = section;
 		initilalize();
 	}
@@ -40,7 +35,7 @@ public class SectionInformationComposite extends Composite {
 
 		// ----- Name -----
 		Label label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_NAME));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_SECTION_NAME));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -52,7 +47,7 @@ public class SectionInformationComposite extends Composite {
 
 		// ----- Parent -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_SECTION));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_EXHIBIT_SECTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -71,7 +66,7 @@ public class SectionInformationComposite extends Composite {
 		
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_MUSEUM_DESCRIPTION));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_MUSEUM_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -91,7 +86,7 @@ public class SectionInformationComposite extends Composite {
 		Button button = new Button(buttonComposite, SWT.NONE);
 		button.setImage(ResourceManager
 				.getImage(getDisplay(), OrdoUI.IMAGES_EDIT));
-		button.setText(bundle.getString(OrdoUI.DETAIL_MUSEUM_EDIT));
+		button.setText(ResourceManager.getText(OrdoUI.BUTTON_EDIT));
 		button.addSelectionListener(new EditSelectionListener());
 
 	}

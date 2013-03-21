@@ -1,7 +1,5 @@
 package de.chesmuh.ordo.gui.composites;
 
-import java.util.ResourceBundle;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
@@ -18,18 +16,15 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
 public class CategorieComposite extends Composite {
 
 	private Tree tree;
-	private ResourceBundle bundle;
 
 	public CategorieComposite(Composite parent, int style) {
 		super(parent, style);
-		bundle = Config.getInstance().getUIBundle();
 		initilaize();
 	}
 
@@ -40,7 +35,7 @@ public class CategorieComposite extends Composite {
 		Group group = new Group(this, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		group.setLayout(new GridLayout(1, true));
-		group.setText(bundle.getString(OrdoUI.CATEGORIES_GROUP_TITLE));
+		group.setText(ResourceManager.getText(OrdoUI.CATEGORIES_TITLE));
 
 		// ----- Buttons -----
 		ToolBar toolBar = new ToolBar(group, SWT.NONE);

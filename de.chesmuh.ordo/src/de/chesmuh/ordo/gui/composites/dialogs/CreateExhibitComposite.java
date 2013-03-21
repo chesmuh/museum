@@ -1,7 +1,5 @@
 package de.chesmuh.ordo.gui.composites.dialogs;
 
-import java.util.ResourceBundle;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
@@ -19,7 +17,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
@@ -33,7 +30,6 @@ import de.chesmuh.ordo.logic.LogicAccess;
 
 public class CreateExhibitComposite extends Composite {
 
-	private ResourceBundle bundle;
 	private Text textParent;
 	private Text textName;
 	private Text textDescription;
@@ -42,7 +38,6 @@ public class CreateExhibitComposite extends Composite {
 
 	public CreateExhibitComposite(Composite parent, Object selection) {
 		super(parent, SWT.NONE);
-		this.bundle = Config.getInstance().getUIBundle();
 		this.selection = selection;
 		initialize();
 	}
@@ -55,7 +50,7 @@ public class CreateExhibitComposite extends Composite {
 
 		// ----- Name -----
 		Label label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_NAME));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_EXHIBIT_NAME));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -67,7 +62,7 @@ public class CreateExhibitComposite extends Composite {
 
 		// ----- ParentSection -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_SECTION));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_EXHIBIT_SECTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -95,7 +90,7 @@ public class CreateExhibitComposite extends Composite {
 
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_DESCRIPTION));
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_EXHIBIT_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -115,13 +110,13 @@ public class CreateExhibitComposite extends Composite {
 		Button button = new Button(buttonComposite, SWT.NONE);
 		button.setImage(ResourceManager
 				.getImage(getDisplay(), OrdoUI.IMAGES_OK));
-		button.setText(bundle.getString(OrdoUI.DETAIL_SAVE));
+		button.setText(ResourceManager.getText(OrdoUI.BUTTON_SAVE));
 		button.addSelectionListener(new SaveSelectionListener());
 
 		button = new Button(buttonComposite, SWT.NONE);
 		button.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_CANCEL));
-		button.setText(bundle.getString(OrdoUI.DETAIL_CANCEL));
+		button.setText(ResourceManager.getText(OrdoUI.BUTTON_CANCEL));
 		button.addSelectionListener(new CloseSelectionListener());
 	}
 
@@ -169,9 +164,8 @@ public class CreateExhibitComposite extends Composite {
 
 			if (null == textParent.getData()) {
 				MessageBox messageBox = new MessageBox(getShell());
-				messageBox.setMessage(bundle
-						.getString(OrdoUI.DETAIL_SECTION_ADD_NOPARENT));
-				messageBox.setText(bundle.getString(OrdoUI.DETAIL_SECTION_ADD_NOPARENT_TITLE));
+				messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NOPARENT));
+				messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NOPARENT_TITLE));
 				messageBox.open();
 			} else {
 				if (textParent.getData() instanceof Section) {

@@ -1,7 +1,6 @@
 package de.chesmuh.ordo.gui.composites;
 
 import java.util.Collection;
-import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -16,7 +15,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Label;
@@ -31,12 +29,10 @@ import de.chesmuh.ordo.gui.resources.ResourceManager;
 public class TableComposite extends Composite implements IUiListener {
 
 	private Table table;
-	private ResourceBundle bundle;
 	private Group group;
 
 	public TableComposite(Composite parent, int style) {
 		super(parent, style);
-		bundle = Config.getInstance().getUIBundle();
 		initialize();
 	}
 
@@ -97,12 +93,12 @@ public class TableComposite extends Composite implements IUiListener {
 
 	private void showExhibitsByLabel(Label label) {
 		table.setRedraw(false);
-		group.setText(bundle.getString(OrdoUI.TABLE_GROUP_EXHIBIT));
+		group.setText(ResourceManager.getText(OrdoUI.TABLE_GROUP_EXHIBIT));
 		deleteAllColumn();
 		deleteAllItems();
-		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
-				bundle.getString(OrdoUI.TABLE_HEADERS_SECTION),
-				bundle.getString(OrdoUI.TABLE_HEADERS_DESCRIPTION) });
+		addColumns(new String[] { ResourceManager.getText(OrdoUI.TABLE_HEADER_NAME),
+				ResourceManager.getText(OrdoUI.TABLE_HEADER_SECTION),
+				ResourceManager.getText(OrdoUI.TABLE_HEADER_DESCRIPTION) });
 		Collection<Exhibit> exhibits = label.getExhibits();
 		for (Exhibit exhibit : exhibits) {
 			TableItem item = new TableItem(table, SWT.NONE);
@@ -119,12 +115,12 @@ public class TableComposite extends Composite implements IUiListener {
 
 	private void showExhibitsBySection(Section section) {
 		table.setRedraw(false);
-		group.setText(bundle.getString(OrdoUI.TABLE_GROUP_EXHIBIT));
+		group.setText(ResourceManager.getText(OrdoUI.TABLE_GROUP_EXHIBIT));
 		deleteAllColumn();
 		deleteAllItems();
-		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
-				bundle.getString(OrdoUI.TABLE_HEADERS_SECTION),
-				bundle.getString(OrdoUI.TABLE_HEADERS_DESCRIPTION) });
+		addColumns(new String[] { ResourceManager.getText(OrdoUI.TABLE_HEADER_NAME),
+				ResourceManager.getText(OrdoUI.TABLE_HEADER_SECTION),
+				ResourceManager.getText(OrdoUI.TABLE_HEADER_DESCRIPTION) });
 		Collection<Exhibit> exhibits = DataAccess.getInstance().getExhibitBySection(section);
 		for (Exhibit exhibit : exhibits) {
 			TableItem item = new TableItem(table, SWT.NONE);

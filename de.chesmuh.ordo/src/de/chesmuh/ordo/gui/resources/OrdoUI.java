@@ -15,49 +15,52 @@ public class OrdoUI {
 	public static final String MENU_FILE_NEW_MUSEUM = "menu.file.new.museum";
 	
 	// ----- Table ------
-	public static final String TABLE_GROUP_SECTION = "table.group.section";
 	public static final String TABLE_GROUP_EXHIBIT = "table.group.exhibit";
-	public static final String TABLE_HEADERS_NAME = "table.headers.name";
-	public static final String TABLE_HEADERS_SECTION = "table.headers.section";
-	public static final String TABLE_HEADERS_CATEGORY = "table.headers.category";
-	public static final String TABLE_HEADERS_MUSEUM = "table.headers.museum";
-	public static final String TABLE_HEADERS_PARENT_SECTION = "table.headers.parentsection";
-	public static final String TABLE_HEADERS_DESCRIPTION = "table.headers.description";
+	public static final String TABLE_HEADER_NAME = "table.header.name";
+	public static final String TABLE_HEADER_SECTION = "table.header.section";
+	public static final String TABLE_HEADER_CATEGORY = "table.header.category";
+	public static final String TABLE_HEADER_MUSEUM = "table.header.museum";
+	public static final String TABLE_HEADER_PARENT_SECTION = "table.header.parentsection";
+	public static final String TABLE_HEADER_DESCRIPTION = "table.header.description";
 
 	// ----- Labels -----
-	public static final String LABELS_GROUP_TITLE = "labels.group.title";
+	public static final String LABELS_GROUP_TITLE = "labels.title";
 	
 	// ----- Details -----
-	public static final String DETAIL_GROUP_DEFAULT_TITLE = "detail.group.title";
+	public static final String DETAIL_TITLE_DEFAULT = "detail.title";
 	public static final String DETAIL_GROUP_EXHIBIT = "detail.group.exhibit";
 	public static final String DETAIL_GROUP_MUSEUM = "detail.group.museum";
 	public static final String DETAIL_GROUP_SECTION = "detail.group.section";
-	public static final String DETAIL_GROUP_ADD_SECTION = "detail.section.add.title";
-	public static final String DETAIL_SECTION_ADD_NOPARENT = "detail.section.add.noparent";
-	public static final String DETAIL_SECTION_ADD_NOPARENT_TITLE = "detail.section.add.noparent.title";
-	public static final String DETAIL_GROUP_ADD_EXHIBIT = "detail.exhibit.add.title";
-	public static final String DETAIL_SAVE = "detail.section.add.save";
-	public static final String DETAIL_CANCEL = "detail.section.add.cancel";
 	public static final String DETAIL_SECTION_NAME = "detail.section.name";
 	public static final String DETAIL_SECTION_DESCRIPTION = "detail.section.description";
 	public static final String DETAIL_SECTION_PARENTSECTION = "detail.section.parentsection";
 	public static final String DETAIL_EXHIBIT_NAME = "detail.exhibit.name";
 	public static final String DETAIL_EXHIBIT_SECTION = "detail.exhibit.section";
 	public static final String DETAIL_EXHIBIT_DESCRIPTION = "detail.exhibit.description";
-	public static final String DETAIL_EXHIBIT_EDIT = "detail.exhibit.edit";
 	public static final String DETAIL_MUSEUM_NAME = "detail.museum.name";
 	public static final String DETAIL_MUSEUM_DESCRIPTION = "detail.museum.description";
-	public static final String DETAIL_MUSEUM_EDIT = "detail.museum.edit";
 
+	// ----- AddSection -----
+	public static final String ADD_SECTION_TITLE = "addsection.title";
+	
+	// ----- AddExhibit
+	public static final String ADD_EXHIBIT_TITLE = "addexhibit.title";
+	
 	// ----- Section -----
-	public static final String SECTION_GROUP_TITLE = "section.group.title";
+	public static final String SECTION_TITLE = "section.title";
 
 	// ----- Categories -----
-	public static String CATEGORIES_GROUP_TITLE = "categories.group.title";
+	public static final String CATEGORIES_TITLE = "categories.title";
 
+	// ----- Buttons -----
+	public static final String BUTTON_SAVE = "button.save";
+	public static final String BUTTON_CANCEL = "button.cancel";
+	public static final String BUTTON_EDIT = "button.edit";
 
-
-
+	// ----- Error -----
+	public static final String ERROR_NOPARENT = "error.noparent";
+	public static final String ERROR_NOPARENT_TITLE = "error.noparent.title";
+	
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
 	public static final String IMAGES_MUSEUM = "/images/home.png";
@@ -69,14 +72,5 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
-
-
-
-
-
-
-
-
-
 
 }

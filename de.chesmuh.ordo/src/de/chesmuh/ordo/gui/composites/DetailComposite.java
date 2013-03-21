@@ -1,14 +1,11 @@
 package de.chesmuh.ordo.gui.composites;
 
-import java.util.ResourceBundle;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
@@ -22,10 +19,10 @@ import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
+import de.chesmuh.ordo.gui.resources.ResourceManager;
 
 public class DetailComposite extends Composite implements IUiListener {
 
-	private ResourceBundle bundle;
 	private Group group;
 	private GridData gridData;
 	private boolean saveState;
@@ -33,7 +30,6 @@ public class DetailComposite extends Composite implements IUiListener {
 
 	public DetailComposite(Composite parent, int style) {
 		super(parent, style);
-		bundle = Config.getInstance().getUIBundle();
 		saveState = false;
 		initialize();
 	}
@@ -48,7 +44,7 @@ public class DetailComposite extends Composite implements IUiListener {
 		group = new Group(this, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		group.setLayout(new GridLayout(1, false));
-		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_DEFAULT_TITLE));
+		group.setText(ResourceManager.getText(OrdoUI.DETAIL_TITLE_DEFAULT));
 
 		// ----- Listener -----
 		MainFrame.addObserver(UiEventType.AddSection, this);
@@ -128,7 +124,7 @@ public class DetailComposite extends Composite implements IUiListener {
 
 	private void showSectionInfos(Object data) {
 		if (data instanceof Section) {
-			group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_SECTION));
+			group.setText(ResourceManager.getText(OrdoUI.DETAIL_GROUP_SECTION));
 			clearGroup();
 			new SectionInformationComposite(group, (Section) data);
 			group.layout();
@@ -137,7 +133,7 @@ public class DetailComposite extends Composite implements IUiListener {
 
 	private void showMuseumInfos(Object data) {
 		if (data instanceof Museum) {
-			group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_MUSEUM));
+			group.setText(ResourceManager.getText(OrdoUI.DETAIL_GROUP_MUSEUM));
 			clearGroup();
 			new MuseumInformationComposite(group, (Museum) data);
 			group.layout();
@@ -146,7 +142,7 @@ public class DetailComposite extends Composite implements IUiListener {
 
 	private void showExhibitInfos(Object data) {
 		if (data instanceof Exhibit) {
-			group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_EXHIBIT));
+			group.setText(ResourceManager.getText(OrdoUI.DETAIL_GROUP_EXHIBIT));
 			clearGroup();
 			new ExhibitInformationComposite(group, (Exhibit) data);
 			group.layout();
@@ -154,21 +150,21 @@ public class DetailComposite extends Composite implements IUiListener {
 	}
 
 	private void showSectionCreate(Object data) {
-		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_ADD_SECTION));
+		group.setText(ResourceManager.getText(OrdoUI.ADD_SECTION_TITLE));
 		clearGroup();
 		new CreateSectionComposite(group, data);
 		group.layout();
 	}
 
 	private void showExhibitCreate(Object data) {
-		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_ADD_EXHIBIT));
+		group.setText(ResourceManager.getText(OrdoUI.ADD_EXHIBIT_TITLE));
 		clearGroup();
 		new CreateExhibitComposite(group, data);
 		group.layout();
 	}
 
 	private void showNothing() {
-		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_DEFAULT_TITLE));
+		group.setText(ResourceManager.getText(OrdoUI.DETAIL_TITLE_DEFAULT));
 		clearGroup();
 		group.layout();
 	}

@@ -22,7 +22,7 @@ import de.chesmuh.ordo.gui.composites.CategorieComposite;
 import de.chesmuh.ordo.gui.composites.DetailComposite;
 import de.chesmuh.ordo.gui.composites.LabelComposite;
 import de.chesmuh.ordo.gui.composites.TableComposite;
-import de.chesmuh.ordo.gui.composites.TreeComposite;
+import de.chesmuh.ordo.gui.composites.SectionComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -66,7 +66,7 @@ public class MainFrame {
 		mainComposite.setLayout(new GridLayout(5, true));
 
 		// ----- SectionTree -----
-		Composite treeComposite = new TreeComposite(mainComposite, SWT.BORDER);
+		Composite treeComposite = new SectionComposite(mainComposite, SWT.BORDER);
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 1;
 		treeComposite.setLayoutData(gridData);

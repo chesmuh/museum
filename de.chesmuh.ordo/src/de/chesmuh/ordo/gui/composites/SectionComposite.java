@@ -34,12 +34,12 @@ import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
-public class TreeComposite extends Composite implements IUiListener {
+public class SectionComposite extends Composite implements IUiListener {
 
 	private Tree tree;
 	private ResourceBundle bundle;
 
-	public TreeComposite(Composite parent, int style) {
+	public SectionComposite(Composite parent, int style) {
 		super(parent, style);
 		bundle = Config.getInstance().getUIBundle();
 		this.initialize();

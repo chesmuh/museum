@@ -10,7 +10,6 @@ import java.util.Map;
 
 import de.chesmuh.ordo.data.sql.ISqlQuery;
 import de.chesmuh.ordo.entitys.DatabaseElement;
-import de.chesmuh.ordo.exceptions.ModelAlreadyDeletedException;
 
 /**
  * 
@@ -59,14 +58,12 @@ public abstract class AbstractManager<Element extends DatabaseElement> implement
 	}
 
 	@Override
-	public void markAsDeleted(Element model) throws ModelAlreadyDeletedException {
+	public void markAsDeleted(Element model) {
 		try {
-			if (model.isDeleted()) {
-				throw new ModelAlreadyDeletedException("The model of "
-						+ model.getClass().getName() + " was already deleted! ");
+			if (!model.isDeleted()) {
+				model.setDeleted(new Timestamp(System.currentTimeMillis()));
+				this.sqlQuery.update(model);
 			}
-			model.setDeleted(new Timestamp(System.currentTimeMillis()));
-			this.sqlQuery.update(model);
 		} catch (SQLTimeoutException e) {
 			// TODO
 		} catch (SQLException e) {

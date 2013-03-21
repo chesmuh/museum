@@ -1,5 +1,6 @@
 package de.chesmuh.ordo.data;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import de.chesmuh.ordo.data.manager.ExhibitManager;
@@ -89,6 +90,12 @@ public class DataAccess {
 
 	public Exhibit getExhibitById(Long id) {
 		return exhibitManager.getbyId(id);
+	}
+
+	public void deleteExhibits(ArrayList<Exhibit> toDelete) {
+		for(Exhibit e : toDelete) { 
+			exhibitManager.markAsDeleted(e);
+		}
 	}
 
 }

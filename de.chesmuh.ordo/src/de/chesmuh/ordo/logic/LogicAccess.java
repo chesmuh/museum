@@ -1,5 +1,7 @@
 package de.chesmuh.ordo.logic;
 
+import java.util.ArrayList;
+
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Section;
@@ -38,6 +40,10 @@ public class LogicAccess {
 		Exhibit exhibit = new Exhibit(museumId, sectionId, name, description);
 		DataAccess.getInstance().saveExhibit(exhibit);
 		return exhibit;
+	}
+
+	public static void deleteExhibits(ArrayList<Exhibit> toDelete) {
+		DataAccess.getInstance().deleteExhibits(toDelete);
 	}
 
 }

@@ -80,4 +80,42 @@ public class Ordo {
 				+ INSERTED + " timestamp not null,\n\t"
 				+ DELETED + " timestamp null\n);";
 	}
+
+	public static class Label {
+		
+		private Label() {
+			
+		}
+		
+		public static final String TABLE_NAME = "label";
+		public static final String ID = "id";
+		public static final String NAME = "name";
+		public static final String DELETED = "deleted";
+		public static final String INSERTED = "inserted";
+		public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "	+ TABLE_NAME + " (\n\t" 
+				+ ID + " int unsigned primary key auto_increment,\n\t" 
+				+ NAME + " varchar(255) not null,\n\t" 
+				+ INSERTED + " timestamp not null,\n\t"
+				+ DELETED + " timestamp null\n);";
+	}
+	
+	public static class Labeled {
+		
+		private Labeled() {
+			
+		}
+		
+		public static final String TABLE_NAME = "label";
+		public static final String ID = "id";
+		public static final String EXHIBIT_ID = "exhibit_id";
+		public static final String LABEL_ID = "label_id";
+		public static final String DELETED = "deleted";
+		public static final String INSERTED = "inserted";
+		public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "	+ TABLE_NAME + " (\n\t" 
+				+ ID + " int unsigned primary key auto_increment,\n\t"
+				+ EXHIBIT_ID + " int unsigned not null,\n\t"
+				+ LABEL_ID + " int unsigned not null,\n\t"
+				+ INSERTED + " timestamp not null,\n\t"
+				+ DELETED + " timestamp null\n);"; 
+	}
 }

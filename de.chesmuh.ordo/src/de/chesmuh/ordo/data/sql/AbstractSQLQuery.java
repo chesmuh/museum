@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 import de.chesmuh.ordo.data.Database;
 import de.chesmuh.ordo.entitys.DatabaseElement;
@@ -28,6 +29,8 @@ public abstract class AbstractSQLQuery<Element extends DatabaseElement> implemen
 	private final String tableName;
 	private final String keyName;
 	private final String[] valueNames;
+	
+	private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME); 
 
 	public AbstractSQLQuery(String[] createTableSQLs, String key, String table,
 			String... values) throws SQLException {
@@ -42,6 +45,7 @@ public abstract class AbstractSQLQuery<Element extends DatabaseElement> implemen
 	@Override
 	public void createTables() throws SQLException {
 		for (String sql : createTableSQLs) {
+			LOGGER.info(sql);
 			Database.getInstance().getConnection().createStatement()
 					.execute(sql);
 		}

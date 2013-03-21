@@ -3,9 +3,11 @@ package de.chesmuh.ordo.data;
 import java.util.Collection;
 
 import de.chesmuh.ordo.data.manager.ExhibitManager;
+import de.chesmuh.ordo.data.manager.LabelManager;
 import de.chesmuh.ordo.data.manager.MuseumManager;
 import de.chesmuh.ordo.data.manager.SectionManager;
 import de.chesmuh.ordo.entitys.Exhibit;
+import de.chesmuh.ordo.entitys.Label;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 
@@ -21,6 +23,7 @@ public class DataAccess {
 	private MuseumManager museumManager;
 	private SectionManager sectionManager;
 	private ExhibitManager exhibitManager;
+	private LabelManager labelManager;
 	
 	private DataAccess() {
 		museumManager = new MuseumManager();
@@ -29,6 +32,8 @@ public class DataAccess {
 		sectionManager.loadAll();
 		exhibitManager = new ExhibitManager();
 		exhibitManager.loadAll();
+		labelManager = new LabelManager();
+		labelManager.loadAll();
 	}
 	
 	public static DataAccess getInstance() {
@@ -78,5 +83,8 @@ public class DataAccess {
 		exhibitManager.store(exhibit);
 	}
 
+	public Collection<Label> getAllLabels() {
+		return labelManager.getAll();
+	}
 
 }

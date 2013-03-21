@@ -11,6 +11,8 @@ public class OrdoUI {
 	// ----- Menu -----
 	public static final String MENU_FILE = "menu.file";
 	public static final String MENU_FILE_CLOSE = "menu.file.close";
+	public static final String MENU_FILE_NEW = "menu.file.new";
+	public static final String MENU_FILE_NEW_MUSEUM = "menu.file.new.museum";
 	
 	// ----- Table ------
 	public static final String TABLE_GROUP_SECTION = "table.group.section";
@@ -67,6 +69,7 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+
 
 
 

@@ -115,7 +115,18 @@ public class MainFrame {
 		MenuItem menuItemFile = new MenuItem(menuBar, SWT.CASCADE);
 		menuItemFile.setText(uiBundle.getString(OrdoUI.MENU_FILE));
 		Menu menuFile = new Menu(menuItemFile);
-
+		
+		// ---- File.New ----
+		MenuItem menuItemNew = new MenuItem(menuFile, SWT.CASCADE);
+		menuItemNew.setText(uiBundle.getString(OrdoUI.MENU_FILE_NEW));
+		Menu menuNew = new Menu(menuItemNew);
+		menuItemNew.setMenu(menuNew);
+	    
+	    // ----- File.New.Museum -----
+	    MenuItem menuItemNewMuseum = new MenuItem(menuNew, SWT.CASCADE);
+		menuItemNewMuseum.setText(uiBundle.getString(OrdoUI.MENU_FILE_NEW_MUSEUM));
+		menuItemNewMuseum.setImage(ResourceManager.getImage(shell.getDisplay(), OrdoUI.IMAGES_MUSEUM));
+	    
 		// ----- File.Close -----
 		MenuItem menuItemFileClose = new MenuItem(menuFile, SWT.CASCADE);
 		menuItemFileClose.setText(uiBundle.getString(OrdoUI.MENU_FILE_CLOSE));

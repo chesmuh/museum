@@ -52,6 +52,7 @@ public class TableComposite extends Composite implements IUiListener {
 		ToolItem toolItemAdd = new ToolItem(toolBar, SWT.PUSH);
 		toolItemAdd.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_ADD));
+		toolItemAdd.addSelectionListener(new AddExhibitAdapter());
 		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
 		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_REMOVE));
@@ -65,8 +66,8 @@ public class TableComposite extends Composite implements IUiListener {
 		table.addSelectionListener(new TableSelectionAdapter());
 
 		// ----- Listener -----
-		MainFrame.addObserver(UiEventType.MuseumSelected, this);
 		MainFrame.addObserver(UiEventType.SectionSelected, this);
+		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
 	}
 
 	@Override
@@ -79,6 +80,10 @@ public class TableComposite extends Composite implements IUiListener {
 				showExhibitsBySection(section);
 			}
 			break;
+		case ExhibitAdded:
+			if (event.getData() instanceof Exhibit) {
+				showExhibitsBySection(((Exhibit) event.getData()).getSection());
+			}
 		default:
 			break;
 		}
@@ -129,17 +134,29 @@ public class TableComposite extends Composite implements IUiListener {
 	}
 
 	private class TableSelectionAdapter extends SelectionAdapter {
-		
+
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			if(table.getSelection().length > 0) {
+			if (table.getSelection().length > 0) {
 				Object data = table.getSelection()[0].getData();
-				if(data instanceof Exhibit) {
-					UiEvent event = new UiEvent(TableComposite.this, data, UiEventType.ExhibitSelected);
+				if (data instanceof Exhibit) {
+					UiEvent event = new UiEvent(TableComposite.this, data,
+							UiEventType.ExhibitSelected);
 					MainFrame.handleEvent(event);
 				}
 			}
 		}
-		
+
+	}
+
+	private class AddExhibitAdapter extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			UiEvent event;
+			event = new UiEvent(null, null, UiEventType.AddExhibit);
+			MainFrame.handleEvent(event);
+		}
+
 	}
 }

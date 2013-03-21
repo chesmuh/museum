@@ -13,6 +13,7 @@ import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
+import de.chesmuh.ordo.gui.composites.dialogs.CreateExhibitComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.CreateSectionComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.ExhibitInformationComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.MuseumInformationComposite;
@@ -56,6 +57,9 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.ExhibitSelected, this);
 		MainFrame.addObserver(UiEventType.MuseumSelected, this);
 		MainFrame.addObserver(UiEventType.SectionSelected, this);
+		MainFrame.addObserver(UiEventType.AddExhibit, this);
+		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
+		MainFrame.addObserver(UiEventType.AddExhibitCanceled, this);
 	}
 
 	@Override
@@ -68,6 +72,11 @@ public class DetailComposite extends Composite implements IUiListener {
 					saveState = false;
 				}
 				break;
+			case AddExhibitCanceled:
+			case ExhibitAdded:
+				if(eventTypeThatLocked == UiEventType.AddExhibit) {
+					saveState = false;
+				}
 			default:
 				break;
 			}
@@ -76,6 +85,9 @@ public class DetailComposite extends Composite implements IUiListener {
 		if (!saveState) {
 			switch (event.getType()) {
 			case AddExhibit:
+				saveState = true;
+				eventTypeThatLocked = event.getType();
+				showExhibitCreate(event.getData());
 				break;
 			case AddLabel:
 				break;
@@ -102,15 +114,17 @@ public class DetailComposite extends Composite implements IUiListener {
 				showSectionInfos(event.getData());
 				break;
 			case SectionAdded:
+			case AddSectionCanceled:
+			case ExhibitAdded:
+			case AddExhibitCanceled:
 				showNothing();
 				break;
-			case AddSectionCanceled:
-				showNothing();
 			default:
 				break;
 			}
 		}
 	}
+
 
 	private void showSectionInfos(Object data) {
 		if (data instanceof Section) {
@@ -143,6 +157,13 @@ public class DetailComposite extends Composite implements IUiListener {
 		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_ADD_SECTION));
 		clearGroup();
 		new CreateSectionComposite(group, data);
+		group.layout();
+	}
+
+	private void showExhibitCreate(Object data) {
+		group.setText(bundle.getString(OrdoUI.DETAIL_GROUP_ADD_EXHIBIT));
+		clearGroup();
+		new CreateExhibitComposite(group, data);
 		group.layout();
 	}
 

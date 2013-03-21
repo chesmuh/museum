@@ -74,5 +74,9 @@ public class DataAccess {
 		sectionManager.store(section);
 	}
 
+	public void saveExhibit(Exhibit exhibit) {
+		exhibitManager.store(exhibit);
+	}
+
 
 }

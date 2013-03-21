@@ -33,8 +33,9 @@ public class OrdoUI {
 	public static final String DETAIL_GROUP_ADD_SECTION = "detail.section.add.title";
 	public static final String DETAIL_SECTION_ADD_NOPARENT = "detail.section.add.noparent";
 	public static final String DETAIL_SECTION_ADD_NOPARENT_TITLE = "detail.section.add.noparent.title";
-	public static final String DETAIL_SECTION_ADD_SAVE = "detail.section.add.save";
-	public static final String DETAIL_SECTION_ADD_CANCEL = "detail.section.add.cancel";
+	public static final String DETAIL_GROUP_ADD_EXHIBIT = "detail.exhibit.add.title";
+	public static final String DETAIL_SAVE = "detail.section.add.save";
+	public static final String DETAIL_CANCEL = "detail.section.add.cancel";
 	public static final String DETAIL_SECTION_NAME = "detail.section.name";
 	public static final String DETAIL_SECTION_DESCRIPTION = "detail.section.description";
 	public static final String DETAIL_SECTION_PARENTSECTION = "detail.section.parentsection";
@@ -66,6 +67,7 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+
 
 
 

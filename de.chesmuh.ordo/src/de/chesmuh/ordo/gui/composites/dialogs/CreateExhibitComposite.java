@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Text;
 
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.DataAccess;
+import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
@@ -30,7 +31,7 @@ import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 import de.chesmuh.ordo.logic.LogicAccess;
 
-public class CreateSectionComposite extends Composite {
+public class CreateExhibitComposite extends Composite {
 
 	private ResourceBundle bundle;
 	private Text textParent;
@@ -39,7 +40,7 @@ public class CreateSectionComposite extends Composite {
 
 	private Object selection;
 
-	public CreateSectionComposite(Composite parent, Object selection) {
+	public CreateExhibitComposite(Composite parent, Object selection) {
 		super(parent, SWT.NONE);
 		this.bundle = Config.getInstance().getUIBundle();
 		this.selection = selection;
@@ -54,7 +55,7 @@ public class CreateSectionComposite extends Composite {
 
 		// ----- Name -----
 		Label label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_NAME));
+		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_NAME));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -66,7 +67,7 @@ public class CreateSectionComposite extends Composite {
 
 		// ----- ParentSection -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_PARENTSECTION));
+		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_SECTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -94,7 +95,7 @@ public class CreateSectionComposite extends Composite {
 
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
-		label.setText(bundle.getString(OrdoUI.DETAIL_SECTION_DESCRIPTION));
+		label.setText(bundle.getString(OrdoUI.DETAIL_EXHIBIT_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -162,9 +163,9 @@ public class CreateSectionComposite extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			String name = textName.getText();
 			String description = textDescription.getText();
-			Section section = null;
-			Museum museum = null;
+			Long museum_id = null;
 			Long section_id = null;
+			Exhibit exhibit = null;
 
 			if (null == textParent.getData()) {
 				MessageBox messageBox = new MessageBox(getShell());
@@ -174,17 +175,14 @@ public class CreateSectionComposite extends Composite {
 				messageBox.open();
 			} else {
 				if (textParent.getData() instanceof Section) {
-					section = ((Section) textParent.getData());
-					section_id = section.getId();
-					museum = section.getMuseum();
+					section_id = ((Section) textParent.getData()).getId();
 				} else if(textParent.getData() instanceof Museum) {
-					museum = (Museum) textParent.getData();
+					museum_id = ((Museum) textParent.getData()).getId();
 				} 
 				
-				section = LogicAccess.saveSection(museum.getId(), section_id, name,
-						description);
-				UiEvent event = new UiEvent(CreateSectionComposite.this, section,
-						UiEventType.SectionAdded);
+				exhibit = LogicAccess.saveExhibit(museum_id, section_id, name, description);
+				UiEvent event = new UiEvent(CreateExhibitComposite.this, exhibit,
+						UiEventType.ExhibitAdded);
 				MainFrame.handleEvent(event);
 			}
 
@@ -196,8 +194,8 @@ public class CreateSectionComposite extends Composite {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			UiEvent event = new UiEvent(CreateSectionComposite.this, null,
-					UiEventType.AddSectionCanceled);
+			UiEvent event = new UiEvent(CreateExhibitComposite.this, null,
+					UiEventType.AddExhibitCanceled);
 			MainFrame.handleEvent(event);
 		}
 	}

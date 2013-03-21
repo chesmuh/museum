@@ -43,6 +43,9 @@ public class SQLQueryExhibit extends AbstractSQLQuery<Exhibit> {
 			if(0L == sectionId) {
 				sectionId = null;
 			}
+			if(null == description) {
+				description = "";
+			}
 			result.add(new Exhibit(id, inserted, deleted, museumId, sectionId,
 					name, description));
 		}

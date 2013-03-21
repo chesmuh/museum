@@ -57,6 +57,12 @@ public class OrdoUI {
 	public static final String BUTTON_CANCEL = "button.cancel";
 	public static final String BUTTON_EDIT = "button.edit";
 
+	// ----- Messages -----
+	public static final String MSG_DELETE_EXHIBIT_TITLE = "msg.delete.exhibit.title";
+	public static final String MSG_DELETE_MANY_EXHIBIT = "msg.delete.exhibit.many";
+	public static final String MSG_DELETE_EXHIBITS = "msg.delte.exhibits";
+	public static final String MSG_DELETE_EXHIBIT = "msg.delete.exhibit";
+	
 	// ----- Error -----
 	public static final String ERROR_NOPARENT = "error.noparent";
 	public static final String ERROR_NOPARENT_TITLE = "error.noparent.title";
@@ -72,5 +78,7 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+
+
 
 }

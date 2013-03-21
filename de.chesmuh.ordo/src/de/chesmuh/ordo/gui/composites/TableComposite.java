@@ -1,5 +1,6 @@
 package de.chesmuh.ordo.gui.composites;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
@@ -9,6 +10,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -25,11 +27,13 @@ import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
+import de.chesmuh.ordo.logic.LogicAccess;
 
 public class TableComposite extends Composite implements IUiListener {
 
 	private Table table;
 	private Group group;
+	private Object criterion;
 
 	public TableComposite(Composite parent, int style) {
 		super(parent, style);
@@ -53,6 +57,7 @@ public class TableComposite extends Composite implements IUiListener {
 		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
 		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_REMOVE));
+		toolItemRemove.addSelectionListener(new RemoveExhibitAdapter());
 
 		// ----- Table -----
 		table = new Table(group, SWT.MULTI | SWT.FULL_SELECTION);
@@ -66,6 +71,7 @@ public class TableComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.SectionSelected, this);
 		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
 		MainFrame.addObserver(UiEventType.LabelSelected, this);
+		MainFrame.addObserver(UiEventType.ExhibitDeleted, this);
 	}
 
 	@Override
@@ -82,16 +88,22 @@ public class TableComposite extends Composite implements IUiListener {
 			if (event.getData() instanceof Exhibit) {
 				showExhibitsBySection(((Exhibit) event.getData()).getSection());
 			}
+			break;
 		case LabelSelected:
 			if (event.getData() instanceof Label) {
 				showExhibitsByLabel((Label) event.getData());
 			}
+			break;
+		case ExhibitDeleted:
+			refreshTable();
+			break;
 		default:
 			break;
 		}
 	}
 
 	private void showExhibitsByLabel(Label label) {
+		criterion = label;
 		table.setRedraw(false);
 		group.setText(ResourceManager.getText(OrdoUI.TABLE_GROUP_EXHIBIT));
 		deleteAllColumn();
@@ -114,6 +126,7 @@ public class TableComposite extends Composite implements IUiListener {
 	}
 
 	private void showExhibitsBySection(Section section) {
+		criterion = section;
 		table.setRedraw(false);
 		group.setText(ResourceManager.getText(OrdoUI.TABLE_GROUP_EXHIBIT));
 		deleteAllColumn();
@@ -155,6 +168,19 @@ public class TableComposite extends Composite implements IUiListener {
 			column.pack();
 		}
 	}
+	
+	private void refreshTable() {
+		if(null == criterion) {
+			table.setRedraw(false);
+			deleteAllColumn();
+			deleteAllItems();
+			table.setRedraw(true);
+		} else if(criterion instanceof Section) {
+			this.showExhibitsBySection((Section) criterion);
+		} else if(criterion instanceof Label) {
+			this.showExhibitsByLabel((Label) criterion);
+		}
+	}
 
 	private class TableSelectionAdapter extends SelectionAdapter {
 
@@ -181,5 +207,44 @@ public class TableComposite extends Composite implements IUiListener {
 			MainFrame.handleEvent(event);
 		}
 
+	}
+	
+	private class RemoveExhibitAdapter extends SelectionAdapter {
+		
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			ArrayList<Exhibit> toDelete = new ArrayList<Exhibit>();
+			TableItem[] selection = table.getSelection();
+			String name = "";
+			for(int i = 0; i < selection.length; i++) {
+				TableItem item = selection[i];
+				if(item.getData() instanceof Exhibit) {
+					Exhibit exh = (Exhibit) item.getData();
+					toDelete.add(exh);
+					if(i < 5) {
+						name = name + exh.getName() + "\n";	
+					}
+				}
+			}			
+			int many = selection.length - 5;
+			String msg = "";
+			if(many > 0) {
+				msg = String.format(ResourceManager.getText(OrdoUI.MSG_DELETE_MANY_EXHIBIT), name, many); 
+			} else if(selection.length > 1) {
+				msg = String.format(ResourceManager.getText(OrdoUI.MSG_DELETE_EXHIBITS), name);
+			} else {
+				msg = String.format(ResourceManager.getText(OrdoUI.MSG_DELETE_EXHIBIT), name);
+			}
+			MessageBox messageBox = new MessageBox(getShell(), SWT.YES | SWT.NO);
+			messageBox.setText(ResourceManager.getText(OrdoUI.MSG_DELETE_EXHIBIT_TITLE));
+			messageBox.setMessage(msg);
+			int result = messageBox.open();
+			if(SWT.YES == result) {
+				LogicAccess.deleteExhibits(toDelete);
+				UiEvent event = new UiEvent(table, toDelete, UiEventType.ExhibitDeleted);
+				MainFrame.handleEvent(event);
+			}
+		}
+		
 	}
 }

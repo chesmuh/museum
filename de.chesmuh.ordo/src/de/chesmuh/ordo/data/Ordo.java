@@ -50,7 +50,7 @@ public class Ordo {
 				+ TABLE_NAME + " (\n\t" + ID
 				+ " int unsigned primary key auto_increment,\n\t" + PARENT_ID
 				+ " int unsigned null,\n\t" + MUSEUM_ID
-				+ " int unsigned null,\n\t" + NAME
+				+ " int unsigned not null,\n\t" + NAME
 				+ " varchar(255) not null,\n\t" + DESCRIPTION
 				+ " text null,\n\t" + INSERTED + " timestamp not null,\n\t"
 				+ DELETED + " timestamp null\n);";
@@ -105,17 +105,13 @@ public class Ordo {
 			
 		}
 		
-		public static final String TABLE_NAME = "label";
-		public static final String ID = "id";
+		public static final String TABLE_NAME = "labeled";
+		public static final String ID = "labeled_id";
 		public static final String EXHIBIT_ID = "exhibit_id";
 		public static final String LABEL_ID = "label_id";
-		public static final String DELETED = "deleted";
-		public static final String INSERTED = "inserted";
 		public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "	+ TABLE_NAME + " (\n\t" 
 				+ ID + " int unsigned primary key auto_increment,\n\t"
 				+ EXHIBIT_ID + " int unsigned not null,\n\t"
-				+ LABEL_ID + " int unsigned not null,\n\t"
-				+ INSERTED + " timestamp not null,\n\t"
-				+ DELETED + " timestamp null\n);"; 
+				+ LABEL_ID + " int unsigned not null\n);";
 	}
 }

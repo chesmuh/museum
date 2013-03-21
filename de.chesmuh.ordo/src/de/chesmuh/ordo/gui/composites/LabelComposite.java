@@ -19,6 +19,8 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.chesmuh.ordo.config.Config;
+import de.chesmuh.ordo.data.DataAccess;
+import de.chesmuh.ordo.entitys.Label;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
@@ -54,14 +56,7 @@ public class LabelComposite extends Composite {
 		// ----- Tree -----
 		tree = new Tree(group, SWT.V_SCROLL | SWT.MULTI);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		for (int i = 0; i < 5; i++) {
-			TreeItem item = new TreeItem(tree, SWT.NONE);
-			item.setText(String.valueOf(i));
-			for (int j = 0; j < 3; j++) {
-				TreeItem subItem = new TreeItem(item, SWT.NONE);
-				subItem.setText(String.valueOf(i) + " " + String.valueOf(j));
-			}
-		}
+		refreshTree();
 		tree.pack();
 
 		// ----- DragSouce -----
@@ -69,6 +64,14 @@ public class LabelComposite extends Composite {
 		dragSource.setTransfer(new Transfer[] { TextTransfer.getInstance() });
 		dragSource.addDragListener(new TreeDragSourceAdapter());
 
+	}
+
+	private void refreshTree() {
+		for(Label label : DataAccess.getInstance().getAllLabels()) {
+			TreeItem item = new TreeItem(tree, SWT.NONE);
+			item.setText(label.getName());
+			item.setData(label);
+		}
 	}
 
 	private class TreeDragSourceAdapter extends DragSourceAdapter {

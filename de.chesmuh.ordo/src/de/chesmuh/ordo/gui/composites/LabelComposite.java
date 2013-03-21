@@ -9,6 +9,8 @@ import org.eclipse.swt.dnd.DragSourceAdapter;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -21,6 +23,9 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.chesmuh.ordo.config.Config;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Label;
+import de.chesmuh.ordo.gui.MainFrame;
+import de.chesmuh.ordo.gui.interfaces.UiEvent;
+import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
@@ -57,6 +62,7 @@ public class LabelComposite extends Composite {
 		tree = new Tree(group, SWT.V_SCROLL | SWT.MULTI);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		refreshTree();
+		tree.addSelectionListener(new TreeSelectionListener());
 		tree.pack();
 
 		// ----- DragSouce -----
@@ -81,5 +87,20 @@ public class LabelComposite extends Composite {
 			event.data = tree.getSelection()[0].getText();
 		}
 
+	}
+	
+	
+	private class TreeSelectionListener extends SelectionAdapter {
+		
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			TreeItem selection = tree.getSelection()[0];
+			if (selection.getData() instanceof Label) {
+				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
+						UiEventType.LabelSelected);
+				MainFrame.handleEvent(uiEvent);
+			}
+		}
+		
 	}
 }

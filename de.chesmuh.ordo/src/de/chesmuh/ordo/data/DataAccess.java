@@ -87,4 +87,8 @@ public class DataAccess {
 		return labelManager.getAll();
 	}
 
+	public Exhibit getExhibitById(Long id) {
+		return exhibitManager.getbyId(id);
+	}
+
 }

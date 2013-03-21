@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import de.chesmuh.ordo.config.Config;
-import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
+import de.chesmuh.ordo.entitys.Label;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
@@ -68,6 +68,7 @@ public class TableComposite extends Composite implements IUiListener {
 		// ----- Listener -----
 		MainFrame.addObserver(UiEventType.SectionSelected, this);
 		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
+		MainFrame.addObserver(UiEventType.LabelSelected, this);
 	}
 
 	@Override
@@ -84,12 +85,16 @@ public class TableComposite extends Composite implements IUiListener {
 			if (event.getData() instanceof Exhibit) {
 				showExhibitsBySection(((Exhibit) event.getData()).getSection());
 			}
+		case LabelSelected:
+			if (event.getData() instanceof Label) {
+				showExhibitsByLabel((Label) event.getData());
+			}
 		default:
 			break;
 		}
 	}
 
-	private void showExhibitsBySection(Section section) {
+	private void showExhibitsByLabel(Label label) {
 		table.setRedraw(false);
 		group.setText(bundle.getString(OrdoUI.TABLE_GROUP_EXHIBIT));
 		deleteAllColumn();
@@ -97,9 +102,8 @@ public class TableComposite extends Composite implements IUiListener {
 		addColumns(new String[] { bundle.getString(OrdoUI.TABLE_HEADERS_NAME),
 				bundle.getString(OrdoUI.TABLE_HEADERS_SECTION),
 				bundle.getString(OrdoUI.TABLE_HEADERS_DESCRIPTION) });
-		Collection<Exhibit> exhibitBySection = DataAccess.getInstance()
-				.getExhibitBySection(section);
-		for (Exhibit exhibit : exhibitBySection) {
+		Collection<Exhibit> exhibits = label.getExhibits();
+		for (Exhibit exhibit : exhibits) {
 			TableItem item = new TableItem(table, SWT.NONE);
 			Section exhibitSection = exhibit.getSection();
 			item.setText(0, exhibit.getName());
@@ -110,6 +114,10 @@ public class TableComposite extends Composite implements IUiListener {
 			item.setData(exhibit);
 		}
 		table.setRedraw(true);
+
+	}
+
+	private void showExhibitsBySection(Section section) {
 	}
 
 	private void deleteAllItems() {

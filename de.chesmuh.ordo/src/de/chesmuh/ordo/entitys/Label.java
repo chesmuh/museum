@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import de.chesmuh.ordo.data.DataAccess;
+
 public class Label extends DatabaseElement {
 
 	private String name;
@@ -51,6 +53,16 @@ public class Label extends DatabaseElement {
 
 	public void addExhibit_id(Long exhibit_id) {
 		exhibit_ids.add(exhibit_id);		
+	}
+
+	public Collection<Exhibit> getExhibits() {
+		ArrayList<Exhibit> ret = new ArrayList<Exhibit>();
+		for(Long id : exhibit_ids) {
+			if(id != null) {
+				ret.add(DataAccess.getInstance().getExhibitById(id));
+			}
+		}
+		return ret;
 	}
 	
 }

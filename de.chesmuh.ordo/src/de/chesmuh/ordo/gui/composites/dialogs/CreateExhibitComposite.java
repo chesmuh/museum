@@ -236,10 +236,9 @@ public class CreateExhibitComposite extends Composite {
 				} else if (textParent.getData() instanceof Museum) {
 					museumId = ((Museum) textParent.getData()).getId();
 				}
-
 				try {
-					exhibit = LogicAccess.saveExhibit(museumId, sectionId, name,
-							description);
+					exhibit = LogicAccess.saveExhibit(museumId, sectionId,
+							name, description);
 					UiEvent event = new UiEvent(CreateExhibitComposite.this,
 							exhibit, UiEventType.ExhibitAdded);
 					MainFrame.handleEvent(event);

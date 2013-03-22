@@ -63,14 +63,14 @@ public class Exhibit extends DatabaseElement {
 	}
 
 	public Section getSection() {
-		if(null != sectionId) {
+		if(null == sectionId) {
 			return null;
 		}
 		return DataAccess.getInstance().getSectionById(sectionId);
 	}
 
 	public Museum getMuseum() {
-		if(null != museumId) {
+		if(null == museumId) {
 			return null;
 		}
 		return DataAccess.getInstance().getMuseumById(museumId);

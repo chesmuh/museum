@@ -157,7 +157,6 @@ public class CreateExhibitComposite extends Composite {
 		@Override
 		public void drop(DropTargetEvent event) {
 			String msg = (String) event.data;
-			String text = "";
 			String[] labels = msg.split(";");
 			for (String msgTag : labels) {
 				String[] split = msgTag.split("/");
@@ -170,14 +169,15 @@ public class CreateExhibitComposite extends Composite {
 						} else {
 							tags.remove(tag);
 						}
-						for (Tag tagName : tags) {
-							if (!text.isEmpty()) {
-								text += ", " + tagName.getName();
-							} else {
-								text += tagName.getName();
-							}
-						}
 					}
+				}
+			}
+			String text = "";
+			for (Tag tagName : tags) {
+				if (!text.isEmpty()) {
+					text += ", " + tagName.getName();
+				} else {
+					text += tagName.getName();
 				}
 			}
 			textTag.setText(text);

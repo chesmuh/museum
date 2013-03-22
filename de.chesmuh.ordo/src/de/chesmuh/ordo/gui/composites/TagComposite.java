@@ -80,13 +80,18 @@ public class TagComposite extends Composite {
 		@Override
 		public void dragSetData(DragSourceEvent event) {
 			StringBuilder stringBuilder = new StringBuilder();
-			Object object = tree.getSelection()[0].getData();
-			if (object instanceof Tag) {
-				de.chesmuh.ordo.entitys.Tag label = (Tag) object;
-				stringBuilder.append("label/");
-				stringBuilder.append(Long.toString(label.getId()));
+			TreeItem[] selection = tree.getSelection();
+			for(TreeItem item : selection) {
+				Object object = item.getData();
+				if (object instanceof Tag) {
+					de.chesmuh.ordo.entitys.Tag label = (Tag) object;
+					stringBuilder.append("label/");
+					stringBuilder.append(Long.toString(label.getId()));
+				}
+				stringBuilder.append(";");
 			}
 			event.data = stringBuilder.toString();
+			
 		}
 
 	}

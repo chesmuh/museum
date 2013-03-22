@@ -99,7 +99,11 @@ public class TableComposite extends Composite implements IUiListener {
 			break;
 		case ExhibitAdded:
 			if (event.getData() instanceof Exhibit) {
-				showExhibitsBySection(((Exhibit) event.getData()).getSection());
+				Exhibit exhibit = (Exhibit) event.getData();
+				if (null != exhibit.getSection()) {
+					showExhibitsBySection(((Exhibit) event.getData())
+							.getSection());
+				}
 			}
 			break;
 		case TagSelected:
@@ -130,7 +134,8 @@ public class TableComposite extends Composite implements IUiListener {
 				ResourceManager.getText(OrdoUI.TABLE_HEADER_NAME),
 				ResourceManager.getText(OrdoUI.TABLE_HEADER_SECTION),
 				ResourceManager.getText(OrdoUI.TABLE_HEADER_DESCRIPTION) });
-		Collection<Exhibit> exhibits = DataAccess.getInstance().getExhibitsByMuseumWithSectionNull(museum);
+		Collection<Exhibit> exhibits = DataAccess.getInstance()
+				.getExhibitsByMuseumWithSectionNull(museum);
 		for (Exhibit exhibit : exhibits) {
 			TableItem item = new TableItem(table, SWT.NONE);
 			Section exhibitSection = exhibit.getSection();
@@ -261,7 +266,7 @@ public class TableComposite extends Composite implements IUiListener {
 			ArrayList<Exhibit> toDelete = new ArrayList<Exhibit>();
 			TableItem[] selection = table.getSelection();
 			String name = "";
-			if(selection.length == 0) {
+			if (selection.length == 0) {
 				return;
 			}
 			for (int i = 0; i < selection.length; i++) {
@@ -304,16 +309,16 @@ public class TableComposite extends Composite implements IUiListener {
 		}
 
 	}
-	
+
 	private class TableDragSourceAdapter extends DragSourceAdapter {
-		
+
 		@Override
 		public void dragSetData(DragSourceEvent event) {
 			StringBuilder stringBuilder = new StringBuilder();
 			TableItem[] selection = table.getSelection();
-			for(TableItem item : selection) {
+			for (TableItem item : selection) {
 				Object data = item.getData();
-				if(data instanceof Exhibit) {
+				if (data instanceof Exhibit) {
 					Exhibit exhibit = (Exhibit) item.getData();
 					stringBuilder.append("exhibit/");
 					stringBuilder.append(exhibit.getId());
@@ -322,6 +327,6 @@ public class TableComposite extends Composite implements IUiListener {
 			}
 			event.data = stringBuilder.toString();
 		}
-		
+
 	}
 }

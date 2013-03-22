@@ -1,26 +1,15 @@
 package de.chesmuh.ordo.gui.interfaces;
 
-import org.eclipse.swt.widgets.Composite;
 
 
 public class UiEvent {
 	
-	private Composite sender;
 	private Object data;
 	private UiEventType type;
 	
-	public UiEvent(Composite sender, Object data, UiEventType type) { 
-		this.sender = sender;
+	public UiEvent(Object data, UiEventType type) { 
 		this.data = data;
 		this.type = type;
-	}
-
-	public Composite getSender() {
-		return sender;
-	}
-
-	public void setSender(Composite sender) {
-		this.sender = sender;
 	}
 
 	public Object getData() {

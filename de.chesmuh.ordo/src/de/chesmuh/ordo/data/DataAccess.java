@@ -24,7 +24,7 @@ public class DataAccess {
 	private MuseumManager museumManager;
 	private SectionManager sectionManager;
 	private ExhibitManager exhibitManager;
-	private TagManager labelManager;
+	private TagManager tagManager;
 	
 	private DataAccess() {
 		museumManager = new MuseumManager();
@@ -33,8 +33,8 @@ public class DataAccess {
 		sectionManager.loadAll();
 		exhibitManager = new ExhibitManager();
 		exhibitManager.loadAll();
-		labelManager = new TagManager();
-		labelManager.loadAll();
+		tagManager = new TagManager();
+		tagManager.loadAll();
 	}
 	
 	public static DataAccess getInstance() {
@@ -50,6 +50,10 @@ public class DataAccess {
 	
 	public Museum getMuseumById(long id) {
 		return museumManager.getbyId(id);
+	}
+
+	public Collection<Exhibit> getExhibitsByMuseumWithSectionNull(Museum museum) {
+		return exhibitManager.getByMuseumWithSectionNull(museum);
 	}
 
 	public Collection<Exhibit> getExhibitBySection(Section section) {
@@ -85,7 +89,7 @@ public class DataAccess {
 	}
 
 	public Collection<Tag> getAllLabels() {
-		return labelManager.getAll();
+		return tagManager.getAll();
 	}
 
 	public Exhibit getExhibitById(Long id) {
@@ -98,8 +102,17 @@ public class DataAccess {
 		}
 	}
 
-	public de.chesmuh.ordo.entitys.Tag getTagById(Long id) {
-		return labelManager.getbyId(id);
+	public Tag getTagById(Long id) {
+		return tagManager.getbyId(id);
+	}
+
+	public void saveTag(Tag tag) {
+		tagManager.store(tag);
+	}
+
+	public void addExhibitToTag(Tag tag, Exhibit exhibit) {
+		tag.getExhibit_ids().add(exhibit.getId());
+		tagManager.update(tag);
 	}
 
 }

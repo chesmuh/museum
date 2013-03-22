@@ -12,6 +12,7 @@ import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.composites.dialogs.CreateExhibitComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.CreateSectionComposite;
+import de.chesmuh.ordo.gui.composites.dialogs.CreateTagComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.ExhibitInformationComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.MuseumInformationComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.SectionInformationComposite;
@@ -56,30 +57,40 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.AddExhibit, this);
 		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
 		MainFrame.addObserver(UiEventType.AddExhibitCanceled, this);
+		MainFrame.addObserver(UiEventType.AddTag, this);
+		MainFrame.addObserver(UiEventType.TagAdded, this);
+		MainFrame.addObserver(UiEventType.AddTagCanceled, this);
 	}
 
 	@Override
 	public void handleEvent(UiEvent event) {
-		if(saveState) { // Lock and Unlock the Detail-Composite
-			switch(event.getType()) {
+		if (saveState) { // Lock and Unlock the Detail-Composite
+			switch (event.getType()) {
 			case AddSectionCanceled:
 			case SectionAdded:
-				if(eventTypeThatLocked == UiEventType.AddSection) {
+				if (eventTypeThatLocked == UiEventType.AddSection) {
 					saveState = false;
 				}
 				break;
 			case AddExhibitCanceled:
 			case ExhibitAdded:
-				if(eventTypeThatLocked == UiEventType.AddExhibit) {
+				if (eventTypeThatLocked == UiEventType.AddExhibit) {
 					saveState = false;
 				}
+			case AddTagCanceled:
+			case TagAdded:
+				if (eventTypeThatLocked == UiEventType.AddTag) {
+					saveState = false;
+				}
+
 			default:
 				break;
 			}
 		}
-		
+
 		if (!saveState) {
 			switch (event.getType()) {
+			// ----- Add -----
 			case AddExhibit:
 				saveState = true;
 				eventTypeThatLocked = event.getType();
@@ -94,21 +105,29 @@ public class DetailComposite extends Composite implements IUiListener {
 				eventTypeThatLocked = event.getType();
 				showSectionCreate(event.getData());
 				break;
+			case AddTag:
+				saveState = true;
+				eventTypeThatLocked = event.getType();
+				showTagCreate();
+				break;
+			// ----- Select -----
 			case ExhibitSelected:
 				showExhibitInfos(event.getData());
 				break;
 			case MuseumSelected:
 				showMuseumInfos(event.getData());
 				break;
+			case SectionSelected:
+				showSectionInfos(event.getData());
+				break;
+			// ----- Remove -----
 			case RemoveLabel:
 				break;
 			case RemoveMuseum:
 				break;
 			case RemoveSection:
 				break;
-			case SectionSelected:
-				showSectionInfos(event.getData());
-				break;
+			// ----- Added -----
 			case SectionAdded:
 			case AddSectionCanceled:
 			case ExhibitAdded:
@@ -121,6 +140,12 @@ public class DetailComposite extends Composite implements IUiListener {
 		}
 	}
 
+	private void showTagCreate() {
+		group.setText(ResourceManager.getText(OrdoUI.ADD_TAG_TITLE));
+		clearGroup();
+		new CreateTagComposite(group);
+		group.layout();
+	}
 
 	private void showSectionInfos(Object data) {
 		if (data instanceof Section) {

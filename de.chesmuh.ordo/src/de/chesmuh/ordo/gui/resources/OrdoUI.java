@@ -40,6 +40,8 @@ public class OrdoUI {
 	public static final String DETAIL_EXHIBIT_DESCRIPTION = "detail.exhibit.description";
 	public static final String DETAIL_MUSEUM_NAME = "detail.museum.name";
 	public static final String DETAIL_MUSEUM_DESCRIPTION = "detail.museum.description";
+	public static final String DETAIL_TAG_NAME = "detail.tag.name";
+	public static final String DETAIL_TAG_EXHIBITS = "detail.tag.exhibits";
 
 	// ----- AddSection -----
 	public static final String ADD_SECTION_TITLE = "addsection.title";
@@ -47,6 +49,9 @@ public class OrdoUI {
 	// ----- AddExhibit
 	public static final String ADD_EXHIBIT_TITLE = "addexhibit.title";
 	
+	// ----- AddTag -----
+	public static final String ADD_TAG_TITLE = "addtag.title";
+
 	// ----- Section -----
 	public static final String SECTION_TITLE = "section.title";
 
@@ -83,10 +88,6 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
-
-
-
-
 
 
 }

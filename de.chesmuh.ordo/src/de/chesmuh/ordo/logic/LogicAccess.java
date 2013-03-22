@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Section;
+import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.exceptions.EmptyNameException;
 import de.chesmuh.ordo.exceptions.MuseumNotSetException;
 import de.chesmuh.ordo.exceptions.SectionNotSetException;
@@ -27,6 +28,13 @@ public class LogicAccess {
 		Exhibit exhibit = new Exhibit(museumId, sectionId, name, description);
 		ExhibitLogic.saveExhibit(exhibit);
 		return exhibit;
+	}
+
+	public static Tag saveTag(String name, ArrayList<Exhibit> exhibits) throws EmptyNameException {
+		Tag tag = new Tag(name);
+		TagLogic.saveTag(tag);
+		TagLogic.addExhibitToTag(tag, exhibits);
+		return tag;
 	}
 
 }

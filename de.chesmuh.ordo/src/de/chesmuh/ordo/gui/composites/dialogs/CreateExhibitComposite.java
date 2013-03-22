@@ -145,7 +145,7 @@ public class CreateExhibitComposite extends Composite {
 		button.setImage(ResourceManager
 				.getImage(getDisplay(), OrdoUI.IMAGES_OK));
 		button.setText(ResourceManager.getText(OrdoUI.BUTTON_SAVE));
-		button.addSelectionListener(new SaveSelectionListener());
+		button.addSelectionListener(new SaveSelectionAdapter());
 
 		button = new Button(buttonComposite, SWT.NONE);
 		button.setImage(ResourceManager.getImage(getDisplay(),
@@ -162,7 +162,7 @@ public class CreateExhibitComposite extends Composite {
 			String[] labels = msg.split(";");
 			for (String msgTag : labels) {
 				String[] split = msgTag.split("/");
-				if (split[0].equals("label")) {
+				if (split[0].equals("tag")) {
 					Long id = Long.parseLong(split[1]);
 					Tag tag = DataAccess.getInstance().getTagById(id);
 					if (null != tag) {
@@ -213,7 +213,7 @@ public class CreateExhibitComposite extends Composite {
 
 	}
 
-	private class SaveSelectionListener extends SelectionAdapter {
+	private class SaveSelectionAdapter extends SelectionAdapter {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
@@ -239,8 +239,8 @@ public class CreateExhibitComposite extends Composite {
 				try {
 					exhibit = LogicAccess.saveExhibit(museumId, sectionId,
 							name, description);
-					UiEvent event = new UiEvent(CreateExhibitComposite.this,
-							exhibit, UiEventType.ExhibitAdded);
+					UiEvent event = new UiEvent(exhibit,
+							UiEventType.ExhibitAdded);
 					MainFrame.handleEvent(event);
 				} catch (SectionNotSetException e1) {
 					MessageBox messageBox = new MessageBox(getShell());
@@ -267,8 +267,7 @@ public class CreateExhibitComposite extends Composite {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			UiEvent event = new UiEvent(CreateExhibitComposite.this, null,
-					UiEventType.AddExhibitCanceled);
+			UiEvent event = new UiEvent(null, UiEventType.AddExhibitCanceled);
 			MainFrame.handleEvent(event);
 		}
 	}

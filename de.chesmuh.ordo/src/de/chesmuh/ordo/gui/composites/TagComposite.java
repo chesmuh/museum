@@ -21,12 +21,13 @@ import org.eclipse.swt.widgets.TreeItem;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.gui.MainFrame;
+import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
-public class TagComposite extends Composite {
+public class TagComposite extends Composite implements IUiListener {
 
 	private Tree tree;
 
@@ -49,6 +50,7 @@ public class TagComposite extends Composite {
 		ToolItem toolItemAdd = new ToolItem(toolBar, SWT.PUSH);
 		toolItemAdd.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_ADD));
+		toolItemAdd.addSelectionListener(new AddTagSelectionAdapter());
 		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
 		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_REMOVE));
@@ -65,10 +67,25 @@ public class TagComposite extends Composite {
 		dragSource.setTransfer(new Transfer[] { TextTransfer.getInstance() });
 		dragSource.addDragListener(new TreeDragSourceAdapter());
 
+		// ----- Listener -----
+		MainFrame.addObserver(UiEventType.TagAdded, this);
+
+	}
+
+	@Override
+	public void handleEvent(UiEvent event) {
+		switch (event.getType()) {
+		case TagAdded:
+			refreshTree();
+			break;
+		default:
+			break;
+		}
 	}
 
 	private void refreshTree() {
-		for(Tag label : DataAccess.getInstance().getAllLabels()) {
+		tree.removeAll();
+		for (Tag label : DataAccess.getInstance().getAllLabels()) {
 			TreeItem item = new TreeItem(tree, SWT.NONE);
 			item.setText(label.getName());
 			item.setData(label);
@@ -81,33 +98,43 @@ public class TagComposite extends Composite {
 		public void dragSetData(DragSourceEvent event) {
 			StringBuilder stringBuilder = new StringBuilder();
 			TreeItem[] selection = tree.getSelection();
-			for(TreeItem item : selection) {
+			for (TreeItem item : selection) {
 				Object object = item.getData();
 				if (object instanceof Tag) {
 					de.chesmuh.ordo.entitys.Tag label = (Tag) object;
-					stringBuilder.append("label/");
+					stringBuilder.append("tag/");
 					stringBuilder.append(Long.toString(label.getId()));
 				}
 				stringBuilder.append(";");
 			}
 			event.data = stringBuilder.toString();
-			
+
 		}
 
 	}
-	
-	
+
 	private class TreeSelectionListener extends SelectionAdapter {
-		
+
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			TreeItem selection = tree.getSelection()[0];
 			if (selection.getData() instanceof Tag) {
-				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
-						UiEventType.LabelSelected);
+				UiEvent uiEvent = new UiEvent(selection.getData(),
+						UiEventType.TagSelected);
 				MainFrame.handleEvent(uiEvent);
 			}
 		}
-		
+
 	}
+
+	private class AddTagSelectionAdapter extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			UiEvent event = new UiEvent(null, UiEventType.AddTag);
+			MainFrame.handleEvent(event);
+		}
+
+	}
+
 }

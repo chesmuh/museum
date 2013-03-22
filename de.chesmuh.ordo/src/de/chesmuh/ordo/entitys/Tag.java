@@ -11,10 +11,10 @@ public class Tag extends DatabaseElement {
 	private String name;
 	private Collection<Long> exhibit_ids;
 	
-	public Tag(String name, Collection<Long> exhibit_ids) {
+	public Tag(String name) {
 		super();
 		this.name = name;
-		this.exhibit_ids = exhibit_ids;
+		this.exhibit_ids = new ArrayList<Long>();
 	}
 	
 	public Tag(Long id, Timestamp inserted, Timestamp deleted, String name) {
@@ -59,7 +59,10 @@ public class Tag extends DatabaseElement {
 		ArrayList<Exhibit> ret = new ArrayList<Exhibit>();
 		for(Long id : exhibit_ids) {
 			if(id != null) {
-				ret.add(DataAccess.getInstance().getExhibitById(id));
+				Exhibit exhibit = DataAccess.getInstance().getExhibitById(id);
+				if(null != exhibit) {
+					ret.add(exhibit);
+				}
 			}
 		}
 		return ret;

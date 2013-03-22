@@ -138,11 +138,11 @@ public class SectionComposite extends Composite implements IUiListener {
 		public void handleEvent(Event event) {
 			TreeItem selection = tree.getSelection()[0];
 			if (selection.getData() instanceof Section) {
-				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
+				UiEvent uiEvent = new UiEvent(selection.getData(),
 						UiEventType.SectionSelected);
 				MainFrame.handleEvent(uiEvent);
 			} else if (selection.getData() instanceof Museum) {
-				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
+				UiEvent uiEvent = new UiEvent(selection.getData(),
 						UiEventType.MuseumSelected);
 				MainFrame.handleEvent(uiEvent);
 			}
@@ -157,10 +157,10 @@ public class SectionComposite extends Composite implements IUiListener {
 			UiEvent event;
 			if (tree.getSelection().length > 0) {
 				TreeItem treeItem = tree.getSelection()[0];
-				event = new UiEvent(null, treeItem.getData(),
+				event = new UiEvent(treeItem.getData(),
 						UiEventType.AddSection);
 			} else {
-				event = new UiEvent(null, null, UiEventType.AddSection);
+				event = new UiEvent(null, UiEventType.AddSection);
 			}
 			MainFrame.handleEvent(event);
 		}
@@ -172,7 +172,7 @@ public class SectionComposite extends Composite implements IUiListener {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			TreeItem treeItem = tree.getSelection()[0];
-			UiEvent event = new UiEvent(null, treeItem.getData(),
+			UiEvent event = new UiEvent(treeItem.getData(),
 					UiEventType.RemoveSection);
 			MainFrame.handleEvent(event);
 		}

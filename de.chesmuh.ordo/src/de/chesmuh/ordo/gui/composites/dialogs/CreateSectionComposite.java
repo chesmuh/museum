@@ -64,7 +64,8 @@ public class CreateSectionComposite extends Composite {
 
 		// ----- ParentSection -----
 		label = new Label(this, SWT.NONE);
-		label.setText(ResourceManager.getText(OrdoUI.DETAIL_SECTION_PARENTSECTION));
+		label.setText(ResourceManager
+				.getText(OrdoUI.DETAIL_SECTION_PARENTSECTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -93,7 +94,8 @@ public class CreateSectionComposite extends Composite {
 
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
-		label.setText(ResourceManager.getText(OrdoUI.DETAIL_SECTION_DESCRIPTION));
+		label.setText(ResourceManager
+				.getText(OrdoUI.DETAIL_SECTION_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -157,33 +159,41 @@ public class CreateSectionComposite extends Composite {
 
 			if (null == textParent.getData()) {
 				MessageBox messageBox = new MessageBox(getShell());
-				messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NOPARENT));
-				messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NOPARENT_TITLE));
+				messageBox.setMessage(ResourceManager
+						.getText(OrdoUI.ERROR_NOPARENT));
+				messageBox.setText(ResourceManager
+						.getText(OrdoUI.ERROR_NOPARENT_TITLE));
 				messageBox.open();
 			} else {
 				if (textParent.getData() instanceof Section) {
 					section = ((Section) textParent.getData());
 					section_id = section.getId();
 					museum = section.getMuseum();
-				} else if(textParent.getData() instanceof Museum) {
+				} else if (textParent.getData() instanceof Museum) {
 					museum = (Museum) textParent.getData();
-				} 
-				
+				}
+
 				try {
-					section = LogicAccess.saveSection(museum.getId(), section_id, name,
-							description);
-					UiEvent event = new UiEvent(CreateSectionComposite.this, section,
+					section = LogicAccess.saveSection(museum.getId(),
+							section_id, name, description);
+					UiEvent event = new UiEvent(section,
 							UiEventType.SectionAdded);
 					MainFrame.handleEvent(event);
 				} catch (EmptyNameException e1) {
-					MessageBox messageBox = new MessageBox(getShell(), SWT.ERROR);
-					messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NAME_EMPTY_TITLE));
-					messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NAME_EMPTY));
+					MessageBox messageBox = new MessageBox(getShell(),
+							SWT.ERROR);
+					messageBox.setText(ResourceManager
+							.getText(OrdoUI.ERROR_NAME_EMPTY_TITLE));
+					messageBox.setMessage(ResourceManager
+							.getText(OrdoUI.ERROR_NAME_EMPTY));
 					messageBox.open();
 				} catch (MuseumNotSetException e1) {
-					MessageBox messageBox = new MessageBox(getShell(), SWT.ERROR);
-					messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NOPARENT));
-					messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NOPARENT_TITLE));
+					MessageBox messageBox = new MessageBox(getShell(),
+							SWT.ERROR);
+					messageBox.setText(ResourceManager
+							.getText(OrdoUI.ERROR_NOPARENT));
+					messageBox.setMessage(ResourceManager
+							.getText(OrdoUI.ERROR_NOPARENT_TITLE));
 					messageBox.open();
 				}
 			}
@@ -196,8 +206,7 @@ public class CreateSectionComposite extends Composite {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			UiEvent event = new UiEvent(CreateSectionComposite.this, null,
-					UiEventType.AddSectionCanceled);
+			UiEvent event = new UiEvent(null, UiEventType.AddSectionCanceled);
 			MainFrame.handleEvent(event);
 		}
 	}

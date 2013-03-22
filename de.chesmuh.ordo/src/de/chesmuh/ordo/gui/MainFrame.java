@@ -20,7 +20,7 @@ import de.chesmuh.ordo.gui.composites.CategorieComposite;
 import de.chesmuh.ordo.gui.composites.DetailComposite;
 import de.chesmuh.ordo.gui.composites.TagComposite;
 import de.chesmuh.ordo.gui.composites.SectionComposite;
-import de.chesmuh.ordo.gui.composites.TableComposite;
+import de.chesmuh.ordo.gui.composites.ExhibitComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -75,7 +75,7 @@ public class MainFrame {
 		overViewComposite.setLayout(new GridLayout(4, true));
 
 		// ----- Table -----
-		Composite tableComposite = new TableComposite(overViewComposite,
+		Composite tableComposite = new ExhibitComposite(overViewComposite,
 				SWT.BORDER);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 3;

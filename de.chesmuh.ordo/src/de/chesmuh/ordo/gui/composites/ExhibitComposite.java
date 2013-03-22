@@ -36,13 +36,13 @@ import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 import de.chesmuh.ordo.logic.LogicAccess;
 
-public class TableComposite extends Composite implements IUiListener {
+public class ExhibitComposite extends Composite implements IUiListener {
 
 	private Table table;
 	private Group group;
 	private Object criterion;
 
-	public TableComposite(Composite parent, int style) {
+	public ExhibitComposite(Composite parent, int style) {
 		super(parent, style);
 		initialize();
 	}

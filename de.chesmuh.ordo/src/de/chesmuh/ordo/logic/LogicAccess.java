@@ -37,4 +37,8 @@ public class LogicAccess {
 		return tag;
 	}
 
+	public static void deleteTags(ArrayList<Tag> toDelete) {
+		DataAccess.getInstance().deleteTags(toDelete);
+	}
+
 }

@@ -1,5 +1,7 @@
 package de.chesmuh.ordo.gui.composites;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
@@ -13,6 +15,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
@@ -26,6 +29,7 @@ import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
+import de.chesmuh.ordo.logic.LogicAccess;
 
 public class TagComposite extends Composite implements IUiListener {
 
@@ -54,6 +58,7 @@ public class TagComposite extends Composite implements IUiListener {
 		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
 		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
 				OrdoUI.IMAGES_REMOVE));
+		toolItemRemove.addSelectionListener(new RemoveTagSelectionAdapter());
 
 		// ----- Tree -----
 		tree = new Tree(group, SWT.V_SCROLL | SWT.MULTI);
@@ -135,6 +140,52 @@ public class TagComposite extends Composite implements IUiListener {
 			MainFrame.handleEvent(event);
 		}
 
+	}
+
+	private class RemoveTagSelectionAdapter extends SelectionAdapter {
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			ArrayList<Tag> toDelete = new ArrayList<Tag>();
+			TreeItem[] selection = tree.getSelection();
+			String name = "";
+			if (selection.length == 0) {
+				return;
+			}
+			for (int i = 0; i < selection.length; i++) {
+				TreeItem item = selection[i];
+				if (item.getData() instanceof Tag) {
+					Tag tag = (Tag) item.getData();
+					toDelete.add(tag);
+					if (i < 5) {
+						name = name + tag.getName() + "\n";
+					}
+				}
+			}
+			int many = selection.length - 5;
+			String msg = "";
+			if (many > 0) {
+				msg = String.format(
+						ResourceManager.getText(OrdoUI.MSG_DELETE_MANY_TAG),
+						name, many);
+			} else if (selection.length > 1) {
+				msg = String.format(
+						ResourceManager.getText(OrdoUI.MSG_DELETE_TAG), name);
+			} else {
+				msg = String.format(
+						ResourceManager.getText(OrdoUI.MSG_DELETE_TAG), name);
+			}
+			MessageBox messageBox = new MessageBox(getShell(), SWT.YES | SWT.NO);
+			messageBox.setText(ResourceManager
+					.getText(OrdoUI.MSG_DELETE_TAG_TITLE));
+			messageBox.setMessage(msg);
+			int result = messageBox.open();
+			if (SWT.YES == result) {
+				LogicAccess.deleteTags(toDelete);
+				UiEvent event = new UiEvent(toDelete, UiEventType.TagDeleted);
+				MainFrame.handleEvent(event);
+			}
+		}
 	}
 
 }

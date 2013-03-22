@@ -115,4 +115,10 @@ public class DataAccess {
 		tagManager.update(tag);
 	}
 
+	public void deleteTags(ArrayList<Tag> toDelete) {
+		for(Tag tag : toDelete) {
+			tagManager.markAsDeleted(tag);
+		}
+	}
+
 }

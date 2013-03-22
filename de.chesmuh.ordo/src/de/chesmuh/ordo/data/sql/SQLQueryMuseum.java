@@ -34,7 +34,10 @@ public class SQLQueryMuseum extends AbstractSQLQuery<Museum> {
 			Timestamp deleted = resultSet.getTimestamp(Ordo.Museum.DELETED);
 			String name = resultSet.getString(Ordo.Museum.NAME);
 			String description = resultSet.getString(Ordo.Museum.DESCRIPTION);
-			Timestamp inserted = resultSet.getTimestamp(Ordo.Museum.INSERTED);			
+			Timestamp inserted = resultSet.getTimestamp(Ordo.Museum.INSERTED);
+			if(null == description) {
+				description = "";
+			}
 			result.add(new Museum(id, name, description, inserted, deleted));
 		}
 		return result;

@@ -31,6 +31,7 @@ public class OrdoUI {
 	public static final String DETAIL_GROUP_EXHIBIT = "detail.group.exhibit";
 	public static final String DETAIL_GROUP_MUSEUM = "detail.group.museum";
 	public static final String DETAIL_GROUP_SECTION = "detail.group.section";
+	public static final String DETAIL_GROUP_TAG = "detail.group.tag";
 	public static final String DETAIL_SECTION_NAME = "detail.section.name";
 	public static final String DETAIL_SECTION_DESCRIPTION = "detail.section.description";
 	public static final String DETAIL_SECTION_PARENTSECTION = "detail.section.parentsection";
@@ -88,6 +89,7 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+
 
 
 }

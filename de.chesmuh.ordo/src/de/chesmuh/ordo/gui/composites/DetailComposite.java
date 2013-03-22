@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Group;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
+import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.composites.dialogs.CreateExhibitComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.CreateSectionComposite;
@@ -16,6 +17,7 @@ import de.chesmuh.ordo.gui.composites.dialogs.CreateTagComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.ExhibitInformationComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.MuseumInformationComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.SectionInformationComposite;
+import de.chesmuh.ordo.gui.composites.dialogs.TagInformationComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -48,18 +50,19 @@ public class DetailComposite extends Composite implements IUiListener {
 		group.setText(ResourceManager.getText(OrdoUI.DETAIL_TITLE_DEFAULT));
 
 		// ----- Listener -----
-		MainFrame.addObserver(UiEventType.AddSection, this);
-		MainFrame.addObserver(UiEventType.SectionAdded, this);
-		MainFrame.addObserver(UiEventType.AddSectionCanceled, this);
-		MainFrame.addObserver(UiEventType.ExhibitSelected, this);
 		MainFrame.addObserver(UiEventType.MuseumSelected, this);
 		MainFrame.addObserver(UiEventType.SectionSelected, this);
-		MainFrame.addObserver(UiEventType.AddExhibit, this);
-		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
-		MainFrame.addObserver(UiEventType.AddExhibitCanceled, this);
+		MainFrame.addObserver(UiEventType.ExhibitSelected, this);
+		MainFrame.addObserver(UiEventType.TagSelected, this);
+		MainFrame.addObserver(UiEventType.AddSection, this);
 		MainFrame.addObserver(UiEventType.AddTag, this);
-		MainFrame.addObserver(UiEventType.TagAdded, this);
+		MainFrame.addObserver(UiEventType.AddExhibit, this);
+		MainFrame.addObserver(UiEventType.AddSectionCanceled, this);
+		MainFrame.addObserver(UiEventType.AddExhibitCanceled, this);
 		MainFrame.addObserver(UiEventType.AddTagCanceled, this);
+		MainFrame.addObserver(UiEventType.TagAdded, this);
+		MainFrame.addObserver(UiEventType.SectionAdded, this);
+		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
 	}
 
 	@Override
@@ -120,6 +123,9 @@ public class DetailComposite extends Composite implements IUiListener {
 			case SectionSelected:
 				showSectionInfos(event.getData());
 				break;
+			case TagSelected:
+				showTagInfos(event.getData());
+				break;
 			// ----- Remove -----
 			case RemoveLabel:
 				break;
@@ -132,11 +138,22 @@ public class DetailComposite extends Composite implements IUiListener {
 			case AddSectionCanceled:
 			case ExhibitAdded:
 			case AddExhibitCanceled:
+			case TagAdded:
+			case AddTagCanceled:
 				showNothing();
 				break;
 			default:
 				break;
 			}
+		}
+	}
+
+	private void showTagInfos(Object data) {
+		if (data instanceof Tag) {
+			group.setText(ResourceManager.getText(OrdoUI.DETAIL_GROUP_TAG));
+			clearGroup();
+			new TagInformationComposite(group, (Tag) data);
+			group.layout();
 		}
 	}
 

@@ -11,7 +11,7 @@ import de.chesmuh.ordo.entitys.Section;
 /**
  * 
  * @author chesmuh
- *
+ * 
  */
 public class ExhibitManager extends AbstractManager<Exhibit> {
 
@@ -22,7 +22,7 @@ public class ExhibitManager extends AbstractManager<Exhibit> {
 	public Collection<Exhibit> getBySection(Section section) {
 		ArrayList<Exhibit> ret = new ArrayList<Exhibit>();
 		for (Exhibit e : this.getAll()) {
-			if (e.getSectionId() == section.getId()) {
+			if (e.getSectionId() == section.getId() && !e.isDeleted()) {
 				ret.add(e);
 			}
 		}
@@ -32,7 +32,8 @@ public class ExhibitManager extends AbstractManager<Exhibit> {
 	public Collection<Exhibit> getByMuseumWithSectionNull(Museum museum) {
 		ArrayList<Exhibit> ret = new ArrayList<Exhibit>();
 		for (Exhibit e : this.getAll()) {
-			if (null == e.getSectionId() && museum.getId() == e.getMuseumId()) {
+			if (null == e.getSectionId() && museum.getId() == e.getMuseumId()
+					&& !e.isDeleted()) {
 				ret.add(e);
 			}
 		}

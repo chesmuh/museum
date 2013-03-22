@@ -14,11 +14,12 @@ import de.chesmuh.ordo.entitys.DatabaseElement;
 /**
  * 
  * @author Chesmuh
- *
- * @param <Element> {@link DatabaseElement}
+ * 
+ * @param <Element>
+ *            {@link DatabaseElement}
  */
-public abstract class AbstractManager<Element extends DatabaseElement> implements
-		IManager<Element> {
+public abstract class AbstractManager<Element extends DatabaseElement>
+		implements IManager<Element> {
 
 	protected final ISqlQuery<Element> sqlQuery;
 	protected Map<Long, Element> values = new HashMap<Long, Element>();
@@ -74,9 +75,9 @@ public abstract class AbstractManager<Element extends DatabaseElement> implement
 	public void loadAll() {
 		try {
 			this.values.clear();
-			
+
 			Collection<Element> collection = this.sqlQuery.loadAll();
-			for (Element element :  collection) {
+			for (Element element : collection) {
 				this.values.put(element.getId(), element);
 			}
 		} catch (SQLTimeoutException e) {
@@ -100,16 +101,20 @@ public abstract class AbstractManager<Element extends DatabaseElement> implement
 	@Override
 	public Collection<Element> getAllDeleted() {
 		HashSet<Element> result = new HashSet<>();
-			for (Element step : this.values.values()) {
-				if (step.isDeleted()) {
-					result.add(step);
-				}
+		for (Element step : this.values.values()) {
+			if (step.isDeleted()) {
+				result.add(step);
 			}
+		}
 		return result;
 	}
 
 	@Override
 	public Element getbyId(Long id) {
+		if (this.values.get(id) == null
+				|| (this.values.get(id) != null && this.values.get(id)
+						.isDeleted()))
+			return null;
 		return this.values.get(id);
 	}
 

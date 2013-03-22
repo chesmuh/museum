@@ -1,5 +1,7 @@
 package de.chesmuh.ordo.gui.composites.dialogs;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
@@ -21,24 +23,29 @@ import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
+import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 import de.chesmuh.ordo.logic.LogicAccess;
+import de.chesmuh.ordo.util.Util;
 
 public class CreateExhibitComposite extends Composite {
 
 	private Text textParent;
 	private Text textName;
 	private Text textDescription;
+	private Text textTag;
+	private ArrayList<Tag> tags;
 
 	private Object selection;
 
 	public CreateExhibitComposite(Composite parent, Object selection) {
 		super(parent, SWT.NONE);
 		this.selection = selection;
+		this.tags = new ArrayList<Tag>();
 		initialize();
 	}
 
@@ -84,13 +91,38 @@ public class CreateExhibitComposite extends Composite {
 			textParent.setText(((Museum) selection).getName());
 			textParent.setData(selection);
 		} else if (selection instanceof Section) {
-			textParent.setText((getPath((Section) selection)));
+			Section section = (Section) selection;
+			textParent.setText(Util.getPath(section));
 			textParent.setData(selection);
 		}
 
+		// ----- Label -----
+		label = new Label(this, SWT.NONE);
+		label.setText(ResourceManager.getText(OrdoUI.DETAIL_EXHIBIT_TAG));
+		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
+		label.setLayoutData(gridData);
+
+		Label dropLabelLabel = new Label(this, SWT.PUSH);
+		dropLabelLabel.setImage(ResourceManager.getImage(getDisplay(),
+				OrdoUI.IMAGES_DROP));
+
+		DropTarget dropTargetLabel = new DropTarget(dropLabelLabel,
+				DND.DROP_MOVE);
+		dropTargetLabel
+				.setTransfer(new Transfer[] { TextTransfer.getInstance() });
+		dropTargetLabel.addDropListener(new LabelDropTargetAdapter());
+
+		textTag = new Text(this, SWT.NONE);
+		textTag.setText("");
+		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridData.horizontalSpan = 1;
+		textTag.setLayoutData(gridData);
+		textTag.setEditable(false);
+
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
-		label.setText(ResourceManager.getText(OrdoUI.DETAIL_EXHIBIT_DESCRIPTION));
+		label.setText(ResourceManager
+				.getText(OrdoUI.DETAIL_EXHIBIT_DESCRIPTION));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
 		label.setLayoutData(gridData);
 
@@ -120,14 +152,37 @@ public class CreateExhibitComposite extends Composite {
 		button.addSelectionListener(new CloseSelectionListener());
 	}
 
-	private String getPath(Section section) {
-		String path = section.getName();
-		while (section.getParent() != null) {
-			path = section.getParent().getName() + "\\" + path;
-			section = section.getParent();
+	private class LabelDropTargetAdapter extends DropTargetAdapter {
+
+		@Override
+		public void drop(DropTargetEvent event) {
+			String msg = (String) event.data;
+			String text = "";
+			String[] labels = msg.split(";");
+			for (String msgTag : labels) {
+				String[] split = msgTag.split("/");
+				if (split[0].equals("label")) {
+					Long id = Long.parseLong(split[1]);
+					Tag tag = DataAccess.getInstance().getTagById(id);
+					if (null != tag) {
+						if (!tags.contains(tag)) {
+							tags.add(tag);
+						} else {
+							tags.remove(tag);
+						}
+						for (Tag tagName : tags) {
+							if (!text.isEmpty()) {
+								text += ", " + tagName.getName();
+							} else {
+								text += tagName.getName();
+							}
+						}
+					}
+				}
+			}
+			textTag.setText(text);
 		}
-		path = section.getMuseum().getName() + "\\" + path;
-		return path;
+
 	}
 
 	private class SectionDropTargetAdapter extends DropTargetAdapter {
@@ -140,13 +195,17 @@ public class CreateExhibitComposite extends Composite {
 			if (split[0].equals("museum")) {
 				Long id = Long.parseLong(split[1]);
 				Museum museum = DataAccess.getInstance().getMuseumById(id);
-				textParent.setText(museum.getName());
-				textParent.setData(museum);
+				if (null != museum) {
+					textParent.setText(museum.getName());
+					textParent.setData(museum);
+				}
 			} else if (split[0].equals("section")) {
 				Long id = Long.parseLong(split[1]);
 				Section section = DataAccess.getInstance().getSectionById(id);
-				textParent.setText(getPath(section));
-				textParent.setData(section);
+				if (null != section) {
+					textParent.setText(Util.getPath(section));
+					textParent.setData(section);
+				}
 			}
 		}
 
@@ -164,19 +223,22 @@ public class CreateExhibitComposite extends Composite {
 
 			if (null == textParent.getData()) {
 				MessageBox messageBox = new MessageBox(getShell());
-				messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NOPARENT));
-				messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NOPARENT_TITLE));
+				messageBox.setMessage(ResourceManager
+						.getText(OrdoUI.ERROR_NOPARENT));
+				messageBox.setText(ResourceManager
+						.getText(OrdoUI.ERROR_NOPARENT_TITLE));
 				messageBox.open();
 			} else {
 				if (textParent.getData() instanceof Section) {
 					section_id = ((Section) textParent.getData()).getId();
-				} else if(textParent.getData() instanceof Museum) {
+				} else if (textParent.getData() instanceof Museum) {
 					museum_id = ((Museum) textParent.getData()).getId();
-				} 
-				
-				exhibit = LogicAccess.saveExhibit(museum_id, section_id, name, description);
-				UiEvent event = new UiEvent(CreateExhibitComposite.this, exhibit,
-						UiEventType.ExhibitAdded);
+				}
+
+				exhibit = LogicAccess.saveExhibit(museum_id, section_id, name,
+						description);
+				UiEvent event = new UiEvent(CreateExhibitComposite.this,
+						exhibit, UiEventType.ExhibitAdded);
 				MainFrame.handleEvent(event);
 			}
 

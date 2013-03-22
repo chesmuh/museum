@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import de.chesmuh.ordo.data.manager.ExhibitManager;
-import de.chesmuh.ordo.data.manager.LabelManager;
+import de.chesmuh.ordo.data.manager.TagManager;
 import de.chesmuh.ordo.data.manager.MuseumManager;
 import de.chesmuh.ordo.data.manager.SectionManager;
 import de.chesmuh.ordo.entitys.Exhibit;
-import de.chesmuh.ordo.entitys.Label;
+import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 
@@ -24,7 +24,7 @@ public class DataAccess {
 	private MuseumManager museumManager;
 	private SectionManager sectionManager;
 	private ExhibitManager exhibitManager;
-	private LabelManager labelManager;
+	private TagManager labelManager;
 	
 	private DataAccess() {
 		museumManager = new MuseumManager();
@@ -33,7 +33,7 @@ public class DataAccess {
 		sectionManager.loadAll();
 		exhibitManager = new ExhibitManager();
 		exhibitManager.loadAll();
-		labelManager = new LabelManager();
+		labelManager = new TagManager();
 		labelManager.loadAll();
 	}
 	
@@ -84,7 +84,7 @@ public class DataAccess {
 		exhibitManager.store(exhibit);
 	}
 
-	public Collection<Label> getAllLabels() {
+	public Collection<Tag> getAllLabels() {
 		return labelManager.getAll();
 	}
 
@@ -96,6 +96,10 @@ public class DataAccess {
 		for(Exhibit e : toDelete) { 
 			exhibitManager.markAsDeleted(e);
 		}
+	}
+
+	public de.chesmuh.ordo.entitys.Tag getTagById(Long id) {
+		return labelManager.getbyId(id);
 	}
 
 }

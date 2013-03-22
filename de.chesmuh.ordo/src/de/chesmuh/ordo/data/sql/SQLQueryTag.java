@@ -9,14 +9,14 @@ import java.util.HashMap;
 
 import de.chesmuh.ordo.data.Database;
 import de.chesmuh.ordo.data.Ordo;
-import de.chesmuh.ordo.entitys.Label;
+import de.chesmuh.ordo.entitys.Tag;
 
 /**
  * 
  * @author Chesmuh
  * 
  */
-public class SQLQueryLabel extends AbstractSQLQuery<Label> {
+public class SQLQueryTag extends AbstractSQLQuery<Tag> {
 
 	PreparedStatement updateList1;
 	PreparedStatement updateList2;
@@ -25,62 +25,62 @@ public class SQLQueryLabel extends AbstractSQLQuery<Label> {
 	PreparedStatement updateList2Server;
 	PreparedStatement deleteListServer;
 
-	public SQLQueryLabel() throws SQLException {
-		super(new String[] {Ordo.Label.CREATE_TABLE, Ordo.Labeled.CREATE_TABLE}, Ordo.Label.ID, Ordo.Label.TABLE_NAME,
-				Ordo.Label.NAME, Ordo.Label.DELETED, Ordo.Label.INSERTED);
+	public SQLQueryTag() throws SQLException {
+		super(new String[] {Ordo.Tag.CREATE_TABLE, Ordo.Tagged.CREATE_TABLE}, Ordo.Tag.ID, Ordo.Tag.TABLE_NAME,
+				Ordo.Tag.NAME, Ordo.Tag.DELETED, Ordo.Tag.INSERTED);
 	}
 
 	@Override
 	public void init() throws SQLException {
 		super.init();
-		String sql = "DELETE FROM " + Ordo.Labeled.TABLE_NAME + " WHERE "
-				+ Ordo.Labeled.LABEL_ID + " = ?";
+		String sql = "DELETE FROM " + Ordo.Tagged.TABLE_NAME + " WHERE "
+				+ Ordo.Tagged.LABEL_ID + " = ?";
 		this.updateList1 = Database.getInstance().getConnection()
 				.prepareStatement(sql);
-		sql = "INSERT INTO " + Ordo.Labeled.TABLE_NAME + "\n( "
-				+ Ordo.Labeled.EXHIBIT_ID + "," + Ordo.Labeled.LABEL_ID + ")"
+		sql = "INSERT INTO " + Ordo.Tagged.TABLE_NAME + "\n( "
+				+ Ordo.Tagged.EXHIBIT_ID + "," + Ordo.Tagged.LABEL_ID + ")"
 				+ "\nVALUES (?,?) \nON DUPLICATE KEY UPDATE "
-				+ Ordo.Labeled.EXHIBIT_ID + "= VALUES("
-				+ Ordo.Labeled.EXHIBIT_ID + ")";
+				+ Ordo.Tagged.EXHIBIT_ID + "= VALUES("
+				+ Ordo.Tagged.EXHIBIT_ID + ")";
 		this.updateList2 = Database.getInstance().getConnection()
 				.prepareStatement(sql);
-		sql = "DELETE FROM " + Ordo.Labeled.TABLE_NAME + " WHERE "
-				+ Ordo.Labeled.LABEL_ID + " = ?";
+		sql = "DELETE FROM " + Ordo.Tagged.TABLE_NAME + " WHERE "
+				+ Ordo.Tagged.LABEL_ID + " = ?";
 		this.deleteList = Database.getInstance().getConnection()
 				.prepareStatement(sql);
 	}
 
 	@Override
 	protected String prepareGetAll() {
-		return "SELECT " + Ordo.Label.ID + "," + Ordo.Label.NAME + ","
-				+ Ordo.Label.DELETED + "," + Ordo.Label.INSERTED + ","
-				+ Ordo.Labeled.EXHIBIT_ID + "\nFROM " + Ordo.Label.TABLE_NAME
-				+ "\nLEFT JOIN " + Ordo.Labeled.TABLE_NAME + "\nON "
-				+ Ordo.Label.ID + " = " + Ordo.Labeled.LABEL_ID;
+		return "SELECT " + Ordo.Tag.ID + "," + Ordo.Tag.NAME + ","
+				+ Ordo.Tag.DELETED + "," + Ordo.Tag.INSERTED + ","
+				+ Ordo.Tagged.EXHIBIT_ID + "\nFROM " + Ordo.Tag.TABLE_NAME
+				+ "\nLEFT JOIN " + Ordo.Tagged.TABLE_NAME + "\nON "
+				+ Ordo.Tag.ID + " = " + Ordo.Tagged.LABEL_ID;
 	}
 
 	@Override
-	public Collection<Label> loadAll() throws SQLException {
-		HashMap<Long, Label> result = new HashMap<>();
+	public Collection<Tag> loadAll() throws SQLException {
+		HashMap<Long, Tag> result = new HashMap<>();
 		ResultSet resultSet = this.loadAll.executeQuery();
 
 		while (resultSet.next()) {
-			Label label;
-			Long id = resultSet.getLong(Ordo.Label.ID);
+			Tag label;
+			Long id = resultSet.getLong(Ordo.Tag.ID);
 			if (result.containsKey(id)) // label already added!
 			{
 				label = result.get(id);
-				Long exhibit_id = resultSet.getLong(Ordo.Labeled.EXHIBIT_ID);
+				Long exhibit_id = resultSet.getLong(Ordo.Tagged.EXHIBIT_ID);
 				if (exhibit_id != null) {
 					label.addExhibit_id(exhibit_id);
 				}
 			} else {
-				String name = resultSet.getString(Ordo.Label.NAME);
-				Timestamp deleted = resultSet.getTimestamp(Ordo.Label.DELETED);
-				Timestamp insert = resultSet.getTimestamp(Ordo.Label.INSERTED);
+				String name = resultSet.getString(Ordo.Tag.NAME);
+				Timestamp deleted = resultSet.getTimestamp(Ordo.Tag.DELETED);
+				Timestamp insert = resultSet.getTimestamp(Ordo.Tag.INSERTED);
 
-				result.put(id, label = new Label(id, insert, deleted, name));
-				Long exhibit_id = resultSet.getLong(Ordo.Labeled.EXHIBIT_ID);
+				result.put(id, label = new Tag(id, insert, deleted, name));
+				Long exhibit_id = resultSet.getLong(Ordo.Tagged.EXHIBIT_ID);
 				if (exhibit_id != null) {
 					label.addExhibit_id(exhibit_id);
 				}
@@ -90,7 +90,7 @@ public class SQLQueryLabel extends AbstractSQLQuery<Label> {
 	}
 
 	@Override
-	public void update(Label model) throws SQLException {
+	public void update(Tag model) throws SQLException {
 		this.bindValues(this.update, model.getId(), model.getName(),
 				model.getDeleted(), model.getInsert());
 
@@ -110,7 +110,7 @@ public class SQLQueryLabel extends AbstractSQLQuery<Label> {
 	}
 
 	@Override
-	public void store(Label model) throws SQLException {
+	public void store(Tag model) throws SQLException {
 		this.bindValues(this.store, model.getName(), model.getDeleted(),
 				model.getInsert());
 		this.store.execute();
@@ -130,7 +130,7 @@ public class SQLQueryLabel extends AbstractSQLQuery<Label> {
 	}
 
 	@Override
-	public void delete(Label model) throws SQLException {
+	public void delete(Tag model) throws SQLException {
 		super.delete(model);
 		this.bindValues(this.deleteList, model.getId());
 		this.deleteList.execute();

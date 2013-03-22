@@ -26,6 +26,7 @@ import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 import de.chesmuh.ordo.logic.LogicAccess;
+import de.chesmuh.ordo.util.Util;
 
 public class CreateSectionComposite extends Composite {
 
@@ -83,7 +84,8 @@ public class CreateSectionComposite extends Composite {
 			textParent.setText(((Museum) selection).getName());
 			textParent.setData(selection);
 		} else if (selection instanceof Section) {
-			textParent.setText((getPath((Section) selection)));
+			Section section = (Section) selection;
+			textParent.setText(Util.getPath(section));
 			textParent.setData(selection);
 		}
 
@@ -119,16 +121,6 @@ public class CreateSectionComposite extends Composite {
 		button.addSelectionListener(new CloseSelectionListener());
 	}
 
-	private String getPath(Section section) {
-		String path = section.getName();
-		while (section.getParent() != null) {
-			path = section.getParent().getName() + "\\" + path;
-			section = section.getParent();
-		}
-		path = section.getMuseum().getName() + "\\" + path;
-		return path;
-	}
-
 	private class SectionDropTargetAdapter extends DropTargetAdapter {
 
 		@Override
@@ -144,7 +136,7 @@ public class CreateSectionComposite extends Composite {
 			} else if (split[0].equals("section")) {
 				Long id = Long.parseLong(split[1]);
 				Section section = DataAccess.getInstance().getSectionById(id);
-				textParent.setText(getPath(section));
+				textParent.setText(Util.getPath(section));
 				textParent.setData(section);
 			}
 		}

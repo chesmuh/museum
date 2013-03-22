@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.chesmuh.ordo.gui.composites.CategorieComposite;
 import de.chesmuh.ordo.gui.composites.DetailComposite;
-import de.chesmuh.ordo.gui.composites.LabelComposite;
+import de.chesmuh.ordo.gui.composites.TagComposite;
 import de.chesmuh.ordo.gui.composites.SectionComposite;
 import de.chesmuh.ordo.gui.composites.TableComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
@@ -82,7 +82,7 @@ public class MainFrame {
 		tableComposite.setLayoutData(gridData);
 
 		// ----- Label -----
-		Composite labelComposite = new LabelComposite(overViewComposite,
+		Composite labelComposite = new TagComposite(overViewComposite,
 				SWT.BORDER);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.horizontalSpan = 1;

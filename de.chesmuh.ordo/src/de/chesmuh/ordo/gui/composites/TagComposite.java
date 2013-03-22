@@ -19,18 +19,18 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 import de.chesmuh.ordo.data.DataAccess;
-import de.chesmuh.ordo.entitys.Label;
+import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
 
-public class LabelComposite extends Composite {
+public class TagComposite extends Composite {
 
 	private Tree tree;
 
-	public LabelComposite(Composite parent, int style) {
+	public TagComposite(Composite parent, int style) {
 		super(parent, style);
 		initilaize();
 	}
@@ -42,7 +42,7 @@ public class LabelComposite extends Composite {
 		Group group = new Group(this, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		group.setLayout(new GridLayout(1, true));
-		group.setText(ResourceManager.getText(OrdoUI.LABELS_GROUP_TITLE));
+		group.setText(ResourceManager.getText(OrdoUI.TAGS_GROUP_TITLE));
 
 		// ----- Buttons -----
 		ToolBar toolBar = new ToolBar(group, SWT.NONE);
@@ -68,7 +68,7 @@ public class LabelComposite extends Composite {
 	}
 
 	private void refreshTree() {
-		for(Label label : DataAccess.getInstance().getAllLabels()) {
+		for(Tag label : DataAccess.getInstance().getAllLabels()) {
 			TreeItem item = new TreeItem(tree, SWT.NONE);
 			item.setText(label.getName());
 			item.setData(label);
@@ -79,7 +79,14 @@ public class LabelComposite extends Composite {
 
 		@Override
 		public void dragSetData(DragSourceEvent event) {
-			event.data = tree.getSelection()[0].getText();
+			StringBuilder stringBuilder = new StringBuilder();
+			Object object = tree.getSelection()[0].getData();
+			if (object instanceof Tag) {
+				de.chesmuh.ordo.entitys.Tag label = (Tag) object;
+				stringBuilder.append("label/");
+				stringBuilder.append(Long.toString(label.getId()));
+			}
+			event.data = stringBuilder.toString();
 		}
 
 	}
@@ -90,7 +97,7 @@ public class LabelComposite extends Composite {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			TreeItem selection = tree.getSelection()[0];
-			if (selection.getData() instanceof Label) {
+			if (selection.getData() instanceof Tag) {
 				UiEvent uiEvent = new UiEvent(tree, selection.getData(),
 						UiEventType.LabelSelected);
 				MainFrame.handleEvent(uiEvent);

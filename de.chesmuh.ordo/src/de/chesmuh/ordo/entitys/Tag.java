@@ -6,18 +6,18 @@ import java.util.Collection;
 
 import de.chesmuh.ordo.data.DataAccess;
 
-public class Label extends DatabaseElement {
+public class Tag extends DatabaseElement {
 
 	private String name;
 	private Collection<Long> exhibit_ids;
 	
-	public Label(String name, Collection<Long> exhibit_ids) {
+	public Tag(String name, Collection<Long> exhibit_ids) {
 		super();
 		this.name = name;
 		this.exhibit_ids = exhibit_ids;
 	}
 	
-	public Label(Long id, Timestamp inserted, Timestamp deleted, String name) {
+	public Tag(Long id, Timestamp inserted, Timestamp deleted, String name) {
 		super(id, inserted, deleted);
 		this.name = name;
 		this.exhibit_ids = new ArrayList<Long>();

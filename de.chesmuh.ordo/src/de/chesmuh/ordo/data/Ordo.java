@@ -81,13 +81,13 @@ public class Ordo {
 				+ DELETED + " timestamp null\n);";
 	}
 
-	public static class Label {
+	public static class Tag {
 		
-		private Label() {
+		private Tag() {
 			
 		}
 		
-		public static final String TABLE_NAME = "label";
+		public static final String TABLE_NAME = "tag";
 		public static final String ID = "id";
 		public static final String NAME = "name";
 		public static final String DELETED = "deleted";
@@ -99,13 +99,13 @@ public class Ordo {
 				+ DELETED + " timestamp null\n);";
 	}
 	
-	public static class Labeled {
+	public static class Tagged {
 		
-		private Labeled() {
+		private Tagged() {
 			
 		}
 		
-		public static final String TABLE_NAME = "labeled";
+		public static final String TABLE_NAME = "tagged";
 		public static final String ID = "labeled_id";
 		public static final String EXHIBIT_ID = "exhibit_id";
 		public static final String LABEL_ID = "label_id";

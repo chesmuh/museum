@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
-import de.chesmuh.ordo.entitys.Label;
+import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
@@ -90,8 +90,8 @@ public class TableComposite extends Composite implements IUiListener {
 			}
 			break;
 		case LabelSelected:
-			if (event.getData() instanceof Label) {
-				showExhibitsByLabel((Label) event.getData());
+			if (event.getData() instanceof Tag) {
+				showExhibitsByLabel((Tag) event.getData());
 			}
 			break;
 		case ExhibitDeleted:
@@ -102,7 +102,7 @@ public class TableComposite extends Composite implements IUiListener {
 		}
 	}
 
-	private void showExhibitsByLabel(Label label) {
+	private void showExhibitsByLabel(Tag label) {
 		criterion = label;
 		table.setRedraw(false);
 		group.setText(ResourceManager.getText(OrdoUI.TABLE_GROUP_EXHIBIT));
@@ -177,8 +177,8 @@ public class TableComposite extends Composite implements IUiListener {
 			table.setRedraw(true);
 		} else if(criterion instanceof Section) {
 			this.showExhibitsBySection((Section) criterion);
-		} else if(criterion instanceof Label) {
-			this.showExhibitsByLabel((Label) criterion);
+		} else if(criterion instanceof Tag) {
+			this.showExhibitsByLabel((Tag) criterion);
 		}
 	}
 

@@ -3,7 +3,6 @@ package de.chesmuh.ordo.data.manager;
 import java.util.Collection;
 
 import de.chesmuh.ordo.entitys.DatabaseElement;
-import de.chesmuh.ordo.exceptions.ModelAlreadyDeletedException;
 
 /**
  * 
@@ -19,7 +18,7 @@ public interface IManager<Element extends DatabaseElement> {
 	
 	void update(Element model);
 	
-	void markAsDeleted(Element model) throws ModelAlreadyDeletedException;
+	void markAsDeleted(Element model);
 
 	void loadAll();
 

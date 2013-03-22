@@ -20,6 +20,8 @@ import org.eclipse.swt.widgets.Text;
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
+import de.chesmuh.ordo.exceptions.EmptyNameException;
+import de.chesmuh.ordo.exceptions.MuseumNotSetException;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -167,11 +169,23 @@ public class CreateSectionComposite extends Composite {
 					museum = (Museum) textParent.getData();
 				} 
 				
-				section = LogicAccess.saveSection(museum.getId(), section_id, name,
-						description);
-				UiEvent event = new UiEvent(CreateSectionComposite.this, section,
-						UiEventType.SectionAdded);
-				MainFrame.handleEvent(event);
+				try {
+					section = LogicAccess.saveSection(museum.getId(), section_id, name,
+							description);
+					UiEvent event = new UiEvent(CreateSectionComposite.this, section,
+							UiEventType.SectionAdded);
+					MainFrame.handleEvent(event);
+				} catch (EmptyNameException e1) {
+					MessageBox messageBox = new MessageBox(getShell(), SWT.ERROR);
+					messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NAME_EMPTY_TITLE));
+					messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NAME_EMPTY));
+					messageBox.open();
+				} catch (MuseumNotSetException e1) {
+					MessageBox messageBox = new MessageBox(getShell(), SWT.ERROR);
+					messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NOPARENT));
+					messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NOPARENT_TITLE));
+					messageBox.open();
+				}
 			}
 
 		}

@@ -24,6 +24,8 @@ import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.entitys.Tag;
+import de.chesmuh.ordo.exceptions.EmptyNameException;
+import de.chesmuh.ordo.exceptions.SectionNotSetException;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -217,8 +219,8 @@ public class CreateExhibitComposite extends Composite {
 		public void widgetSelected(SelectionEvent e) {
 			String name = textName.getText();
 			String description = textDescription.getText();
-			Long museum_id = null;
-			Long section_id = null;
+			Long museumId = null;
+			Long sectionId = null;
 			Exhibit exhibit = null;
 
 			if (null == textParent.getData()) {
@@ -230,16 +232,32 @@ public class CreateExhibitComposite extends Composite {
 				messageBox.open();
 			} else {
 				if (textParent.getData() instanceof Section) {
-					section_id = ((Section) textParent.getData()).getId();
+					sectionId = ((Section) textParent.getData()).getId();
 				} else if (textParent.getData() instanceof Museum) {
-					museum_id = ((Museum) textParent.getData()).getId();
+					museumId = ((Museum) textParent.getData()).getId();
 				}
 
-				exhibit = LogicAccess.saveExhibit(museum_id, section_id, name,
-						description);
-				UiEvent event = new UiEvent(CreateExhibitComposite.this,
-						exhibit, UiEventType.ExhibitAdded);
-				MainFrame.handleEvent(event);
+				try {
+					exhibit = LogicAccess.saveExhibit(museumId, sectionId, name,
+							description);
+					UiEvent event = new UiEvent(CreateExhibitComposite.this,
+							exhibit, UiEventType.ExhibitAdded);
+					MainFrame.handleEvent(event);
+				} catch (SectionNotSetException e1) {
+					MessageBox messageBox = new MessageBox(getShell());
+					messageBox.setMessage(ResourceManager
+							.getText(OrdoUI.ERROR_NOSECTION));
+					messageBox.setText(ResourceManager
+							.getText(OrdoUI.ERROR_NOSECTION_TITLE));
+					messageBox.open();
+				} catch (EmptyNameException e1) {
+					MessageBox messageBox = new MessageBox(getShell());
+					messageBox.setMessage(ResourceManager
+							.getText(OrdoUI.ERROR_NAME_EMPTY));
+					messageBox.setText(ResourceManager
+							.getText(OrdoUI.ERROR_NAME_EMPTY_TITLE));
+					messageBox.open();
+				}
 			}
 
 		}

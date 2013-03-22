@@ -69,6 +69,8 @@ public class OrdoUI {
 	public static final String ERROR_NOPARENT_TITLE = "error.noparent.title";
 	public static final String ERROR_NAME_EMPTY = "error.name.empty";
 	public static final String ERROR_NAME_EMPTY_TITLE = "error.name.empty.title";
+	public static final String ERROR_NOSECTION = "error.nosection";
+	public static final String ERROR_NOSECTION_TITLE = "error.nosection.title";
 	
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
@@ -81,6 +83,7 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+
 
 
 

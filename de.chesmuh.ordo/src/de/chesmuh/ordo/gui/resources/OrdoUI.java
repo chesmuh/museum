@@ -10,9 +10,12 @@ public class OrdoUI {
 
 	// ----- Menu -----
 	public static final String MENU_FILE = "menu.file";
-	public static final String MENU_FILE_CLOSE = "menu.file.close";
 	public static final String MENU_FILE_NEW = "menu.file.new";
 	public static final String MENU_FILE_NEW_MUSEUM = "menu.file.new.museum";
+	public static final String MENU_FILE_CLOSE = "menu.file.close";
+	public static final String MENU_EDIT = "menu.edit";
+	public static final String MENU_EDIT_DELETE = "menu.edit.delete";
+	public static final String MENU_EDIT_DELETE_MUSEUM = "menu.edit.delete.museum";
 	
 	// ----- Table ------
 	public static final String TABLE_GROUP_EXHIBIT = "table.group.exhibit";
@@ -87,12 +90,13 @@ public class OrdoUI {
 	public static final String IMAGES_MUSEUM = "/images/home.png";
 	public static final String IMAGES_ORDO = "/images/home.png";
 	public static final String IMAGES_ADD = "/images/plus.png";
-	public static final String IMAGES_REMOVE = "/images/minus.png";
+	public static final String IMAGES_DELETE = "/images/minus.png";
 	public static final String IMAGES_SWAP = "/images/swap.png";
 	public static final String IMAGES_DROP = "/images/marquee-download.png";
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+
 
 
 

@@ -58,7 +58,7 @@ public class SectionComposite extends Composite implements IUiListener {
 		toolItemAdd.addSelectionListener(new AddSectionAdapter());
 		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
 		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_REMOVE));
+				OrdoUI.IMAGES_DELETE));
 		toolItemRemove.addSelectionListener(new RemoveSectionAdapter());
 
 		// ----- Tree -----

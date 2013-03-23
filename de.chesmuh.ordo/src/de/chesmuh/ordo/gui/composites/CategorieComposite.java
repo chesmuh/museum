@@ -44,7 +44,7 @@ public class CategorieComposite extends Composite {
 				OrdoUI.IMAGES_ADD));
 		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
 		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_REMOVE));
+				OrdoUI.IMAGES_DELETE));
 
 		// ----- Tree -----
 		tree = new Tree(group, SWT.V_SCROLL | SWT.MULTI);

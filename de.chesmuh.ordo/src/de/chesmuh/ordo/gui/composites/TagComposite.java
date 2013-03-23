@@ -57,7 +57,7 @@ public class TagComposite extends Composite implements IUiListener {
 		toolItemAdd.addSelectionListener(new AddTagSelectionAdapter());
 		ToolItem toolItemRemove = new ToolItem(toolBar, SWT.PUSH);
 		toolItemRemove.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_REMOVE));
+				OrdoUI.IMAGES_DELETE));
 		toolItemRemove.addSelectionListener(new RemoveTagSelectionAdapter());
 
 		// ----- Tree -----

@@ -1,6 +1,7 @@
 package de.chesmuh.ordo.logic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
@@ -31,10 +32,10 @@ public class LogicAccess {
 		return exhibit;
 	}
 
-	public static Tag saveTag(String name, ArrayList<Exhibit> exhibits) throws EmptyNameException {
+	public static Tag saveTag(String name, Collection<Exhibit> exhibits) throws EmptyNameException {
 		Tag tag = new Tag(name);
 		TagLogic.saveTag(tag);
-		TagLogic.addExhibitToTag(tag, exhibits);
+		TagLogic.addExhibitsToTag(tag, exhibits);
 		return tag;
 	}
 
@@ -44,6 +45,10 @@ public class LogicAccess {
 
 	public static void deleteMuseum(Museum museum) {
 		MuseumLogic.deleteMuseum(museum);
+	}
+
+	public static void tagExhibit(Exhibit exhibit, Tag tag) {
+		TagLogic.addExhibitToTag(tag, exhibit);
 	}
 
 }

@@ -63,6 +63,7 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.TagAdded, this);
 		MainFrame.addObserver(UiEventType.SectionAdded, this);
 		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
+		MainFrame.addObserver(UiEventType.TagDeleted, this);
 	}
 
 	@Override
@@ -85,7 +86,6 @@ public class DetailComposite extends Composite implements IUiListener {
 				if (eventTypeThatLocked == UiEventType.AddTag) {
 					saveState = false;
 				}
-
 			default:
 				break;
 			}
@@ -140,6 +140,7 @@ public class DetailComposite extends Composite implements IUiListener {
 			case AddExhibitCanceled:
 			case TagAdded:
 			case AddTagCanceled:
+			case TagDeleted:
 				showNothing();
 				break;
 			default:

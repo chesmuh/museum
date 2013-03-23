@@ -83,6 +83,7 @@ public class ExhibitComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.SectionSelected, this);
 		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
 		MainFrame.addObserver(UiEventType.TagSelected, this);
+		MainFrame.addObserver(UiEventType.TagDeleted, this);
 		MainFrame.addObserver(UiEventType.ExhibitDeleted, this);
 		MainFrame.addObserver(UiEventType.MuseumSelected, this);
 	}
@@ -117,6 +118,7 @@ public class ExhibitComposite extends Composite implements IUiListener {
 			}
 			break;
 		case ExhibitDeleted:
+		case TagDeleted:
 			refreshTable();
 			break;
 		default:
@@ -220,15 +222,36 @@ public class ExhibitComposite extends Composite implements IUiListener {
 	}
 
 	private void refreshTable() {
-		if (null == criterion) {
+		if (criterion instanceof Section) {
+			Section section = (Section) criterion;
+			if (!section.isDeleted()) {
+				this.showExhibitsBySection(section);
+			} else {
+				criterion = null;
+				refreshTable();
+			}
+		} else if (criterion instanceof Tag) {
+			this.showExhibitsByTag((Tag) criterion);
+			Tag tag = (Tag) criterion;
+			if (!tag.isDeleted()) {
+				this.showExhibitsByTag(tag);
+			} else {
+				criterion = null;
+				refreshTable();
+			}
+		} else if (criterion instanceof Museum) {
+			Museum museum = (Museum) criterion;
+			if (!museum.isDeleted()) {
+				this.showExhibitsByTag((Tag) criterion);
+			} else {
+				criterion = null;
+				refreshTable();
+			}
+		} else {
 			table.setRedraw(false);
 			deleteAllColumn();
 			deleteAllItems();
 			table.setRedraw(true);
-		} else if (criterion instanceof Section) {
-			this.showExhibitsBySection((Section) criterion);
-		} else if (criterion instanceof Tag) {
-			this.showExhibitsByTag((Tag) criterion);
 		}
 	}
 

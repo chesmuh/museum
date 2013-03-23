@@ -19,6 +19,8 @@ public class MuseumLogic {
 		for(Section section : sectionByMuseumWithNoParent) {
 			deleteAll(section);
 		}
+		Collection<Exhibit> exhibitsByMuseumWithSectionNull = DataAccess.getInstance().getExhibitsByMuseumWithSectionNull(museum);
+		DataAccess.getInstance().deleteExhibits(exhibitsByMuseumWithSectionNull);
 		DataAccess.getInstance().deleteMuseum(museum);
 		
 	}

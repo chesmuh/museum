@@ -10,21 +10,27 @@ import de.chesmuh.ordo.exceptions.EmptyNameException;
 public class TagLogic {
 
 	private TagLogic() {
-		
+
 	}
-	
+
 	public static void saveTag(Tag tag) throws EmptyNameException {
-		if(tag.getName().isEmpty()) {
+		if (tag.getName().isEmpty()) {
 			throw new EmptyNameException();
 		}
 		DataAccess.getInstance().saveTag(tag);
 	}
-	
-	public static void addExhibitToTag(Tag tag, Collection<Exhibit> exhibits) {
-		for(Exhibit exhibit : exhibits) {
-			if(!tag.getExhibit_ids().contains(exhibit.getId())) {
+
+	public static void addExhibitsToTag(Tag tag, Collection<Exhibit> exhibits) {
+		for (Exhibit exhibit : exhibits) {
+			if (!tag.getExhibit_ids().contains(exhibit.getId())) {
 				DataAccess.getInstance().addExhibitToTag(tag, exhibit);
 			}
-		}	
+		}
+	}
+
+	public static void addExhibitToTag(Tag tag, Exhibit exhibit) {
+		if (!tag.getExhibit_ids().contains(exhibit.getId())) {
+			DataAccess.getInstance().addExhibitToTag(tag, exhibit);
+		}
 	}
 }

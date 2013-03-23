@@ -239,6 +239,9 @@ public class CreateExhibitComposite extends Composite {
 				try {
 					exhibit = LogicAccess.saveExhibit(museumId, sectionId,
 							name, description);
+					for(Tag tag : tags) {
+						LogicAccess.tagExhibit(exhibit, tag);
+					}
 					UiEvent event = new UiEvent(exhibit,
 							UiEventType.ExhibitAdded);
 					MainFrame.handleEvent(event);

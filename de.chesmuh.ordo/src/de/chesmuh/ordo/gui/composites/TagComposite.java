@@ -83,6 +83,7 @@ public class TagComposite extends Composite implements IUiListener {
 		switch (event.getType()) {
 		case TagAdded:
 		case TagDeleted:
+		case MuseumDeleted:
 			refreshTree();
 			break;
 		default:

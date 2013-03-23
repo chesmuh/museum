@@ -86,6 +86,7 @@ public class ExhibitComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.TagDeleted, this);
 		MainFrame.addObserver(UiEventType.ExhibitDeleted, this);
 		MainFrame.addObserver(UiEventType.MuseumSelected, this);
+		MainFrame.addObserver(UiEventType.MuseumDeleted, this);
 	}
 
 	@Override
@@ -119,6 +120,10 @@ public class ExhibitComposite extends Composite implements IUiListener {
 			break;
 		case ExhibitDeleted:
 		case TagDeleted:
+			refreshTable();
+			break;
+		case MuseumDeleted:
+			criterion = null;
 			refreshTable();
 			break;
 		default:

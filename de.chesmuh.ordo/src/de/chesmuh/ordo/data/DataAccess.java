@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import de.chesmuh.ordo.data.manager.ExhibitManager;
-import de.chesmuh.ordo.data.manager.TagManager;
 import de.chesmuh.ordo.data.manager.MuseumManager;
 import de.chesmuh.ordo.data.manager.SectionManager;
+import de.chesmuh.ordo.data.manager.TagManager;
 import de.chesmuh.ordo.entitys.Exhibit;
-import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
+import de.chesmuh.ordo.entitys.Tag;
 
 /**
  * 
@@ -96,7 +96,7 @@ public class DataAccess {
 		return exhibitManager.getbyId(id);
 	}
 
-	public void deleteExhibits(ArrayList<Exhibit> toDelete) {
+	public void deleteExhibits(Collection<Exhibit> toDelete) {
 		for(Exhibit e : toDelete) { 
 			exhibitManager.markAsDeleted(e);
 		}
@@ -119,6 +119,14 @@ public class DataAccess {
 		for(Tag tag : toDelete) {
 			tagManager.markAsDeleted(tag);
 		}
+	}
+
+	public void deleteSection(Section section) {
+		sectionManager.markAsDeleted(section);
+	}
+
+	public void deleteMuseum(Museum museum) {
+		museumManager.markAsDeleted(museum);
 	}
 
 }

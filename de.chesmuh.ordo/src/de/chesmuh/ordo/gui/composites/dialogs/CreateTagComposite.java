@@ -134,7 +134,7 @@ public class CreateTagComposite extends Composite {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			if(null == textName.getText()) {
-				MessageBox messageBox = new MessageBox(getShell(), SWT.ERROR);
+				MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_ERROR);
 				messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NAME_EMPTY_TITLE));
 				messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NAME_EMPTY));
 				messageBox.open();
@@ -144,7 +144,7 @@ public class CreateTagComposite extends Composite {
 					UiEvent event = new UiEvent(tag, UiEventType.TagAdded);
 					MainFrame.handleEvent(event);
 				} catch (EmptyNameException exn) {
-					MessageBox messageBox = new MessageBox(getShell(), SWT.ERROR);
+					MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_ERROR);
 					messageBox.setText(ResourceManager.getText(OrdoUI.ERROR_NAME_EMPTY_TITLE));
 					messageBox.setMessage(ResourceManager.getText(OrdoUI.ERROR_NAME_EMPTY));
 					messageBox.open();

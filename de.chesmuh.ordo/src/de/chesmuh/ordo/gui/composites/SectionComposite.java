@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
@@ -31,6 +32,7 @@ import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
 import de.chesmuh.ordo.gui.resources.OrdoUI;
 import de.chesmuh.ordo.gui.resources.ResourceManager;
+import de.chesmuh.ordo.logic.LogicAccess;
 
 public class SectionComposite extends Composite implements IUiListener {
 
@@ -73,8 +75,72 @@ public class SectionComposite extends Composite implements IUiListener {
 
 		// ----- Listener -----
 		MainFrame.addObserver(UiEventType.SectionAdded, this);
+		MainFrame.addObserver(UiEventType.RemoveMuseum, this);
+		MainFrame.addObserver(UiEventType.MuseumDeleted, this);
 
 		refreshTree();
+	}
+
+	@Override
+	public void handleEvent(UiEvent event) {
+		switch (event.getType()) {
+		case SectionAdded:
+			this.refreshTree();
+			break;
+		case RemoveMuseum:
+			this.removeMuseum();
+			break;
+		case MuseumDeleted:
+			this.refreshTree();
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void removeMuseum() {
+		TreeItem[] selection = tree.getSelection();
+		if (selection.length != 1) {
+			MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_ERROR);
+			messageBox.setMessage(ResourceManager
+					.getText(OrdoUI.ERROR_SELECTONEMUSEUM));
+			messageBox.setText(ResourceManager
+					.getText(OrdoUI.ERROR_SELECTONEMUSEUM_TITLE));
+			messageBox.open();
+			return;
+		}
+		if (!(selection[0].getData() instanceof Museum)) {
+			MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_ERROR);
+			messageBox.setMessage(ResourceManager
+					.getText(OrdoUI.ERROR_NOMUSEUMSELECTED));
+			messageBox.setText(ResourceManager
+					.getText(OrdoUI.ERROR_NOMUSEUMSELECTED_TITLE));
+			messageBox.open();
+			return;
+		}
+		Museum museum = (Museum) selection[0].getData();
+		MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_QUESTION
+				| SWT.YES | SWT.NO);
+		messageBox.setMessage(String.format(
+				ResourceManager.getText(OrdoUI.MSG_DELETE_MUSEUM),
+				museum.getName()));
+		messageBox.setText(ResourceManager
+				.getText(OrdoUI.MSG_DELETE_MUSEUM_TITLE));
+		int result = messageBox.open();
+		if (SWT.YES == result) {
+			messageBox = new MessageBox(getShell(), SWT.ICON_QUESTION | SWT.YES
+					| SWT.NO);
+			messageBox.setMessage(ResourceManager
+					.getText(OrdoUI.MSG_DELETE_ALL_EXHIBITS));
+			messageBox.setText(ResourceManager
+					.getText(OrdoUI.MSG_DELETE_ALL_EXHIBITS_TITLE));
+			result = messageBox.open();
+			if (SWT.YES == result) {
+				LogicAccess.deleteMuseum(museum);
+				UiEvent event = new UiEvent(museum, UiEventType.MuseumDeleted);
+				MainFrame.handleEvent(event);
+			}
+		}
 	}
 
 	private void refreshTree() {
@@ -110,7 +176,7 @@ public class SectionComposite extends Composite implements IUiListener {
 			expand(item.getItems());
 		}
 	}
-	
+
 	public void expand(TreeItem[] items) {
 		for (TreeItem item : items) {
 			item.setExpanded(true);
@@ -157,8 +223,7 @@ public class SectionComposite extends Composite implements IUiListener {
 			UiEvent event;
 			if (tree.getSelection().length > 0) {
 				TreeItem treeItem = tree.getSelection()[0];
-				event = new UiEvent(treeItem.getData(),
-						UiEventType.AddSection);
+				event = new UiEvent(treeItem.getData(), UiEventType.AddSection);
 			} else {
 				event = new UiEvent(null, UiEventType.AddSection);
 			}
@@ -197,17 +262,6 @@ public class SectionComposite extends Composite implements IUiListener {
 			event.data = stringBuilder.toString();
 		}
 
-	}
-
-	@Override
-	public void handleEvent(UiEvent event) {
-		switch (event.getType()) {
-		case SectionAdded:
-			this.refreshTree();
-			break;
-		default:
-			break;
-		}
 	}
 
 }

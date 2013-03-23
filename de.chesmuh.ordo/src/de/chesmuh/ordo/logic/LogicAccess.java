@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
+import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.exceptions.EmptyNameException;
@@ -39,6 +40,10 @@ public class LogicAccess {
 
 	public static void deleteTags(ArrayList<Tag> toDelete) {
 		DataAccess.getInstance().deleteTags(toDelete);
+	}
+
+	public static void deleteMuseum(Museum museum) {
+		MuseumLogic.deleteMuseum(museum);
 	}
 
 }

@@ -2,10 +2,10 @@ package de.chesmuh.ordo.gui.resources;
 
 public class OrdoUI {
 
-	private OrdoUI() { 
-		
+	private OrdoUI() {
+
 	}
-	
+
 	public static final String WINDOW_TITLE = "window.title";
 
 	// ----- Menu -----
@@ -16,7 +16,7 @@ public class OrdoUI {
 	public static final String MENU_EDIT = "menu.edit";
 	public static final String MENU_EDIT_DELETE = "menu.edit.delete";
 	public static final String MENU_EDIT_DELETE_MUSEUM = "menu.edit.delete.museum";
-	
+
 	// ----- Table ------
 	public static final String TABLE_GROUP_EXHIBIT = "table.group.exhibit";
 	public static final String TABLE_HEADER_NAME = "table.header.name";
@@ -28,7 +28,7 @@ public class OrdoUI {
 
 	// ----- Tags -----
 	public static final String TAGS_GROUP_TITLE = "tags.title";
-	
+
 	// ----- Details -----
 	public static final String DETAIL_TITLE_DEFAULT = "detail.title";
 	public static final String DETAIL_GROUP_EXHIBIT = "detail.group.exhibit";
@@ -49,10 +49,10 @@ public class OrdoUI {
 
 	// ----- AddSection -----
 	public static final String ADD_SECTION_TITLE = "addsection.title";
-	
+
 	// ----- AddExhibit
 	public static final String ADD_EXHIBIT_TITLE = "addexhibit.title";
-	
+
 	// ----- AddTag -----
 	public static final String ADD_TAG_TITLE = "addtag.title";
 
@@ -76,7 +76,11 @@ public class OrdoUI {
 	public static final String MSG_DELETE_MANY_TAG = "msg.delete.tag.many";
 	public static final String MSG_DELETE_TAGS = "msg.delete.tags";
 	public static final String MSG_DELETE_TAG = "msg.delete.tag";
-	
+	public static final String MSG_DELETE_MUSEUM = "msg.delete.museum";
+	public static final String MSG_DELETE_MUSEUM_TITLE = "msg.delete.museum.title";
+	public static final String MSG_DELETE_ALL_EXHIBITS = "msg.delete.allexhibits";
+	public static final String MSG_DELETE_ALL_EXHIBITS_TITLE = "msg.delete.allexhibits.title";
+
 	// ----- Error -----
 	public static final String ERROR_NOPARENT = "error.noparent";
 	public static final String ERROR_NOPARENT_TITLE = "error.noparent.title";
@@ -84,7 +88,11 @@ public class OrdoUI {
 	public static final String ERROR_NAME_EMPTY_TITLE = "error.name.empty.title";
 	public static final String ERROR_NOSECTION = "error.nosection";
 	public static final String ERROR_NOSECTION_TITLE = "error.nosection.title";
-	
+	public static final String ERROR_NOMUSEUMSELECTED = "error.nomuseumselected";
+	public static final String ERROR_NOMUSEUMSELECTED_TITLE = "error.nomuseumselected.title";
+	public static final String ERROR_SELECTONEMUSEUM = "error.selectonemuseum";
+	public static final String ERROR_SELECTONEMUSEUM_TITLE = "error.selectonemuseum.title";
+
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
 	public static final String IMAGES_MUSEUM = "/images/home.png";
@@ -96,7 +104,6 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
-
 
 
 

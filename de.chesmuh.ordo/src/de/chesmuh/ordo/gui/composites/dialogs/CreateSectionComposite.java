@@ -181,7 +181,7 @@ public class CreateSectionComposite extends Composite {
 					MainFrame.handleEvent(event);
 				} catch (EmptyNameException e1) {
 					MessageBox messageBox = new MessageBox(getShell(),
-							SWT.ERROR);
+							SWT.ICON_ERROR);
 					messageBox.setText(ResourceManager
 							.getText(OrdoUI.ERROR_NAME_EMPTY_TITLE));
 					messageBox.setMessage(ResourceManager
@@ -189,7 +189,7 @@ public class CreateSectionComposite extends Composite {
 					messageBox.open();
 				} catch (MuseumNotSetException e1) {
 					MessageBox messageBox = new MessageBox(getShell(),
-							SWT.ERROR);
+							SWT.ICON_ERROR);
 					messageBox.setText(ResourceManager
 							.getText(OrdoUI.ERROR_NOPARENT));
 					messageBox.setMessage(ResourceManager

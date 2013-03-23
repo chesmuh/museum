@@ -18,9 +18,9 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.chesmuh.ordo.gui.composites.CategorieComposite;
 import de.chesmuh.ordo.gui.composites.DetailComposite;
-import de.chesmuh.ordo.gui.composites.TagComposite;
-import de.chesmuh.ordo.gui.composites.SectionComposite;
 import de.chesmuh.ordo.gui.composites.ExhibitComposite;
+import de.chesmuh.ordo.gui.composites.SectionComposite;
+import de.chesmuh.ordo.gui.composites.TagComposite;
 import de.chesmuh.ordo.gui.interfaces.IUiListener;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -111,12 +111,14 @@ public class MainFrame {
 		MenuItem menuItemFile = new MenuItem(menuBar, SWT.CASCADE);
 		menuItemFile.setText(ResourceManager.getText(OrdoUI.MENU_FILE));
 		Menu menuFile = new Menu(menuItemFile);
+		menuItemFile.setMenu(menuFile);
 		
 		// ---- File.New ----
-		MenuItem menuItemNew = new MenuItem(menuFile, SWT.CASCADE);
-		menuItemNew.setText(ResourceManager.getText(OrdoUI.MENU_FILE_NEW));
-		Menu menuNew = new Menu(menuItemNew);
-		menuItemNew.setMenu(menuNew);
+		MenuItem menuItemFileNew = new MenuItem(menuFile, SWT.CASCADE);
+		menuItemFileNew.setText(ResourceManager.getText(OrdoUI.MENU_FILE_NEW));
+		menuItemFileNew.setImage(ResourceManager.getImage(shell.getDisplay(), OrdoUI.IMAGES_ADD));
+		Menu menuNew = new Menu(menuItemFileNew);
+		menuItemFileNew.setMenu(menuNew);
 	    
 	    // ----- File.New.Museum -----
 	    MenuItem menuItemNewMuseum = new MenuItem(menuNew, SWT.CASCADE);
@@ -129,8 +131,25 @@ public class MainFrame {
 		menuItemFileClose.setAccelerator(SWT.MOD1 + 'Q');
 		menuItemFileClose
 				.addSelectionListener(new FileCloseSelectionListener());
-		menuItemFile.setMenu(menuFile);
 
+		// ----- Edit -----
+		MenuItem menuItemEdit = new MenuItem(menuBar, SWT.CASCADE);
+		menuItemEdit.setText(ResourceManager.getText(OrdoUI.MENU_EDIT));
+		Menu menuEdit = new Menu(menuItemFile);
+		menuItemEdit.setMenu(menuEdit);
+		
+		// ---- Edit.Delete ----
+		MenuItem menuItemEditDelete = new MenuItem(menuEdit, SWT.CASCADE);
+		menuItemEditDelete.setText(ResourceManager.getText(OrdoUI.MENU_EDIT_DELETE));
+		menuItemEditDelete.setImage(ResourceManager.getImage(shell.getDisplay(), OrdoUI.IMAGES_DELETE));
+		Menu menuDelete = new Menu(menuItemEditDelete);
+		menuItemEditDelete.setMenu(menuDelete);
+		
+		// ---- Edit.Delete.Museum ----
+		MenuItem menuItemDeleteMuseum = new MenuItem(menuDelete, SWT.CASCADE);
+		menuItemDeleteMuseum.setText(ResourceManager.getText(OrdoUI.MENU_EDIT_DELETE_MUSEUM));
+		menuItemDeleteMuseum.setImage(ResourceManager.getImage(shell.getDisplay(), OrdoUI.IMAGES_MUSEUM));
+		menuItemDeleteMuseum.addSelectionListener(new DeleteMuseumSelectionAdapter());
 	}
 
 	public static void addObserver(UiEventType type, IUiListener listener) {
@@ -160,6 +179,16 @@ public class MainFrame {
 			shell.close();
 		}
 
+	}
+	
+	private class DeleteMuseumSelectionAdapter extends SelectionAdapter {
+		
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			UiEvent event = new UiEvent(null, UiEventType.RemoveMuseum);
+			MainFrame.handleEvent(event);
+		}
+		
 	}
 
 }

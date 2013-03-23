@@ -15,7 +15,8 @@ import de.chesmuh.ordo.exceptions.SectionNotSetException;
 public class LogicAccess {
 
 	public static Section saveSection(long museum_id, Long parent_id,
-			String name, String description) throws EmptyNameException, MuseumNotSetException {
+			String name, String description) throws EmptyNameException,
+			MuseumNotSetException {
 		Section section = new Section(museum_id, parent_id, name, description);
 		SectionLogic.saveSection(section);
 		return section;
@@ -26,13 +27,15 @@ public class LogicAccess {
 	}
 
 	public static Exhibit saveExhibit(Long museumId, Long sectionId,
-			String name, String description) throws SectionNotSetException, EmptyNameException {
+			String name, String description) throws SectionNotSetException,
+			EmptyNameException {
 		Exhibit exhibit = new Exhibit(museumId, sectionId, name, description);
 		ExhibitLogic.saveExhibit(exhibit);
 		return exhibit;
 	}
 
-	public static Tag saveTag(String name, Collection<Exhibit> exhibits) throws EmptyNameException {
+	public static Tag saveTag(String name, Collection<Exhibit> exhibits)
+			throws EmptyNameException {
 		Tag tag = new Tag(name);
 		TagLogic.saveTag(tag);
 		TagLogic.addExhibitsToTag(tag, exhibits);
@@ -49,6 +52,10 @@ public class LogicAccess {
 
 	public static void tagExhibit(Exhibit exhibit, Tag tag) {
 		TagLogic.addExhibitToTag(tag, exhibit);
+	}
+
+	public static void deleteSection(Section section) {
+		SectionLogic.deleteSection(section);
 	}
 
 }

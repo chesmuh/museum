@@ -65,6 +65,7 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.ExhibitAdded, this);
 		MainFrame.addObserver(UiEventType.TagDeleted, this);
 		MainFrame.addObserver(UiEventType.MuseumDeleted, this);
+		MainFrame.addObserver(UiEventType.SectionDeleted, this);
 	}
 
 	@Override
@@ -136,7 +137,7 @@ public class DetailComposite extends Composite implements IUiListener {
 				break;
 			case RemoveSection:
 				break;
-			// ----- Added -----
+			// ----- Added / Deleted -----
 			case SectionAdded:
 			case AddSectionCanceled:
 			case ExhibitAdded:
@@ -145,6 +146,7 @@ public class DetailComposite extends Composite implements IUiListener {
 			case AddTagCanceled:
 			case TagDeleted:
 			case MuseumDeleted:
+			case SectionDeleted:
 				showNothing();
 				break;
 			default:

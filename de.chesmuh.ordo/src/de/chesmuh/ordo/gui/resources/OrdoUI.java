@@ -80,6 +80,9 @@ public class OrdoUI {
 	public static final String MSG_DELETE_MUSEUM_TITLE = "msg.delete.museum.title";
 	public static final String MSG_DELETE_ALL_EXHIBITS = "msg.delete.allexhibits";
 	public static final String MSG_DELETE_ALL_EXHIBITS_TITLE = "msg.delete.allexhibits.title";
+	public static final String MSG_DELETE_SECTION_TITLE = "msg.delete.sections.title";
+	public static final String MSG_DELETE_SECTION = "msg.delete.section";
+	public static final String MSG_DELETE_SECTIONS = "msg.delete.sections";
 
 	// ----- Error -----
 	public static final String ERROR_NOPARENT = "error.noparent";
@@ -104,6 +107,10 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+
+
+
+
 
 
 

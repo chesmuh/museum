@@ -83,4 +83,8 @@ public class Section extends DatabaseElement implements Comparable<Section> {
 		return DataAccess.getInstance().getSectionById(parent_id);
 	}
 		
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

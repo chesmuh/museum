@@ -75,6 +75,7 @@ public class SectionComposite extends Composite implements IUiListener {
 
 		// ----- Listener -----
 		MainFrame.addObserver(UiEventType.SectionAdded, this);
+		MainFrame.addObserver(UiEventType.SectionDeleted, this);
 		MainFrame.addObserver(UiEventType.RemoveMuseum, this);
 		MainFrame.addObserver(UiEventType.MuseumDeleted, this);
 
@@ -84,12 +85,11 @@ public class SectionComposite extends Composite implements IUiListener {
 	@Override
 	public void handleEvent(UiEvent event) {
 		switch (event.getType()) {
-		case SectionAdded:
-			this.refreshTree();
-			break;
 		case RemoveMuseum:
 			this.removeMuseum();
 			break;
+		case SectionDeleted:
+		case SectionAdded:
 		case MuseumDeleted:
 			this.refreshTree();
 			break;
@@ -236,10 +236,22 @@ public class SectionComposite extends Composite implements IUiListener {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			TreeItem treeItem = tree.getSelection()[0];
-			UiEvent event = new UiEvent(treeItem.getData(),
-					UiEventType.RemoveSection);
-			MainFrame.handleEvent(event);
+			TreeItem[] selection = tree.getSelection();
+			if (selection.length != 1) {
+				return;
+			}
+			TreeItem item = selection[0];
+			Section toDelete = (Section) item.getData();
+			MessageBox messageBox = new MessageBox(getShell(), SWT.YES | SWT.NO);
+			messageBox.setText(ResourceManager
+					.getText(OrdoUI.MSG_DELETE_SECTION_TITLE));
+			messageBox.setMessage(ResourceManager.getText(OrdoUI.MSG_DELETE_SECTION));
+			int result = messageBox.open();
+			if (SWT.YES == result) {
+				LogicAccess.deleteSection(toDelete);
+				UiEvent event = new UiEvent(toDelete, UiEventType.SectionDeleted);
+				MainFrame.handleEvent(event);
+			}
 		}
 
 	}

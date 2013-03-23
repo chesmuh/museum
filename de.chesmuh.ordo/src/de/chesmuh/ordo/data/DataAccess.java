@@ -129,4 +129,25 @@ public class DataAccess {
 		museumManager.markAsDeleted(museum);
 	}
 
+	public ArrayList<Exhibit> getExhibitBySectionWithSubSections(Section section) {
+		ArrayList<Exhibit> ret = new ArrayList<Exhibit>();
+		Collection<Section> sectionBySection = DataAccess.getInstance().getSectionBySection(section);
+		for(Section subSection : sectionBySection) {
+			ret.addAll(DataAccess.getInstance().getExhibitBySectionWithSubSections(subSection));
+		}
+		ret.addAll(DataAccess.getInstance().getExhibitBySection(section));
+		return ret;
+	}
+
+	public Collection<Section> getSectionBySectionWithSubSections(
+			Section section) {
+		ArrayList<Section> ret = new ArrayList<Section>();
+		Collection<Section> sectionBySection = DataAccess.getInstance().getSectionBySection(section);
+		ret.add(section);
+		for(Section subSection : sectionBySection) {
+			ret.addAll(DataAccess.getInstance().getSectionBySectionWithSubSections(subSection));
+		}
+		return ret;
+	}
+
 }

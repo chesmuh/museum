@@ -150,4 +150,8 @@ public class DataAccess {
 		return ret;
 	}
 
+	public void saveMuseum(Museum museum) {
+		museumManager.store(museum);
+	}
+
 }

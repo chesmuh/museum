@@ -6,6 +6,7 @@ import de.chesmuh.ordo.data.DataAccess;
 import de.chesmuh.ordo.entitys.Exhibit;
 import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
+import de.chesmuh.ordo.exceptions.EmptyNameException;
 
 public class MuseumLogic {
 
@@ -33,6 +34,14 @@ public class MuseumLogic {
 		Collection<Exhibit> exhibitBySection = DataAccess.getInstance().getExhibitBySection(section);
 		DataAccess.getInstance().deleteExhibits(exhibitBySection);
 		DataAccess.getInstance().deleteSection(section);
+	}
+
+
+	public static void saveMuseum(Museum museum) throws EmptyNameException {
+		if (museum.getName().isEmpty()) {
+			throw new EmptyNameException();
+		}
+		DataAccess.getInstance().saveMuseum(museum);
 	}
 
 }

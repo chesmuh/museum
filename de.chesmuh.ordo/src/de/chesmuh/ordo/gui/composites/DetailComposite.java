@@ -12,6 +12,7 @@ import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.composites.dialogs.CreateExhibitComposite;
+import de.chesmuh.ordo.gui.composites.dialogs.CreateMuseumComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.CreateSectionComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.CreateTagComposite;
 import de.chesmuh.ordo.gui.composites.dialogs.ExhibitInformationComposite;
@@ -66,6 +67,9 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.TagDeleted, this);
 		MainFrame.addObserver(UiEventType.MuseumDeleted, this);
 		MainFrame.addObserver(UiEventType.SectionDeleted, this);
+		MainFrame.addObserver(UiEventType.AddMuseum, this);
+		MainFrame.addObserver(UiEventType.MuseumAdded, this);
+		MainFrame.addObserver(UiEventType.AddMuseumCanceled, this);
 	}
 
 	@Override
@@ -88,6 +92,11 @@ public class DetailComposite extends Composite implements IUiListener {
 				if (eventTypeThatLocked == UiEventType.AddTag) {
 					saveState = false;
 				}
+			case MuseumAdded:
+			case AddMuseumCanceled:
+				if(eventTypeThatLocked == UiEventType.AddMuseum) {
+					saveState = false;
+				}
 			case MuseumDeleted:
 				saveState = false;
 			default:
@@ -103,9 +112,10 @@ public class DetailComposite extends Composite implements IUiListener {
 				eventTypeThatLocked = event.getType();
 				showExhibitCreate(event.getData());
 				break;
-			case AddLabel:
-				break;
 			case AddMuseum:
+				saveState = true;
+				eventTypeThatLocked = event.getType();
+				showMuseumCreate();
 				break;
 			case AddSection:
 				saveState = true;
@@ -139,6 +149,7 @@ public class DetailComposite extends Composite implements IUiListener {
 				break;
 			// ----- Added / Deleted -----
 			case SectionAdded:
+			case MuseumAdded:
 			case AddSectionCanceled:
 			case ExhibitAdded:
 			case AddExhibitCanceled:
@@ -153,6 +164,13 @@ public class DetailComposite extends Composite implements IUiListener {
 				break;
 			}
 		}
+	}
+
+	private void showMuseumCreate() {
+		group.setText(ResourceManager.getText(OrdoUI.ADD_MUSEUM_TITLE));
+		clearGroup();
+		new CreateMuseumComposite(group);
+		group.layout();
 	}
 
 	private void showTagInfos(Object data) {

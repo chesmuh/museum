@@ -56,6 +56,9 @@ public class OrdoUI {
 	// ----- AddTag -----
 	public static final String ADD_TAG_TITLE = "addtag.title";
 
+	// ----- AddMuseum -----
+	public static final String ADD_MUSEUM_TITLE = "addmuseum.title";
+
 	// ----- Section -----
 	public static final String SECTION_TITLE = "section.title";
 
@@ -107,6 +110,7 @@ public class OrdoUI {
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+
 
 
 

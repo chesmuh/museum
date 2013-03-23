@@ -124,6 +124,7 @@ public class MainFrame {
 	    MenuItem menuItemNewMuseum = new MenuItem(menuNew, SWT.CASCADE);
 		menuItemNewMuseum.setText(ResourceManager.getText(OrdoUI.MENU_FILE_NEW_MUSEUM));
 		menuItemNewMuseum.setImage(ResourceManager.getImage(shell.getDisplay(), OrdoUI.IMAGES_MUSEUM));
+		menuItemNewMuseum.addSelectionListener(new NewMuseumSelectionAdapter());
 	    
 		// ----- File.Close -----
 		MenuItem menuItemFileClose = new MenuItem(menuFile, SWT.CASCADE);
@@ -190,5 +191,16 @@ public class MainFrame {
 		}
 		
 	}
+	
+	private class NewMuseumSelectionAdapter extends SelectionAdapter {
+		
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			UiEvent event = new UiEvent(null, UiEventType.AddMuseum);
+			MainFrame.handleEvent(event);
+		}
+		
+	}
+	
 
 }

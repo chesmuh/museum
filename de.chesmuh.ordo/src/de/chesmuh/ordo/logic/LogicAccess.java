@@ -58,4 +58,10 @@ public class LogicAccess {
 		SectionLogic.deleteSection(section);
 	}
 
+	public static Museum saveMuseum(String name, String description) throws EmptyNameException {
+		Museum museum = new Museum(name, description);
+		MuseumLogic.saveMuseum(museum);
+		return museum;
+	}
+
 }

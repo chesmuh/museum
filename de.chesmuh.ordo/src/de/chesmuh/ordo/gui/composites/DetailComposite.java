@@ -189,8 +189,8 @@ public class DetailComposite extends Composite implements IUiListener {
 				break;
 			case RemoveSection:
 				break;
+			// ----- Added / Deleted -----
 			default:
-				// ----- Added / Deleted -----
 				showNothing();
 				break;
 			}

@@ -240,16 +240,21 @@ public class SectionComposite extends Composite implements IUiListener {
 				return;
 			}
 			TreeItem item = selection[0];
-			Section toDelete = (Section) item.getData();
-			MessageBox messageBox = new MessageBox(getShell(), SWT.YES | SWT.NO);
-			messageBox.setText(ResourceManager
-					.getText(OrdoUI.MSG_DELETE_SECTION_TITLE));
-			messageBox.setMessage(ResourceManager.getText(OrdoUI.MSG_DELETE_SECTION));
-			int result = messageBox.open();
-			if (SWT.YES == result) {
-				LogicAccess.deleteSection(toDelete);
-				UiEvent event = new UiEvent(toDelete, UiEventType.SectionDeleted);
-				MainFrame.handleEvent(event);
+			if (item.getData() instanceof Section) {
+				Section toDelete = (Section) item.getData();
+				MessageBox messageBox = new MessageBox(getShell(), SWT.YES
+						| SWT.NO);
+				messageBox.setText(ResourceManager
+						.getText(OrdoUI.MSG_DELETE_SECTION_TITLE));
+				messageBox.setMessage(ResourceManager
+						.getText(OrdoUI.MSG_DELETE_SECTION));
+				int result = messageBox.open();
+				if (SWT.YES == result) {
+					LogicAccess.deleteSection(toDelete);
+					UiEvent event = new UiEvent(toDelete,
+							UiEventType.SectionDeleted);
+					MainFrame.handleEvent(event);
+				}
 			}
 		}
 

@@ -70,6 +70,8 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.AddMuseum, this);
 		MainFrame.addObserver(UiEventType.MuseumAdded, this);
 		MainFrame.addObserver(UiEventType.AddMuseumCanceled, this);
+		MainFrame.addObserver(UiEventType.EditMuseum, this);
+		MainFrame.addObserver(UiEventType.EditMuseumCanceled, this);
 	}
 
 	@Override
@@ -94,7 +96,12 @@ public class DetailComposite extends Composite implements IUiListener {
 				}
 			case MuseumAdded:
 			case AddMuseumCanceled:
-				if(eventTypeThatLocked == UiEventType.AddMuseum) {
+				if (eventTypeThatLocked == UiEventType.AddMuseum) {
+					saveState = false;
+				}
+			case MuseumEdited:
+			case EditMuseumCanceled:
+				if (eventTypeThatLocked == UiEventType.EditMuseum) {
 					saveState = false;
 				}
 			case MuseumDeleted:
@@ -140,6 +147,10 @@ public class DetailComposite extends Composite implements IUiListener {
 			case TagSelected:
 				showTagInfos(event.getData());
 				break;
+			// ----- Edit -----
+			case EditMuseum:
+				saveState = true;
+				eventTypeThatLocked = event.getType();
 			// ----- Remove -----
 			case RemoveLabel:
 				break;
@@ -158,6 +169,7 @@ public class DetailComposite extends Composite implements IUiListener {
 			case TagDeleted:
 			case MuseumDeleted:
 			case SectionDeleted:
+			case EditMuseumCanceled:
 				showNothing();
 				break;
 			default:

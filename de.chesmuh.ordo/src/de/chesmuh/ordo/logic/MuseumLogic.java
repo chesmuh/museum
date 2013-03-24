@@ -44,4 +44,15 @@ public class MuseumLogic {
 		DataAccess.getInstance().saveMuseum(museum);
 	}
 
+
+	public static void updateMuseum(String name, String description,
+			Museum museum) throws EmptyNameException {
+		if (name.isEmpty()) {
+			throw new EmptyNameException();
+		}
+		museum.setName(name);
+		museum.setDescription(description == null ? "" : description);
+		DataAccess.getInstance().updateMuseum(museum);
+	}
+
 }

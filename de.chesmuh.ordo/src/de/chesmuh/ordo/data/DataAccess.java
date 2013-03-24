@@ -154,4 +154,8 @@ public class DataAccess {
 		museumManager.store(museum);
 	}
 
+	public void updateMuseum(Museum museum) {
+		museumManager.update(museum);
+	}
+
 }

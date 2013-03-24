@@ -64,4 +64,9 @@ public class LogicAccess {
 		return museum;
 	}
 
+	public static Museum updateMuseum(String name, String description, Museum museum) throws EmptyNameException {
+		MuseumLogic.updateMuseum(name, description, museum);
+		return museum;
+	}
+
 }

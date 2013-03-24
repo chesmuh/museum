@@ -38,7 +38,7 @@ public class Section extends DatabaseElement implements Comparable<Section> {
 		return museum_id;
 	}
 
-	public void setMuseum_id(Long museum_id) {
+	public void setMuseumId(Long museum_id) {
 		this.museum_id = museum_id;
 	}
 
@@ -46,7 +46,7 @@ public class Section extends DatabaseElement implements Comparable<Section> {
 		return parent_id;
 	}
 
-	public void setParent_id(Long parent_id) {
+	public void setParentId(Long parent_id) {
 		this.parent_id = parent_id;
 	}
 

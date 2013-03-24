@@ -46,4 +46,20 @@ public class SectionLogic {
 
 	}
 
+	public static void updataSection(Long museumId, Long sectionId,
+			String name, String description, Section section) throws EmptyNameException, MuseumNotSetException {
+		if (section.getName().isEmpty()) {
+			throw new EmptyNameException();
+		} else if (null == section.getMuseum()) {
+			throw new MuseumNotSetException();
+		}
+		
+		section.setDescription(description);
+		section.setName(name);
+		section.setMuseumId(museumId);
+		section.setParentId(sectionId);
+		
+		DataAccess.getInstance().updateSection(section);
+	}
+
 }

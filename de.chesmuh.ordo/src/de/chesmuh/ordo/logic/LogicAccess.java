@@ -74,4 +74,10 @@ public class LogicAccess {
 		return tag;
 	}
 
+	public static Section updateSection(Long museumId, Long sectionId, String name,
+			String description, Section section) throws EmptyNameException, MuseumNotSetException {
+		SectionLogic.updataSection(museumId, sectionId, name, description, section);
+		return section;
+	}
+
 }

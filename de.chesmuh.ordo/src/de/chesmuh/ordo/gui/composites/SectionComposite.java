@@ -80,6 +80,7 @@ public class SectionComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.MuseumDeleted, this);
 		MainFrame.addObserver(UiEventType.MuseumAdded, this);
 		MainFrame.addObserver(UiEventType.MuseumEdited, this);
+		MainFrame.addObserver(UiEventType.SectionEdited, this);
 
 		refreshTree();
 	}
@@ -90,14 +91,8 @@ public class SectionComposite extends Composite implements IUiListener {
 		case RemoveMuseum:
 			this.removeMuseum();
 			break;
-		case SectionDeleted:
-		case SectionAdded:
-		case MuseumDeleted:
-		case MuseumAdded:
-		case MuseumEdited:
-			this.refreshTree();
-			break;
 		default:
+			this.refreshTree();
 			break;
 		}
 	}

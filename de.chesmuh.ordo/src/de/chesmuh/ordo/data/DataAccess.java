@@ -162,4 +162,8 @@ public class DataAccess {
 		tagManager.update(tag);
 	}
 
+	public void updateSection(Section section) {
+		sectionManager.update(section);
+	}
+
 }

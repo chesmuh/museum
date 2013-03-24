@@ -75,6 +75,9 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.EditTag, this);
 		MainFrame.addObserver(UiEventType.TagEdited, this);
 		MainFrame.addObserver(UiEventType.EditTagCanceled, this);
+		MainFrame.addObserver(UiEventType.EditSection, this);
+		MainFrame.addObserver(UiEventType.SectionEdited, this);
+		MainFrame.addObserver(UiEventType.EditSectionCanceled, this);
 	}
 
 	@Override
@@ -92,26 +95,37 @@ public class DetailComposite extends Composite implements IUiListener {
 				if (eventTypeThatLocked == UiEventType.AddExhibit) {
 					saveState = false;
 				}
+				break;
 			case AddTagCanceled:
 			case TagAdded:
 				if (eventTypeThatLocked == UiEventType.AddTag) {
 					saveState = false;
 				}
+				break;
 			case MuseumAdded:
 			case AddMuseumCanceled:
 				if (eventTypeThatLocked == UiEventType.AddMuseum) {
 					saveState = false;
 				}
+				break;
 			case MuseumEdited:
 			case EditMuseumCanceled:
 				if (eventTypeThatLocked == UiEventType.EditMuseum) {
 					saveState = false;
 				}
+				break;
 			case TagEdited:
 			case EditTagCanceled:
 				if (eventTypeThatLocked == UiEventType.EditTag) {
 					saveState = false;
 				}
+				break;
+			case SectionEdited:
+			case EditSectionCanceled:
+				if (eventTypeThatLocked == UiEventType.EditSection) {
+					saveState = false;
+				}
+				break;
 			case MuseumDeleted:
 				saveState = false;
 			default:
@@ -159,9 +173,15 @@ public class DetailComposite extends Composite implements IUiListener {
 			case EditMuseum:
 				saveState = true;
 				eventTypeThatLocked = event.getType();
+				break;
 			case EditTag:
 				saveState = true;
 				eventTypeThatLocked = event.getType();
+				break;
+			case EditSection:
+				saveState = true;
+				eventTypeThatLocked = event.getType();
+				break;
 			// ----- Remove -----
 			case RemoveLabel:
 				break;
@@ -169,24 +189,9 @@ public class DetailComposite extends Composite implements IUiListener {
 				break;
 			case RemoveSection:
 				break;
-			// ----- Added / Deleted -----
-			case SectionAdded:
-			case MuseumAdded:
-			case AddSectionCanceled:
-			case ExhibitAdded:
-			case AddExhibitCanceled:
-			case TagAdded:
-			case AddTagCanceled:
-			case TagDeleted:
-			case MuseumDeleted:
-			case SectionDeleted:
-			case EditMuseumCanceled:
-			case EditTagCanceled:
-			case TagEdited:
-			case MuseumEdited:
-				showNothing();
-				break;
 			default:
+				// ----- Added / Deleted -----
+				showNothing();
 				break;
 			}
 		}

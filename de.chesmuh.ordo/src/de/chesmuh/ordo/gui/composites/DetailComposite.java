@@ -78,6 +78,9 @@ public class DetailComposite extends Composite implements IUiListener {
 		MainFrame.addObserver(UiEventType.EditSection, this);
 		MainFrame.addObserver(UiEventType.SectionEdited, this);
 		MainFrame.addObserver(UiEventType.EditSectionCanceled, this);
+		MainFrame.addObserver(UiEventType.EditExhibit, this);
+		MainFrame.addObserver(UiEventType.ExhibitEdited, this);
+		MainFrame.addObserver(UiEventType.EditExhibitCanceled, this);
 	}
 
 	@Override
@@ -123,6 +126,12 @@ public class DetailComposite extends Composite implements IUiListener {
 			case SectionEdited:
 			case EditSectionCanceled:
 				if (eventTypeThatLocked == UiEventType.EditSection) {
+					saveState = false;
+				}
+				break;
+			case ExhibitEdited:
+			case EditExhibitCanceled:
+				if (eventTypeThatLocked == UiEventType.EditExhibit) {
 					saveState = false;
 				}
 				break;
@@ -179,6 +188,10 @@ public class DetailComposite extends Composite implements IUiListener {
 				eventTypeThatLocked = event.getType();
 				break;
 			case EditSection:
+				saveState = true;
+				eventTypeThatLocked = event.getType();
+				break;
+			case EditExhibit:
 				saveState = true;
 				eventTypeThatLocked = event.getType();
 				break;

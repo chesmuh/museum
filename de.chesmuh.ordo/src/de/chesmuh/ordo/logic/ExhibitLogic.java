@@ -19,4 +19,17 @@ public class ExhibitLogic {
 		}
 		DataAccess.getInstance().saveExhibit(exhibit);
 	}
+
+	public static void updateExhibit(Long museumId, Long sectionId, String name, String description,
+			Exhibit exhibit) throws EmptyNameException, SectionNotSetException {
+		if (null == exhibit.getMuseum() && null == exhibit.getSection()) {
+			throw new SectionNotSetException();
+		} else if (exhibit.getName().isEmpty()) {
+			throw new EmptyNameException();
+		}
+		exhibit.setName(name);
+		exhibit.setDescription(description);
+		DataAccess.getInstance().updateExhibit(exhibit);
+		
+	}
 }

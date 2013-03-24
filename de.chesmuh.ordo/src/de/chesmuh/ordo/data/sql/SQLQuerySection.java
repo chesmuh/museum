@@ -52,15 +52,15 @@ public class SQLQuerySection extends AbstractSQLQuery<Section> {
 	@Override
 	public void update(Section model) throws SQLException {
 		this.bindValues(this.update, model.getId(), model.getName(),
-				model.getDescription(), model.getParent_id(),
-				model.getMuseum_id(), model.getDeleted(), model.getInsert());
+				model.getDescription(), model.getParentId(),
+				model.getMuseumId(), model.getDeleted(), model.getInsert());
 		this.update.executeUpdate();
 	}
 
 	@Override
 	public void store(Section model) throws SQLException {
 		this.bindValues(this.store, model.getName(), model.getDescription(),
-				model.getParent_id(), model.getMuseum_id(), model.getDeleted(),
+				model.getParentId(), model.getMuseumId(), model.getDeleted(),
 				model.getInsert());
 		this.store.execute();
 		this.setGeneratedKey(model);

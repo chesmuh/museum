@@ -31,7 +31,7 @@ public class Tag extends DatabaseElement {
 		this.name = name;
 	}
 
-	public Collection<Long> getExhibit_ids() {
+	public Collection<Long> getExhibitIds() {
 		return exhibit_ids;
 	}
 

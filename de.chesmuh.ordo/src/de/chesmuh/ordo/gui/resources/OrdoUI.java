@@ -98,6 +98,8 @@ public class OrdoUI {
 	public static final String ERROR_NOMUSEUMSELECTED_TITLE = "error.nomuseumselected.title";
 	public static final String ERROR_SELECTONEMUSEUM = "error.selectonemuseum";
 	public static final String ERROR_SELECTONEMUSEUM_TITLE = "error.selectonemuseum.title";
+	public static final String ERROR_SETCHILDASPARENT = "error.setchildasparent";
+	public static final String ERROR_SETCHILDASPARENT_TITLE = "error.setchildasparent.title";
 
 	// ----- Images -----
 	public static final String IMAGES_SECTION = "/images/folder.png";
@@ -106,10 +108,13 @@ public class OrdoUI {
 	public static final String IMAGES_ADD = "/images/plus.png";
 	public static final String IMAGES_DELETE = "/images/minus.png";
 	public static final String IMAGES_SWAP = "/images/swap.png";
-	public static final String IMAGES_DROP = "/images/marquee-download.png";
+	public static final String IMAGES_DROP_ENABLED = "/images/marquee-download.png";
+	public static final String IMAGES_DROP_DISABLED = "/images/marquee.png";
 	public static final String IMAGES_CANCEL = "/images/cross.png";
 	public static final String IMAGES_OK = "/images/tick.png";
 	public static final String IMAGES_EDIT = "/images/quill.png";
+	public static final String IMAGES_TAG = "/images/tag.png";
+
 
 
 

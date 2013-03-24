@@ -98,6 +98,7 @@ public class TagComposite extends Composite implements IUiListener {
 		for (Tag label : DataAccess.getInstance().getAllLabels()) {
 			TreeItem item = new TreeItem(tree, SWT.NONE);
 			item.setText(label.getName());
+			item.setImage(ResourceManager.getImage(getDisplay(), OrdoUI.IMAGES_TAG));
 			item.setData(label);
 		}
 	}

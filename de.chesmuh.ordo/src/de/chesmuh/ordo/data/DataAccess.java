@@ -15,17 +15,17 @@ import de.chesmuh.ordo.entitys.Tag;
 /**
  * 
  * @author Chesmuh
- *
+ * 
  */
 public class DataAccess {
 
 	private static DataAccess instance;
-	
+
 	private MuseumManager museumManager;
 	private SectionManager sectionManager;
 	private ExhibitManager exhibitManager;
 	private TagManager tagManager;
-	
+
 	private DataAccess() {
 		museumManager = new MuseumManager();
 		museumManager.loadAll();
@@ -36,18 +36,18 @@ public class DataAccess {
 		tagManager = new TagManager();
 		tagManager.loadAll();
 	}
-	
+
 	public static DataAccess getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new DataAccess();
 		}
 		return instance;
 	}
-	
+
 	public Collection<Museum> getAllMuseum() {
 		return museumManager.getAll();
 	}
-	
+
 	public Museum getMuseumById(long id) {
 		return museumManager.getbyId(id);
 	}
@@ -67,15 +67,15 @@ public class DataAccess {
 	public Collection<Section> getAllSection() {
 		return sectionManager.getAll();
 	}
-	
+
 	public Collection<Section> getSectionsByMuseum(Museum museum) {
 		return sectionManager.getByMuseum(museum);
 	}
-	
+
 	public Collection<Section> getSectionBySection(Section section) {
 		return sectionManager.getBySection(section);
 	}
-	
+
 	public Collection<Section> getSectionByMuseumWithNoParent(Museum museum) {
 		return sectionManager.getByMuseumWithParentNull(museum);
 	}
@@ -97,7 +97,7 @@ public class DataAccess {
 	}
 
 	public void deleteExhibits(Collection<Exhibit> toDelete) {
-		for(Exhibit e : toDelete) { 
+		for (Exhibit e : toDelete) {
 			exhibitManager.markAsDeleted(e);
 		}
 	}
@@ -111,12 +111,12 @@ public class DataAccess {
 	}
 
 	public void addExhibitToTag(Tag tag, Exhibit exhibit) {
-		tag.getExhibit_ids().add(exhibit.getId());
+		tag.getExhibitIds().add(exhibit.getId());
 		tagManager.update(tag);
 	}
 
 	public void deleteTags(ArrayList<Tag> toDelete) {
-		for(Tag tag : toDelete) {
+		for (Tag tag : toDelete) {
 			tagManager.markAsDeleted(tag);
 		}
 	}
@@ -131,9 +131,11 @@ public class DataAccess {
 
 	public ArrayList<Exhibit> getExhibitBySectionWithSubSections(Section section) {
 		ArrayList<Exhibit> ret = new ArrayList<Exhibit>();
-		Collection<Section> sectionBySection = DataAccess.getInstance().getSectionBySection(section);
-		for(Section subSection : sectionBySection) {
-			ret.addAll(DataAccess.getInstance().getExhibitBySectionWithSubSections(subSection));
+		Collection<Section> sectionBySection = DataAccess.getInstance()
+				.getSectionBySection(section);
+		for (Section subSection : sectionBySection) {
+			ret.addAll(DataAccess.getInstance()
+					.getExhibitBySectionWithSubSections(subSection));
 		}
 		ret.addAll(DataAccess.getInstance().getExhibitBySection(section));
 		return ret;
@@ -142,10 +144,12 @@ public class DataAccess {
 	public Collection<Section> getSectionBySectionWithSubSections(
 			Section section) {
 		ArrayList<Section> ret = new ArrayList<Section>();
-		Collection<Section> sectionBySection = DataAccess.getInstance().getSectionBySection(section);
+		Collection<Section> sectionBySection = DataAccess.getInstance()
+				.getSectionBySection(section);
 		ret.add(section);
-		for(Section subSection : sectionBySection) {
-			ret.addAll(DataAccess.getInstance().getSectionBySectionWithSubSections(subSection));
+		for (Section subSection : sectionBySection) {
+			ret.addAll(DataAccess.getInstance()
+					.getSectionBySectionWithSubSections(subSection));
 		}
 		return ret;
 	}
@@ -164,6 +168,14 @@ public class DataAccess {
 
 	public void updateSection(Section section) {
 		sectionManager.update(section);
+	}
+
+	public void updateExhibit(Exhibit exhibit) {
+		exhibitManager.update(exhibit);
+	}
+
+	public Collection<Tag> getTagByExhibit(Exhibit exhibit) {
+		return tagManager.getByExhibit(exhibit);
 	}
 
 }

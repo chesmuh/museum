@@ -77,7 +77,7 @@ public class CreateExhibitComposite extends Composite {
 
 		Label dropLabel = new Label(this, SWT.PUSH);
 		dropLabel.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_DROP));
+				OrdoUI.IMAGES_DROP_ENABLED));
 
 		DropTarget dropTarget = new DropTarget(dropLabel, DND.DROP_MOVE);
 		dropTarget.setTransfer(new Transfer[] { TextTransfer.getInstance() });
@@ -98,7 +98,7 @@ public class CreateExhibitComposite extends Composite {
 			textParent.setData(selection);
 		}
 
-		// ----- Label -----
+		// ----- Tag -----
 		label = new Label(this, SWT.NONE);
 		label.setText(ResourceManager.getText(OrdoUI.DETAIL_EXHIBIT_TAG));
 		gridData = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
@@ -106,7 +106,7 @@ public class CreateExhibitComposite extends Composite {
 
 		Label dropLabelLabel = new Label(this, SWT.PUSH);
 		dropLabelLabel.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_DROP));
+				OrdoUI.IMAGES_DROP_ENABLED));
 
 		DropTarget dropTargetLabel = new DropTarget(dropLabelLabel,
 				DND.DROP_MOVE);

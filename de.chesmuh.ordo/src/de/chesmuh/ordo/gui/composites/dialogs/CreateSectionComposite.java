@@ -22,6 +22,7 @@ import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.exceptions.EmptyNameException;
 import de.chesmuh.ordo.exceptions.MuseumNotSetException;
+import de.chesmuh.ordo.exceptions.SetChildAsParentException;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -71,7 +72,7 @@ public class CreateSectionComposite extends Composite {
 
 		Label dropLabel = new Label(this, SWT.PUSH);
 		dropLabel.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_DROP));
+				OrdoUI.IMAGES_DROP_ENABLED));
 
 		DropTarget dropTarget = new DropTarget(dropLabel, DND.DROP_MOVE);
 		dropTarget.setTransfer(new Transfer[] { TextTransfer.getInstance() });
@@ -194,6 +195,14 @@ public class CreateSectionComposite extends Composite {
 							.getText(OrdoUI.ERROR_NOPARENT));
 					messageBox.setMessage(ResourceManager
 							.getText(OrdoUI.ERROR_NOPARENT_TITLE));
+					messageBox.open();
+				} catch (SetChildAsParentException e1) {
+					MessageBox messageBox = new MessageBox(getShell(),
+							SWT.ICON_ERROR);
+					messageBox.setText(ResourceManager
+							.getText(OrdoUI.ERROR_SETCHILDASPARENT));
+					messageBox.setMessage(ResourceManager
+							.getText(OrdoUI.ERROR_SETCHILDASPARENT_TITLE));
 					messageBox.open();
 				}
 			}

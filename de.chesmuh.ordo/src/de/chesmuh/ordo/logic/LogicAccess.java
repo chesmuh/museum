@@ -11,12 +11,13 @@ import de.chesmuh.ordo.entitys.Tag;
 import de.chesmuh.ordo.exceptions.EmptyNameException;
 import de.chesmuh.ordo.exceptions.MuseumNotSetException;
 import de.chesmuh.ordo.exceptions.SectionNotSetException;
+import de.chesmuh.ordo.exceptions.SetChildAsParentException;
 
 public class LogicAccess {
 
 	public static Section saveSection(long museum_id, Long parent_id,
 			String name, String description) throws EmptyNameException,
-			MuseumNotSetException {
+			MuseumNotSetException, SetChildAsParentException {
 		Section section = new Section(museum_id, parent_id, name, description);
 		SectionLogic.saveSection(section);
 		return section;
@@ -75,9 +76,15 @@ public class LogicAccess {
 	}
 
 	public static Section updateSection(Long museumId, Long sectionId, String name,
-			String description, Section section) throws EmptyNameException, MuseumNotSetException {
+			String description, Section section) throws EmptyNameException, MuseumNotSetException, SetChildAsParentException {
 		SectionLogic.updataSection(museumId, sectionId, name, description, section);
 		return section;
+	}
+
+	public static Exhibit updateExhibit(Long museumId, Long sectionId, String name, String description,
+			Exhibit exhibit) throws EmptyNameException, SectionNotSetException {
+		ExhibitLogic.updateExhibit(museumId, sectionId, name, description, exhibit);
+		return exhibit;
 	}
 
 }

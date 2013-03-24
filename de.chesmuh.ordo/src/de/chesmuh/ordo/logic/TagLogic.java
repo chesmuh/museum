@@ -22,14 +22,14 @@ public class TagLogic {
 
 	public static void addExhibitsToTag(Tag tag, Collection<Exhibit> exhibits) {
 		for (Exhibit exhibit : exhibits) {
-			if (!tag.getExhibit_ids().contains(exhibit.getId())) {
+			if (!tag.getExhibitIds().contains(exhibit.getId())) {
 				DataAccess.getInstance().addExhibitToTag(tag, exhibit);
 			}
 		}
 	}
 
 	public static void addExhibitToTag(Tag tag, Exhibit exhibit) {
-		if (!tag.getExhibit_ids().contains(exhibit.getId())) {
+		if (!tag.getExhibitIds().contains(exhibit.getId())) {
 			DataAccess.getInstance().addExhibitToTag(tag, exhibit);
 		}
 	}

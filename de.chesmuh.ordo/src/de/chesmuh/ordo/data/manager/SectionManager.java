@@ -21,7 +21,7 @@ public class SectionManager extends AbstractManager<Section> {
 	public Collection<Section> getByMuseum(Museum museum) {
 		ArrayList<Section> ret = new ArrayList<Section>();
 		for (Section s : this.getAll()) {
-			if (s.getMuseum_id() == museum.getId() && !s.isDeleted()) {
+			if (s.getMuseumId() == museum.getId() && !s.isDeleted()) {
 				ret.add(s);
 			}
 		}
@@ -31,7 +31,7 @@ public class SectionManager extends AbstractManager<Section> {
 	public Collection<Section> getBySection(Section section) {
 		ArrayList<Section> ret = new ArrayList<Section>();
 		for (Section s : this.getAll()) {
-			if (s.getParent_id() == section.getId() && !s.isDeleted()) {
+			if (s.getParentId() == section.getId() && !s.isDeleted()) {
 				ret.add(s);
 			}
 		}
@@ -41,7 +41,7 @@ public class SectionManager extends AbstractManager<Section> {
 	public Collection<Section> getByMuseumWithParentNull(Museum museum) {
 		ArrayList<Section> ret = new ArrayList<Section>();
 		for (Section s : this.getAll()) {
-			if (s.getMuseum_id() == museum.getId() && s.getParent_id() == null && !s.isDeleted()) {
+			if (s.getMuseumId() == museum.getId() && s.getParentId() == null && !s.isDeleted()) {
 				ret.add(s);
 			}
 		}

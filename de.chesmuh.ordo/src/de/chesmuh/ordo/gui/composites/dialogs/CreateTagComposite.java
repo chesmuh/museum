@@ -69,7 +69,7 @@ public class CreateTagComposite extends Composite {
 
 		Label dropLabel = new Label(this, SWT.PUSH);
 		dropLabel.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_DROP));
+				OrdoUI.IMAGES_DROP_ENABLED));
 
 		DropTarget dropTarget = new DropTarget(dropLabel, DND.DROP_MOVE);
 		dropTarget.setTransfer(new Transfer[] { TextTransfer.getInstance() });

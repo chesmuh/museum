@@ -99,8 +99,8 @@ public class SQLQueryTag extends AbstractSQLQuery<Tag> {
 		this.updateList1.setObject(1, model.getId());
 		this.updateList1.execute();
 
-		if (model.getExhibit_ids().size() > 0) {
-			for (Long exhibitId : model.getExhibit_ids()) {
+		if (model.getExhibitIds().size() > 0) {
+			for (Long exhibitId : model.getExhibitIds()) {
 				this.updateList2.setObject(1, exhibitId);
 				this.updateList2.setObject(2, model.getId());
 				this.updateList2.addBatch();
@@ -119,8 +119,8 @@ public class SQLQueryTag extends AbstractSQLQuery<Tag> {
 		this.updateList1.setObject(1, model.getId());
 		this.updateList1.execute();
 
-		if (model.getExhibit_ids().size() > 0) {
-			for (Long exhibitId : model.getExhibit_ids()) {
+		if (model.getExhibitIds().size() > 0) {
+			for (Long exhibitId : model.getExhibitIds()) {
 				this.updateList2.setObject(1, exhibitId);
 				this.updateList2.setObject(2, model.getId());
 				this.updateList2.addBatch();

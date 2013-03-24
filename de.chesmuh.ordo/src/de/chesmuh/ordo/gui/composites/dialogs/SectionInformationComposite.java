@@ -22,6 +22,7 @@ import de.chesmuh.ordo.entitys.Museum;
 import de.chesmuh.ordo.entitys.Section;
 import de.chesmuh.ordo.exceptions.EmptyNameException;
 import de.chesmuh.ordo.exceptions.MuseumNotSetException;
+import de.chesmuh.ordo.exceptions.SetChildAsParentException;
 import de.chesmuh.ordo.gui.MainFrame;
 import de.chesmuh.ordo.gui.interfaces.UiEvent;
 import de.chesmuh.ordo.gui.interfaces.UiEventType;
@@ -72,26 +73,21 @@ public class SectionInformationComposite extends Composite {
 
 		dropLabel = new Label(this, SWT.PUSH);
 		dropLabel.setImage(ResourceManager.getImage(getDisplay(),
-				OrdoUI.IMAGES_DROP));		
-		dropLabel.setVisible(false);
-		
-		DropTarget dropTarget = new DropTarget(dropLabel, DND.DROP_MOVE);
-		dropTarget.setTransfer(new Transfer[] { TextTransfer.getInstance() });
-		dropTarget.addDropListener(new SectionDropTargetAdapter());
+				OrdoUI.IMAGES_DROP_DISABLED));
 
 		textParent = new Text(this, SWT.NONE);
 		gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		textParent.setLayoutData(gridData);
 		textParent.setEditable(false);
-		if(null != section.getMuseum()) {
+		if (null != section.getMuseum()) {
 			textParent.setText(section.getMuseum().getName());
 			textParent.setData(section.getMuseum());
 		}
-		if(null != section.getParent()) {
+		if (null != section.getParent()) {
 			textParent.setText(Util.getPath(section.getParent()));
 			textParent.setData(section.getParent());
 		}
-		
+
 		// ----- Description -----
 		label = new Label(this, SWT.NONE);
 		label.setText(ResourceManager.getText(OrdoUI.DETAIL_MUSEUM_DESCRIPTION));
@@ -113,8 +109,8 @@ public class SectionInformationComposite extends Composite {
 		buttonComposite.setLayout(new GridLayout(2, false));
 
 		Button button = new Button(buttonComposite, SWT.NONE);
-		button.setImage(ResourceManager
-				.getImage(getDisplay(), OrdoUI.IMAGES_EDIT));
+		button.setImage(ResourceManager.getImage(getDisplay(),
+				OrdoUI.IMAGES_EDIT));
 		button.setText(ResourceManager.getText(OrdoUI.BUTTON_EDIT));
 		button.addSelectionListener(new EditSelectionAdapter());
 
@@ -139,14 +135,20 @@ public class SectionInformationComposite extends Composite {
 			button.setText(ResourceManager.getText(OrdoUI.BUTTON_CANCEL));
 			button.addSelectionListener(new CancelSelectionAdapter());
 
+			// ----- Enable UI -----
 			textName.setEditable(true);
 			textDescription.setEditable(true);
-			dropLabel.setVisible(true);
-			
+			dropLabel.setImage(ResourceManager.getImage(getDisplay(),
+					OrdoUI.IMAGES_DROP_ENABLED));
+			DropTarget dropTarget = new DropTarget(dropLabel, DND.DROP_MOVE);
+			dropTarget
+					.setTransfer(new Transfer[] { TextTransfer.getInstance() });
+			dropTarget.addDropListener(new SectionDropTargetAdapter());
+
 			buttonComposite.layout();
 			SectionInformationComposite.this.layout();
-			UiEvent event = new UiEvent(null, UiEventType.EditSection);
 
+			UiEvent event = new UiEvent(null, UiEventType.EditSection);
 			MainFrame.handleEvent(event);
 		}
 
@@ -180,7 +182,8 @@ public class SectionInformationComposite extends Composite {
 
 				try {
 					section = LogicAccess.updateSection(museum.getId(),
-							section_id, name, description, SectionInformationComposite.this.section);
+							section_id, name, description,
+							SectionInformationComposite.this.section);
 					UiEvent event = new UiEvent(section,
 							UiEventType.SectionEdited);
 					MainFrame.handleEvent(event);
@@ -200,6 +203,14 @@ public class SectionInformationComposite extends Composite {
 					messageBox.setMessage(ResourceManager
 							.getText(OrdoUI.ERROR_NOPARENT_TITLE));
 					messageBox.open();
+				} catch (SetChildAsParentException exn) {
+					MessageBox messageBox = new MessageBox(getShell(),
+							SWT.ICON_ERROR);
+					messageBox.setText(ResourceManager
+							.getText(OrdoUI.ERROR_SETCHILDASPARENT_TITLE));
+					messageBox.setMessage(ResourceManager
+							.getText(OrdoUI.ERROR_SETCHILDASPARENT));
+					messageBox.open();
 				}
 			}
 		}
@@ -215,7 +226,7 @@ public class SectionInformationComposite extends Composite {
 		}
 
 	}
-	
+
 	private class SectionDropTargetAdapter extends DropTargetAdapter {
 
 		@Override

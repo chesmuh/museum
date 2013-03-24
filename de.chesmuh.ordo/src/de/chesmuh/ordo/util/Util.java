@@ -1,6 +1,9 @@
 package de.chesmuh.ordo.util;
 
+import java.util.Collection;
+
 import de.chesmuh.ordo.entitys.Section;
+import de.chesmuh.ordo.entitys.Tag;
 
 public class Util {
 
@@ -16,5 +19,17 @@ public class Util {
 		}
 		path = section.getMuseum().getName() + "\\" + path;
 		return path;
+	}
+
+	public static String getTags(Collection<Tag> tags) {
+		String text = "";
+		for (Tag tagName : tags) {
+			if (!text.isEmpty()) {
+				text += ", " + tagName.getName();
+			} else {
+				text += tagName.getName();
+			}
+		}
+		return text;
 	}
 }

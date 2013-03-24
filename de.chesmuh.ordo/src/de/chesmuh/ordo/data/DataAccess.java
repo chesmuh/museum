@@ -158,4 +158,8 @@ public class DataAccess {
 		museumManager.update(museum);
 	}
 
+	public void updateTag(Tag tag) {
+		tagManager.update(tag);
+	}
+
 }

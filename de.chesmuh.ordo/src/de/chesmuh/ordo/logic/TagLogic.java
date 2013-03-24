@@ -33,4 +33,12 @@ public class TagLogic {
 			DataAccess.getInstance().addExhibitToTag(tag, exhibit);
 		}
 	}
+
+	public static void updateTag(Tag tag, String name) throws EmptyNameException {
+		if (name.isEmpty()) {
+			throw new EmptyNameException();
+		}
+		tag.setName(name);
+		DataAccess.getInstance().updateTag(tag);
+	}
 }

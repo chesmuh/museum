@@ -75,6 +75,7 @@ public class TagComposite extends Composite implements IUiListener {
 		// ----- Listener -----
 		MainFrame.addObserver(UiEventType.TagAdded, this);
 		MainFrame.addObserver(UiEventType.TagDeleted, this);
+		MainFrame.addObserver(UiEventType.TagEdited, this);
 
 	}
 
@@ -84,6 +85,7 @@ public class TagComposite extends Composite implements IUiListener {
 		case TagAdded:
 		case TagDeleted:
 		case MuseumDeleted:
+		case TagEdited:
 			refreshTree();
 			break;
 		default:

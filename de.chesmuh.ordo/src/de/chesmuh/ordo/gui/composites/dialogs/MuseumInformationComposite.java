@@ -124,7 +124,7 @@ public class MuseumInformationComposite extends Composite {
 			} else {
 				try {
 					Museum museum = LogicAccess.updateMuseum(textName.getText(), textDescription.getText(), MuseumInformationComposite.this.museum);
-					UiEvent event = new UiEvent(museum, UiEventType.MuseumAdded);
+					UiEvent event = new UiEvent(museum, UiEventType.MuseumEdited);
 					MainFrame.handleEvent(event);
 				} catch (EmptyNameException exn) {
 					MessageBox messageBox = new MessageBox(getShell(),

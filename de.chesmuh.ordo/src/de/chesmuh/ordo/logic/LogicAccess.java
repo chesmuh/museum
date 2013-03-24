@@ -69,4 +69,9 @@ public class LogicAccess {
 		return museum;
 	}
 
+	public static Tag updateTag(String name, Tag tag) throws EmptyNameException {
+		TagLogic.updateTag(tag, name);
+		return tag;
+	}
+
 }
